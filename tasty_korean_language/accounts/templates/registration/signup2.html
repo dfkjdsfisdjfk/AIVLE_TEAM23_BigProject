@@ -1,43 +1,51 @@
+{% extends "base.html" %}
 {% load static %}
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <title>{% block title %}{% endblock %}</title>
-        <link rel="stylesheet" href="{% static 'css/signup2.css' %}" />
-    </head>
-    <body>
-            <!-- main -->
-            <div class="main-w3layouts wrapper">
-                <div class="main-agileinfo">
-                    <div class="agileits-top">
-                        <h1>회원가입</h1>
-                        <form action="#" method="post">
-                            <h2>id</h2>
-                            <input class="text" type="text" name="Username" placeholder="Username" required="">                          
-                            <h2>password</h2>
-                            <input class="text" type="text" name="Username" placeholder="Username" required="">                          
-                            <h2>check password</h2>
-                            <input class="text" type="text" name="Username" placeholder="Username" required="">                          
-                            <h2>email</h2>
-                            <input class="text" type="text" name="Username" placeholder="Username" required="">                          
-                            
-                            <div class="wthree-text">
-                                <label class="anim">
-                                    <input type="checkbox" class="checkbox" required="">
-                                    <span>굿</span>
-                                </label>
-                                <div class="clear"> </div>
-                            </div>
-                            <input type="submit" value="SIGNUP">
-                        </form>
-                        <p>Don't have an Account? <a href="#"> Login Now!</a></p>
-                    </div>
+
+{% block title %}
+sign up 2
+{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/signup2.css' %}" />
+{% endblock css %}
+
+{% block content %}
+<!-- main -->
+<div class="main-w3layouts wrapper">
+    <div class="main-agileinfo">
+        <div class="agileits-top">
+            <h1>회원가입</h1>
+            <form action="#" method="post">
+                <h2>id</h2>
+                <input class="text" type="text" name="Username" placeholder="Username" required="">                          
+                <h2>password</h2>
+                <input class="text" type="text" name="Username" placeholder="Username" required="">                          
+                <h2>check password</h2>
+                <input class="text" type="text" name="Username" placeholder="Username" required="">                          
+                <h2>email</h2>
+                <input class="text" type="text" name="Username" placeholder="Username" required="">                          
+                
+                <div class="wthree-text">
+                    <label class="anim">
+                        <input type="checkbox" class="checkbox" required="">
+                        <span>굿</span>
+                    </label>
+                    <div class="clear"> </div>
                 </div>
-                <!-- copyright -->
-                <div class="colorlibcopy-agile">
-                    <p>kt aivle 23조 화이팅<a href="https://naver.com/" target="_blank">  naver</a></p>
-                </div>
-            </div>
-            <!-- //main -->
-    </body>
-</html>
+                <input type="submit" value="SIGNUP">
+            </form>
+            <p>Don't have an Account? <a href="#"> Login Now!</a></p>
+        </div>
+    </div>
+    <!-- copyright -->
+    <div class="colorlibcopy-agile">
+        <p>kt aivle 23조 화이팅<a href="https://naver.com/" target="_blank">  naver</a></p>
+    </div>
+</div>
+<!-- //main -->
+{% endblock content %}
+
+
+{% comment %}  {% endcomment %}
+
+
