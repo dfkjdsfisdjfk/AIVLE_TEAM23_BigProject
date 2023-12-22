@@ -7,25 +7,35 @@
 {% block content %}
     <h1>게시판 페이지입니다</h1>
 
-    <table class = 'community-table'>
-        <thead class = 'community-table-thead'>
-            <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>글쓴이</th>
-                <th>등록일</th>
-            </tr>
-        </thead>
-        
-        <tbody class = 'community-table-tbody'>
-            {% for lt in tmp_list %}
+    <div class = 'container-com'>
+        <table class = 'community-table'>
+            <thead class = 'community-table-thead'>
                 <tr>
-                    <td>{{lt.name}}</td>
-                    <td>{{lt.content}}</td>
-                    <td>아아</td>
-                    <td>아아아</td>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>글쓴이</th>
+                    <th>등록일</th>
                 </tr>
+            </thead>
+            
+            <tbody class = 'community-table-tbody'>
+                {% for obj in page_obj %}
+                    <tr>
+                        <td>{{obj.name}}</td>
+                        <td>{{obj.content}}</td>
+                        <td>아아</td>
+                        <td>아아아</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class = 'com-number'>
+        <ul>
+            {% for page in pages %}
+                <li><a href ="?page={{page}}">{{page}}</a></li>
             {% endfor %}
-        </tbody>
-    </table>
+        </ul>
+    </div>
 {% endblock content %}
