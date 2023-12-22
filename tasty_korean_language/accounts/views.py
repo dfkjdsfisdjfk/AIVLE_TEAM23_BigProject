@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
-def login():
-    return ('hello')
+def login(request):
+    return render(request, 'registration/login.html')
 
 def signup1(request):
     return render(request, 'registration/signup1.html')
