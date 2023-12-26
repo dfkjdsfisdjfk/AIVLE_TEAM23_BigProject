@@ -2,50 +2,28 @@
 {% load static %}
 
 {% block title %}
-sign up 2
+TKL: Sign up
 {% endblock title %}
 
-{% block css %}
-<link rel="stylesheet" href="{% static 'css/signup2.css' %}" />
-{% endblock css %}
-
 {% block content %}
-<!-- main -->
-<div class="main-w3layouts wrapper">
-    <div class="main-agileinfo">
-        <div class="agileits-top">
-            <h1>회원가입</h1>
-            <form action="#" method="post">
-                <h2>id</h2>
-                <input class="text" type="text" name="Username" placeholder="Username" required="">                          
-                <h2>password</h2>
-                <input class="text" type="text" name="Username" placeholder="Username" required="">                          
-                <h2>check password</h2>
-                <input class="text" type="text" name="Username" placeholder="Username" required="">                          
-                <h2>email</h2>
-                <input class="text" type="text" name="Username" placeholder="Username" required="">                          
-                
-                <div class="wthree-text">
-                    <label class="anim">
-                        <input type="checkbox" class="checkbox" required="">
-                        <span>굿</span>
-                    </label>
-                    <div class="clear"> </div>
-                </div>
-                <input type="submit" value="SIGNUP">
-            </form>
-            <p>Don't have an Account? <a href="#"> Login Now!</a></p>
-        </div>
-    </div>
-    <!-- copyright -->
-    <div class="colorlibcopy-agile">
-        <p>kt aivle 23조 화이팅<a href="https://naver.com/" target="_blank">  naver</a></p>
-    </div>
+<div class="wrapper signup-wrapper">
+    <h2>회원가입</h2>
+    <p><span>*</span>는 필수 입력 항목입니다.</p>
+    <form action="#" method="post">
+        <label><span>*</span>ID</label>
+        <input class="form-input" type="text" name="Username" placeholder="Username" required="">                          
+        <div class="form-msg id-msg">* 아이디 관련 메시지 출력</div>
+        <label><span>*</span>Password</label>
+        <input class="form-input" type="password" name="pwd" placeholder="Password" required="">                          
+        <div class="form-msg pwd-msg">* 패스워드 관련 메시지 출력</div>
+        <label><span>*</span>Check password</label>
+        <input class="form-input" type="password" name="pwd-check" placeholder="Password" required="">                          
+        <div class="form-msg pwd-check-msg">* 패스워드 확인 관련 메시지 출력</div>
+        <label><span>*</span>Email</label>
+        <input class="form-input" type="email" name="email" placeholder="example@naver.com" required="">                          
+        <div class="form-msg email-msg">* 이메일 관련 메시지 출력</div>
+
+        <input class="btn signup" type="submit" value="Sign up">
+    </form>
 </div>
-<!-- //main -->
 {% endblock content %}
-
-
-{% comment %}  {% endcomment %}
-
-

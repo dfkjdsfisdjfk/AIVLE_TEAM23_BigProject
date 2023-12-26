@@ -6,18 +6,18 @@ TKL: Sign in
 {% endblock title %}
 
 {% block content %}
-<div class="wrapper">
+<div class="wrapper login-wrapper">
     <h2>로그인</h2>
     <form action="post">
         {% csrf_token %}
         <label for="id">ID</label>
-        <input type="text" name="id" id="id" placeholder="User ID">
+        <input class="form-input" type="text" name="id" id="id" placeholder="User ID">
         <label for="pwd">Password</label>
-        <input type="password" name="pwd" id="pwd" placeholder="Password">
-        <input type="submit" value="Sign in">
+        <input class="form-input" type="password" name="pwd" id="pwd" placeholder="Password">
+        <input class="btn signin" type="submit" value="Sign in">
     </form>
-    <div class="login_more"><a href="#">아이디 찾기</a><span>|</span><a href="#">비밀번호 찾기</a><span>|</span><a href="#">회원가입</a></div>
+    <div class="login_more"><a href="#">아이디 찾기</a><span>|</span><a href="#">비밀번호 찾기</a><span>|</span><a href="{% url 'signup' %}">회원가입</a></div>
     <hr>
-    <div class="login_google"><button type="button"><img src="{% static 'img/google_login.png' %}" alt=""></button></div>
+    <div class="login_google"><button type="button"><img src="{% static 'img/google_icon.svg' %}" alt=""><span>Sign in with Google</span></button></div>
 </div>
 {% endblock content %}
