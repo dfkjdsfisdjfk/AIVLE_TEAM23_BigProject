@@ -5,6 +5,10 @@
 TKL: Sign in
 {% endblock title %}
 
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'css/accounts_style.css' %}">
+{% endblock extrahead %}
+
 {% block content %}
 <div class="wrapper login-wrapper">
     <h2>로그인</h2>

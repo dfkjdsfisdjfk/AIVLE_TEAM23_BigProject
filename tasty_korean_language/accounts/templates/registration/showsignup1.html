@@ -5,6 +5,10 @@
 TKL: Sign up
 {% endblock title %}
 
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'css/accounts_style.css' %}">
+{% endblock extrahead %}
+
 {% block content %}
 <div class="wrapper signup-wrapper">
     <h2>회원가입</h2>
