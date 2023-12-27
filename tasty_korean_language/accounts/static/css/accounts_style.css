@@ -10,7 +10,7 @@
   margin: 50px auto;
 }
 
-.wrapper form label {
+.wrapper form > label {
   display: block;
   width: 70%;
   font-size: 17px;
@@ -18,7 +18,7 @@
   margin: 10px auto 3px auto;
 }
 
-.wrapper form label:first-child {
+.wrapper form > label:first-child {
   margin: 0px auto 3px auto;
 }
 
@@ -154,12 +154,12 @@
   width: calc(100% - 30px);
 }
 
-.anim span {
+.anim label {
   font-size: 13px;
   vertical-align: middle;
 }
 
-.anim input.checkbox {
+.anim input[type=radio] {
   margin-left: 7px;
   vertical-align: middle;
 }
@@ -203,6 +203,10 @@
   background-color: #48485C;
   opacity: 0.8;
   color: white;
+}
+
+.btn.next.disable {
+  pointer-events: none;
 }
 
 .signup-wrapper > p {

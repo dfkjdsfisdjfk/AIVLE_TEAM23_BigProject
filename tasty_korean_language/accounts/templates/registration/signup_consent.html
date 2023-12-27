@@ -12,7 +12,7 @@ TKL: Sign up
 {% block content %}
 <div class="wrapper signup-wrapper">
     <h2>회원가입</h2>
-    <div class="signup-check"><input type="checkbox" class="checkbox" required=""><span>전체 동의</span> </div>
+    <div class="signup-check"><input id="check-all" type="checkbox"><span>전체 동의</span> </div>
     <div class="form-wrapper">
         <p>이용약관</p>
         <form action="#" method="post">
@@ -46,13 +46,12 @@ TKL: Sign up
                 </p>
             </div>
             <div class="wthree-text">
-                <label class="anim">
-                    <input type="checkbox" class="checkbox" required="">
-                    <span>동의</span>
-                    <input type="checkbox" class="checkbox" required="">
-                    <span>동의 안함</span>
-                </label>
-                <div class="clear"> </div>
+                <div class="anim">
+                    <input type="radio" name="service" id="service-agree" class="agree">
+                    <label for="service-agree">동의</label>
+                    <input type="radio" name="service" id="service-disagree" class="disagree">
+                    <label for="service-disagree">동의 안함</label>
+                </div>
             </div>
         </form>
     </div>
@@ -89,16 +88,46 @@ TKL: Sign up
                 </p>
             </div>
             <div class="wthree-text">
-                <label class="anim">
-                    <input type="checkbox" class="checkbox" required="">
-                    <span>동의</span>
-                    <input type="checkbox" class="checkbox" required="">
-                    <span>동의 안함</span>
-                </label>
-                <div class="clear"> </div>
+                <div class="anim">
+                    <input type="radio" name="privacy" id="privacy-agree" class="agree">
+                    <label for="privacy-agree">동의</label>
+                    <input type="radio" name="privacy" id="privacy-disagree" class="disagree">
+                    <label for="privacy-disagree">동의 안함</label>
+                </div>
             </div>
         </form>
     </div>
-    <div class="signup-next"><a class="btn next" href="{% url 'signup' %}">NEXT</a></div>
+    <div class="signup-next">
+        <a class="btn next disable" href="{% url 'signup' %}">NEXT</a>
+    </div>
 </div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script>
+    // 전체 동의 체크
+    $("#check-all").on('click', function(){
+        if ($("#check-all").is(":checked")){
+            $("input[type=radio].agree").prop("checked", true);
+            $('.signup-next .next').removeClass('disable');
+        }
+		else {
+            $("input[type=radio]").prop("checked", false);
+            $('.signup-next .next').addClass('disable');
+        }
+    });
+
+    // 개별 동의 해제 시 전체 동의 체크 변경
+    $('input[type=radio]').on('click', function(){
+        if ($('input[type=radio].agree:checked').length == 2) {
+            $('#check-all').prop('checked', true);
+            $('.signup-next .next').removeClass('disable');
+        } 
+        else {
+            $('#check-all').prop('checked', false);
+            $('.signup-next .next').addClass('disable');
+        }
+    });
+
+</script>
+
 {% endblock content %}
