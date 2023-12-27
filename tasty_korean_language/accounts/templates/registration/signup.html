@@ -13,7 +13,7 @@ TKL: Sign up
 <div class="wrapper signup-wrapper">
     <h2>회원가입</h2>
     <p><span>*</span>는 필수 입력 항목입니다.</p>
-    <form action="{% url 'signup' %}" method="post">
+    <form action="" method="post">
         {% csrf_token %}
         <label><span>*</span>Username</label>
         <input class="form-input" type="text" name="username" placeholder="Username" required="">                          
@@ -22,7 +22,7 @@ TKL: Sign up
         <input class="form-input" type="password" name="password1" placeholder="Password" required="">                          
         <div class="form-msg pwd-msg">* 패스워드 관련 메시지 출력</div>
         <label><span>*</span>Check password</label>
-        <input class="form-input" type="password" name="password12" placeholder="Password" required="">                          
+        <input class="form-input" type="password" name="password2" placeholder="Password" required="">                          
         <div class="form-msg pwd-check-msg">* 패스워드 확인 관련 메시지 출력</div>
         <label><span>*</span>Email</label>
         <input class="form-input" type="email" name="email" placeholder="example@naver.com" required="">                          
