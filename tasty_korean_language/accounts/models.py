@@ -11,14 +11,13 @@ class Profile(models.Model):
     address = models.CharField(max_length=50)
 
 
-def on_send_mail(sender, **kwargs):
-    if kwargs['created'] :
-        user = kwargs['instance']
-        send_mail('가입인사','가입을 환영합니다.', 'admin@sky.com', [user.email], fail_silently=False)
+# def on_send_mail(sender, **kwargs):
+#     if kwargs['created'] :
+#         user = kwargs['instance']
+#         send_mail('가입인사','가입을 환영합니다.', 'admin@sky.com', [user.email], fail_silently=False)
         
 
-post_save.connect(on_send_mail, sender=settings.AUTH_USER_MODEL)
-
+# post_save.connect(on_send_mail, sender=settings.AUTH_USER_MODEL)
 
 from django.contrib.sessions.backends.db import SessionStore
 from django.contrib.auth.signals import user_logged_in
