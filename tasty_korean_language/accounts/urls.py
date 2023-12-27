@@ -3,13 +3,10 @@ from django.contrib.auth import views as auth_views
 from . import views
 from django.views.generic import TemplateView
 
-urlpatterns = [
-     path('showlogin/', views.show_login, name='showlogin'),
-     path('showsignup1/', views.show_signup1, name='showsignup1'),
-     path('showsignup2/', views.show_signup2, name='showsignup2'),
-     
+urlpatterns = [     
      path('login/', auth_views.LoginView.as_view(), name='login'),
      path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+     path('signup_consent/', views.signupConsent, name='signup_consent'),
      path('signup/', views.signup, name='signup'),
      
      path(

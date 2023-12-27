@@ -7,14 +7,8 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 
 
-def show_login(request):
-    return render(request, 'registration/showlogin.html')
-
-def show_signup1(request):
-    return render(request, 'registration/showsignup1.html')
-
-def show_signup2(request):
-    return render(request, 'registration/showsignup2.html')
+def signupConsent(request):
+    return render(request, 'registration/signup_consent.html')
 
 def signup(request):
     if request.method == 'POST':
