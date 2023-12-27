@@ -11,7 +11,7 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Tasty Korean Language</a>
+            <a class="navbar-brand" href="{% url 'home' %}">Tasty Korean Language</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -55,7 +55,7 @@
     <div id="page-footer">
         <div class="container">
             <p>
-                <a href="#">개인정보처리방침</a><span>|</span><a href="#">이용약관</a>
+                <a href="{% url 'privacy' %}">개인정보처리방침</a><span>|</span><a href="#">이용약관</a>
                 <span class="text-muted">Copyright © 2023 KT AIVLE 4th Team23 All Right Reserved</span>
             </p>
         </div>
