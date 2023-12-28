@@ -59,11 +59,20 @@
     <div id="page-footer">
         <div class="container">
             <p>
-                <a href="{% url 'privacy' %}">개인정보처리방침</a><span>|</span><a href="{% url 'service' %}">이용약관</a>
+                <a href="#" onclick="openPrivacyPopup()">개인정보처리방침</a><span>|</span><a href="#" onclick="openServicePopup()">이용약관</a>
                 <span class="text-muted">Copyright © 2023 KT AIVLE 4th Team23 All Right Reserved</span>
             </p>
         </div>
     </div>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script>
+        function openPrivacyPopup(){
+            window.open("{% url 'privacy' %}", "new", "toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=700, height=700, left=0, top=0");
+        }
+
+        function openServicePopup(){
+            window.open("{% url 'service' %}", "new", "toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=700, height=700, left=0, top=0");
+        }
+    </script>
 </body>
 </html>
