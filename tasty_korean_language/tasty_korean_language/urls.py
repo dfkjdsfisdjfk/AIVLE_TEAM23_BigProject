@@ -25,6 +25,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('community/', include('community.urls')),
+    path('aichat/', include('aichat.urls')),
 ]
 
 from django.conf import settings
