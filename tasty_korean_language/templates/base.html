@@ -7,21 +7,6 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     {% block extrahead %}{% endblock extrahead %}
-    <style>
-        .navbar-nav .nav-link2 {
-            border: none; /* 테두리 제거 */
-            cursor: pointer; /* 커서 손가락 모양으로 변경 */
-            outline: none; /* 포커스시 발생하는 테두리 제거 */
-            background-color: #f8f9fa; /* 배경색 추가 */
-            
-        }
-
-        .navbar-nav .nav-link2:hover {
-            background-color: #f8f9fa; /* 마우스 호버시 배경색 추가 */
-            
-        }
-
-    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-light">
@@ -54,10 +39,10 @@
                                 <a class="nav-link" href="{% url 'login' %}">로그인</a>
                             </li>
                         {% else %}
-                            <li class="nav-item">
+                            <li class="nav-item logout">
                                 <form method="post" action="{% url 'logout' %}?next={{request.path}}">
                                     {% csrf_token %}
-                                    <input class="nav-link2" type="submit" value="로그아웃">
+                                    <input class="nav-link" type="submit" value="로그아웃">
                                     {% comment %} <input type="submit" value="로그아웃"> {% endcomment %}
                                 </form>
                             </li>
