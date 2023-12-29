@@ -207,6 +207,8 @@
 
 .btn.next.disable {
   pointer-events: none;
+  background-color: #cccccc;
+  color: white;
 }
 
 .signup-wrapper > p {
