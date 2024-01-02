@@ -28,8 +28,8 @@
             <tbody class = 'community-table-tbody'>
                 {% for obj in page_obj %}
                     <tr>
-                        <td>{{obj.name}}</td>
-                        <td>{{obj.content}}</td>
+                        <td>{{obj.pk}}</td>
+                        <td><a href="{% url 'community:detail' obj.pk %}">{{obj.postname}}</a></td>
                         <td>아아</td>
                         <td>아아아</td>
                     </tr>
