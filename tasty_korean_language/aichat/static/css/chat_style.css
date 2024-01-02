@@ -1,7 +1,53 @@
+.wrapper {
+    margin: 30px auto;
+    text-align: center;
+}
+
+#chat-box {
+    width: 90%;
+    height: 500px;
+    margin: 0 auto;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    background-color: #fafafa;
+    overflow-y: auto;
+}
+
+audio::-webkit-media-controls-panel {
+    background-color: #86F774;
+  }
+
+#chat-box > .gpt-chat {
+    width: fit-content;
+    margin: 10px auto 0px 7px;
+    padding: 3px 10px;
+    border: 1px solid #cccccc;
+    border-radius: 12px;
+    background-color: #cccccc;
+    font-size: 14px;
+}
+
+#chat-box > .user-chat {
+    width: fit-content;
+    margin: 10px 7px 0px auto;
+    border: 1px solid #86F774;
+    border-radius: 12px;
+    background-color: #86F774;
+}
+
+#chat-box > .user-chat > audio {
+}
+
 #record {
-    background-color: aliceblue;
+    width: 70px;
+    height: 70px;
+    margin: 20px auto;
+    border: none;
+    background-color: white;
+    background-image: url('/static/img/icon_record_start.svg');
+    transition: all ease-out 0.2s 0s;
 }
 
 #record.recording {
-    background-color: red;
+    background-image: url('/static/img/icon_record_stop.svg');
 }

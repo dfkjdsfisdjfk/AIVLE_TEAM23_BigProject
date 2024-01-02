@@ -25,7 +25,7 @@ $(document).ready(function(){
             mediaRecorder.onstop = (event) => {
                 // 녹음 데이터 audio 태그 추가
                 var $audio = $('<audio controls>');
-                $('#chat-box').append($('<article>').append($audio));
+                $('#chat-box').append($('<article class="user-chat">').append($audio));
 
                 const blob = new Blob(recordArray, {
                     'type': 'audio/wav codecs=opus'
@@ -36,10 +36,10 @@ $(document).ready(function(){
                 $audio.attr('src', audioURL);
 
                 // 녹음 파일 저장
-                const a = document.createElement('a');
-                a.href = audioURL;
-                a.download = "record" + Date.now();
-                a.click();
+                // const a = document.createElement('a');
+                // a.href = audioURL;
+                // a.download = "record" + Date.now();
+                // a.click();
             };
 
             // 녹음 데이터 배열에 저장

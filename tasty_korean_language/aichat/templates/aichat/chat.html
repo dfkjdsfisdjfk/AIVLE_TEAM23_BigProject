@@ -10,9 +10,13 @@ TKL: AI Chat
 {% endblock extrahead %}
 
 {% block content %}
-<div>
-    <div id="chat-box"></div>
-    <button id="record">녹음</button>
+<div class="wrapper">
+    <div id="chat-box">
+        <div class="gpt-chat">
+            gpt 대화 내용 + audio
+        </div>
+    </div>
+    <button id="record"></button>
 </div>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
