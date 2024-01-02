@@ -1,0 +1,7 @@
+#record {
+    background-color: aliceblue;
+}
+
+#record.recording {
+    background-color: red;
+}

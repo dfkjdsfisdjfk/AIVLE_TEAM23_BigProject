@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+TKL: AI Chat
+{% endblock title %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'css/chat_style.css' %}">
+{% endblock extrahead %}
+
+{% block content %}
+<div>
+    <div id="chat-box"></div>
+    <button id="record">녹음</button>
+</div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src= "{% static 'js/voiceRecord.js' %}"></script>
+{% endblock content %}
