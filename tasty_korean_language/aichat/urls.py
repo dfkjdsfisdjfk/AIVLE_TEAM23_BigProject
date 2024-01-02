@@ -1,6 +1,11 @@
 from django.urls import path
 from django.views.generic import TemplateView
+from . import views 
+
+app_name = 'aichat'
 
 urlpatterns = [   
-    path('chat/', TemplateView.as_view(template_name='aichat/chat.html'), name='chat'),  
+    # path('chat/', TemplateView.as_view(template_name='aichat/chat.html'), name='chat'),  
+    path('', views.index, name='chat'),
+    path('send/', views.send, name='send'),
 ]
