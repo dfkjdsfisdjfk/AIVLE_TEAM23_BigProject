@@ -1,11 +1,18 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     커뮤니티
 {% endblock title %}
 
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'css/community.css' %}">
+{% endblock extrahead %}
+
 {% block content %}
     <h1>게시판 페이지입니다</h1>
+
+    <hr class ="hr1" noshade>
 
     <div class = 'container-com'>
         <table class = 'community-table'>
