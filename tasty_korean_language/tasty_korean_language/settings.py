@@ -89,7 +89,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         'HOST': 'localhost',
         'PORT': '3306',
-        'NAME': 'testdb',
+        'NAME': 'TKL',
         'USER': 'root',
         'PASSWORD': '',
     }
@@ -144,6 +144,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = 'accounts.User'
 
 LOGIN_REDIRECT_URL = '/accounts/profile/'
 
