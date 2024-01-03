@@ -1,10 +1,32 @@
 .wrapper {
+    width: 90%;
     margin: 30px auto;
     text-align: center;
 }
 
+.new-chat-container {
+    width: 100%;
+    margin: 10px auto;
+    text-align: end;
+}
+
+#new-chat {
+    width: fit-content;
+    padding: 5px 10px;
+    margin: 0 0 0 auto;
+    background-color: #48485C;
+    border: 1px solid #48485C;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    font-size: 15px;
+}
+
+#new-chat:hover {
+    opacity: 0.8;
+}
+
 #chat-box {
-    width: 90%;
     height: 500px;
     margin: 0 auto;
     border: 1px solid #cccccc;
@@ -19,35 +41,53 @@ audio::-webkit-media-controls-panel {
 
 #chat-box > .gpt-chat {
     width: fit-content;
+    max-width: 60%;
     margin: 10px auto 0px 7px;
     padding: 3px 10px;
     border: 1px solid #cccccc;
     border-radius: 12px;
     background-color: #cccccc;
     font-size: 14px;
+    text-align: start;
 }
 
 #chat-box > .user-chat {
     width: fit-content;
+    max-width: 60%;
     margin: 10px 7px 0px auto;
     padding: 3px 10px;
     border: 1px solid #86F774;
     border-radius: 12px;
     background-color: #86F774;
     font-size: 14px;
+    text-align: start;
 }
 
-#chat-box > .user-chat > audio {
+#text-input {
+    width: calc(100% - 100px);
+    padding: 5px 10px;
+    border-radius: 10px;
+    border-color: #cccccc;
+    background-color: #fafafa;
+    font-size: 14px;
+}
+
+#text-submit {
+    width: 80px;
 }
 
 #record {
     width: 70px;
     height: 70px;
-    margin: 20px auto;
+    margin: 15px auto;
     border: none;
     background-color: white;
     background-image: url('/static/img/icon_record_start.svg');
     transition: all ease-out 0.2s 0s;
+}
+
+#record:hover {
+    opacity: 0.8;
 }
 
 #record.recording {
