@@ -1,9 +1,25 @@
 from django.db import models
+from django.conf import settings
 
+class ChatLog(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    
 class ChatMessage(models.Model):
-    user = models.CharField(max_length=100)
+    chatlog = models.ForeignKey(ChatLog, on_delete=models.CASCADE)
+    sender = models.CharField(max_length=100)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return f'{self.user}: {self.message}'
+        return self.message
+    
+    
+class Feedback(models.Model):
+    chatmessage = models.OneToOneField(ChatMessage, on_delete=models.CASCADE)
+    accuracy = models.FloatField()
+    feedback = models.TextField()
+    answer = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    
