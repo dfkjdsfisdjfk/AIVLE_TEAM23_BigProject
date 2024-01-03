@@ -3,13 +3,18 @@ from django.http import JsonResponse
 
 from django.contrib.auth.decorators import login_required
 
-from .models import ChatMessage
+from .models import *
 
 from openai import OpenAI
 
 @login_required
 def index(request):
-    messages = ChatMessage.objects.all()
+    if (ChatLog.objects.filter(user=request.user).count() == 0):
+        chatlog = ChatLog.objects.create(user=request.user)
+    
+    userchatlog = ChatLog.objects.filter(user=request.user).order_by('created_at').last()
+    
+    messages = ChatMessage.objects.filter(chatlog=userchatlog)
     return render(request, 'aichat/chat.html', {'messages': messages})
 
 
@@ -17,8 +22,11 @@ def index(request):
 def send(request):
     
     message = request.POST.get('message')
-    user = request.user.username
-
+    sender = request.user.username
+    
+    chatlog = ChatLog.objects.filter(user=request.user).order_by('created_at').last()
+    
+    ChatMessage.objects.create(chatlog=chatlog, sender=sender, message=message)
     # response = get_chat_gpt_response(message)
     
     client = OpenAI(api_key="")
@@ -33,8 +41,7 @@ def send(request):
     
     response = completion.choices[0].message.content
 
-    message = ChatMessage(user=user, message=response)
-    message.save()
+    ChatMessage.objects.create(chatlog=chatlog, sender="system", message=response)
 
     return redirect('aichat:chat')
     

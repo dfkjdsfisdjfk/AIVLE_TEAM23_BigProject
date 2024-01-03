@@ -11,15 +11,24 @@ TKL: AI Chat
 
 {% block content %}
 <div class="wrapper">
+    <a href="">New Chat</a>
     <div id="chat-box">
-        <div class="gpt-chat">
-            gpt 대화 내용 + audio
-        </div>
-        <ul id="messages">
+        {% for message in messages %}
+            {% if message.sender == "system" %}
+                <div class="gpt-chat">
+                    {{ message }}
+                </div>
+            {% else %}
+                <div class="user-chat">
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+        <!-- <ul id="messages">
             {% for message in messages %}
                 <li>{{ message }}</li>
             {% endfor %}
-        </ul>
+        </ul> -->
     </div>
     <form action="{% url 'aichat:send' %}" method="post">
         {% csrf_token %}

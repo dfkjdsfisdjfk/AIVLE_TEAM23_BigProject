@@ -30,9 +30,11 @@ audio::-webkit-media-controls-panel {
 #chat-box > .user-chat {
     width: fit-content;
     margin: 10px 7px 0px auto;
+    padding: 3px 10px;
     border: 1px solid #86F774;
     border-radius: 12px;
     background-color: #86F774;
+    font-size: 14px;
 }
 
 #chat-box > .user-chat > audio {
