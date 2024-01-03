@@ -7,6 +7,8 @@ from .models import *
 
 from openai import OpenAI
 
+from django.conf import settings
+
 @login_required
 def index(request):
     if (ChatLog.objects.filter(user=request.user).count() == 0):
@@ -29,7 +31,8 @@ def send(request):
     ChatMessage.objects.create(chatlog=chatlog, sender=sender, message=message)
     # response = get_chat_gpt_response(message)
     
-    client = OpenAI(api_key="")
+    gpt_key = settings.CHATGPT_API_KEY
+    client = OpenAI(api_key=gpt_key)
 
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo",
