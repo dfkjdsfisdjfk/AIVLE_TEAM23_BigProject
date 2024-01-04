@@ -23,7 +23,7 @@
                 <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+                            <a class="nav-link" aria-current="page" href="{% url 'home' %}">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'aichat:chat' %}">AI 회화</a>
@@ -64,8 +64,23 @@
             </p>
         </div>
     </div>
+
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script>
+        var url = window.location.pathname;
+        if (url == "{% url 'signup' %}"){
+            $('.nav-item a[href="{% url 'signup_consent' %}"]').addClass('active');
+        }
+        else if (url.indexOf("{% url 'aichat:chat' %}") !== -1){
+            $('.nav-item a[href="{% url 'aichat:chat' %}"]').addClass('active');
+        }
+        else {
+            $('.nav-item').find('a').each(function() {
+                $(this).toggleClass('active', $(this).attr('href')==url);
+            });
+        }
+
         function openPrivacyPopup(){
             window.open("{% url 'privacy' %}", "new", "toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=700, height=700, left=0, top=0");
         }
