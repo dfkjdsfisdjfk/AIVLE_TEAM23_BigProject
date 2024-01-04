@@ -30,5 +30,12 @@ TKL: Sign up
 
         <input class="btn signup" type="submit" value="Sign up">
     </form>
+    
+    {% if messages %}
+    <script>
+        alert("{{ messages }}");
+    </script>
+    {% endif %}
+
 </div>
 {% endblock content %}

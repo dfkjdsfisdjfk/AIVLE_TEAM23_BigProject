@@ -1,24 +1,36 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, resolve_url
 from django.http import JsonResponse
 
 from django.contrib.auth.decorators import login_required
 
-from .models import ChatMessage
+from .models import *
 
 from openai import OpenAI
 
 @login_required
 def index(request):
-    messages = ChatMessage.objects.all()
-    return render(request, 'aichat/chat.html', {'messages': messages})
+    chatlog = ChatLog.objects.create(user=request.user)
+    
+    return render(request, 'aichat/chat.html', {'messages': '', 'id': chatlog.id})
 
 
 @login_required
-def send(request):
+def index2(request, id):
+    userchatlog = ChatLog.objects.get(id=id)
+    
+    messages = ChatMessage.objects.filter(chatlog=userchatlog)
+    return render(request, 'aichat/chat.html', {'messages': messages, 'id': id})
+
+
+@login_required
+def send(request, id):
     
     message = request.POST.get('message')
-    user = request.user.username
-
+    sender = request.user.username
+    
+    chatlog = ChatLog.objects.get(id=id)
+    
+    ChatMessage.objects.create(chatlog=chatlog, sender=sender, message=message)
     # response = get_chat_gpt_response(message)
     
     client = OpenAI(api_key="")
@@ -33,10 +45,9 @@ def send(request):
     
     response = completion.choices[0].message.content
 
-    message = ChatMessage(user=user, message=response)
-    message.save()
+    ChatMessage.objects.create(chatlog=chatlog, sender="system", message=response)
 
-    return redirect('aichat:chat')
+    return redirect('aichat:chatlog', chatlog.id)
     
 
 

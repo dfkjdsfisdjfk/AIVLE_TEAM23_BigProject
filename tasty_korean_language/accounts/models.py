@@ -3,12 +3,21 @@ from django.conf import settings
 from django.core.mail import send_mail 
 from django.db.models.signals import post_save
 from django.contrib.auth.signals import user_logged_in
+from django.contrib.auth.models import AbstractUser
 
+LANGUAGE_CHOICES = (
+   ("en", "English"),
+   ("ko", "Korean"),
+)
 
-class Profile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    phone_number = models.CharField(max_length=20)
-    address = models.CharField(max_length=50)
+class User(AbstractUser):
+    language = models.CharField(choices=LANGUAGE_CHOICES, max_length=2, null=True, blank=True)
+    
+
+# class Profile(models.Model):
+#     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+#     phone_number = models.CharField(max_length=20)
+#     address = models.CharField(max_length=50)
 
 
 # def on_send_mail(sender, **kwargs):
