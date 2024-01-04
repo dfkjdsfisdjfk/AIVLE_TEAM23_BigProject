@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.core.paginator import Paginator
 from .models import Post
-
+from .forms import PostForm
 
 
 def test1(request):
@@ -25,7 +25,7 @@ def test1(request):
         'pages' : pages,
     }
     
-    print(Post.objects.all()[0].pk)
+    print(Post.objects.all()[0])
 
     
     return render(request, 'community/community.html', contents)
@@ -35,3 +35,18 @@ def posting(request, pk):
     post = Post.objects.get(pk=pk)
  
     return render(request, 'community/community_detail.html', {'post':post})
+
+
+def write(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            form_dic = form.cleaned_data
+            form_dic['writer'] = request.user
+            print(form.cleaned_data, request.user)
+            post = Post.objects.create(**form.cleaned_data)
+        return redirect(post)
+    else:
+        form = PostForm()
+
+        return render(request, 'community/community_write.html', {'form':form})
