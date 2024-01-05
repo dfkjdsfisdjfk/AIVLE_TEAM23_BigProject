@@ -20,16 +20,16 @@ TKL: Sign in
         <input class="form-input" type="password" name="password" id="password" placeholder="Password">
 
         {% if form.errors %}
+        
             <div class="form-msg login-error-msg">
                 로그인에 실패했습니다. 아이디와 비밀번호를 확인하세요.
             </div>
 
-
             <script>
-                // JavaScript로 팝업 띄우기
+                
                 alert("로그인에 실패했습니다. 아이디와 비밀번호를 확인하세요.");
             </script>
-            
+
         {% endif %}
 
         <input class="btn signin" type="submit" value="Sign in">
