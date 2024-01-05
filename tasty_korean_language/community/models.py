@@ -1,7 +1,7 @@
-from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 from django.urls import reverse
+from django.conf import settings
 
 # Create your models here.
 class Post(models.Model):
@@ -10,7 +10,7 @@ class Post(models.Model):
     create_date = models.DateTimeField(auto_now_add=True)
     like_count = models.PositiveIntegerField(default=0) # 양수입력 필드
     # writer은 다른 모델을 참조하겠다.(User) 외래키 추가
-    writer = models.ForeignKey(User, on_delete=models.CASCADE, default = '') # on_delete : User가 delete 될 때 게시글을 어떻게 설정한 것인지에 대해 설정 1. 게시글 같이 지우기(CASCADE) 2. 없는 값으로 해서 게시글은 남겨두기
+    writer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default = '') # on_delete : User가 delete 될 때 게시글을 어떻게 설정한 것인지에 대해 설정 1. 게시글 같이 지우기(CASCADE) 2. 없는 값으로 해서 게시글은 남겨두기
 
     def get_absolute_url(self):
         return reverse('community:detail', args=[self.id])
