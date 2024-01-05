@@ -40,6 +40,10 @@
     </table>
     <div style="text-align:left;">
         <a href="{% url 'community:index' %}">> Home</a>
-        <a >[글 수정]</a>
+        {% if post.writer == user %}
+            <a href = "{% url 'community:update' post.id %}">> 글 수정</a>
+            <a href= "{% url 'community:delete' post.id %}">> 글 삭제</a>
+        {% endif %}
     </div>
+
 {% endblock content %}

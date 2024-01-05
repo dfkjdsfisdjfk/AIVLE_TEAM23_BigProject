@@ -47,7 +47,7 @@
                             <a class="nav-link" href="{% url 'aichat:chat' %}">AI 회화</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">커뮤니티</a>
+                            <a class="nav-link" href="{% url 'community:index' %}">커뮤니티</a>
                         </li>
                         {% if not user.is_authenticated %}
                             <li class="nav-item">

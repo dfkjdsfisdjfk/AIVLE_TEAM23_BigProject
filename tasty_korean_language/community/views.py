@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.core.paginator import Paginator
 from .models import Post
@@ -25,7 +25,7 @@ def test1(request):
         'pages' : pages,
     }
     
-    print(Post.objects.all()[0])
+    # print(Post.objects.all()[0])
 
     
     return render(request, 'community/community.html', contents)
@@ -33,8 +33,9 @@ def test1(request):
 def posting(request, pk):
     
     post = Post.objects.get(pk=pk)
+    print(request.user)
  
-    return render(request, 'community/community_detail.html', {'post':post})
+    return render(request, 'community/community_detail.html', {'post':post, 'user':request.user})
 
 
 def write(request):
@@ -50,3 +51,26 @@ def write(request):
         form = PostForm()
 
         return render(request, 'community/community_write.html', {'form':form})
+
+
+def update(request, id):
+    post = get_object_or_404(Post, id=id)
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            form_dic = form.cleaned_data
+            form_dic['writer'] = request.user
+            post = Post.objects.create(**form.cleaned_data)
+        return redirect(post)
+    else:
+        form = PostForm(instance=post)
+        return render(request, 'community/community_update.html', {'form':form})
+    
+    
+def delete(request, id):
+    post = Post.objects.get(id=id)
+    if request.method == 'POST':
+        post.delete()
+        return redirect('community:index')
+    else:
+        return render(request, 'community/community_delete.html', {'post':post})
