@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    커뮤니티
+{% endblock title %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'css/community.css' %}">
+{% endblock extrahead %}
+
+{% block content %}
+    <div class="content">
+        <form action="" method="post">
+
+            {% csrf_token %}
+            <table>
+                {{form.as_table}}
+            </table>
+
+            <input type="submit" value="등록">
+        </form>
+
+        <div style="text-align:left;">
+            <a href="{% url 'community:index' %}">> Home</a>
+        </div>
+
+    </div>
+{% endblock content %}
