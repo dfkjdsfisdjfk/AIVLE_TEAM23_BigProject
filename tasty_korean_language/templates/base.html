@@ -31,7 +31,7 @@
 </head>
 <body>
 	<!--header section start -->
-	<div class="header_section sticky-wrapper-header">
+	<div class="header_section">
 		<div class="container-fluid">
 			<nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="logo"><a href="{% url 'home' %}"><img src="{% static 'img/logo.png' %}"></a></div>
@@ -100,17 +100,7 @@
     <!-- sidebar -->
     <script src="{% static 'js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
     <script src="{% static 'js/custom.js' %}"></script>
-    <!-- javascript --> 
-    <script src="{% static 'js/owl.carousel.js' %}"></script>
-    <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            $(".fancybox").fancybox({
-                openEffect: "none",
-                closeEffect: "none"
-            });
-        });
-    </script>
+    
     <script>
         var url = window.location.pathname;
         if (url == "{% url 'signup' %}"){
