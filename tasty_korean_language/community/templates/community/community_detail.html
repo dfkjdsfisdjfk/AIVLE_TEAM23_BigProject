@@ -10,9 +10,40 @@
 {% endblock extrahead %}
 
 {% block content %}
-    <body>
-        <h1>게시글 개별 페이지입니다</h1>
-        <p>{{post.postname}}</p>
-        <p>{{post.contents}}</p>
-    </body>
+    <table class="board_for_read">
+        <tbody>
+            <tr>
+                <td class="td_title" style="text-align:center; width:20%;">제목</td>
+                <td style="padding:10px;">
+                    <input type="text" name="title" id="title" value="{{ post.title }}" readonly/>
+                </td>
+            </tr>
+            <tr>
+                <td class="td_title" style="text-align:center; width:20%;">작성일자</td>
+                <td style="padding:10px;">
+                    <span>{{ post.create_date }}</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="td_title" style="text-align:center;">글쓴이</td>
+                <td style="padding:10px;">
+                    <span>{{ post.writer }}</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="td_title" style="text-align:center;">내용</td>
+                <td style="padding:10px;">
+                    <textarea name="detail" id="detail" rows="10" readonly>{{ post.contents }}</textarea>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="text-align:left;">
+        <a href="{% url 'community:index' %}">> Home</a>
+        {% if post.writer == user %}
+            <a href = "{% url 'community:update' post.id %}">> 글 수정</a>
+            <a href= "{% url 'community:delete' post.id %}">> 글 삭제</a>
+        {% endif %}
+    </div>
+
 {% endblock content %}

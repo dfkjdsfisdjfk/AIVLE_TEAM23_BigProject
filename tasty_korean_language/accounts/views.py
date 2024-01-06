@@ -15,7 +15,7 @@ def signup(request):
         form = SignupForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(settings.LOGIN_URL)
+            return redirect(settings.LOGIN_URL)            
     else:
         form = SignupForm()
 

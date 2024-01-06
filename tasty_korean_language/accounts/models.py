@@ -4,6 +4,8 @@ from django.core.mail import send_mail
 from django.db.models.signals import post_save
 from django.contrib.auth.signals import user_logged_in
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 
 LANGUAGE_CHOICES = (
    ("en", "English"),
@@ -12,7 +14,7 @@ LANGUAGE_CHOICES = (
 
 class User(AbstractUser):
     language = models.CharField(choices=LANGUAGE_CHOICES, max_length=2, null=True, blank=True)
-    
+
 
 # class Profile(models.Model):
 #     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

@@ -15,20 +15,24 @@ TKL: Sign up
     <p><span>*</span>는 필수 입력 항목입니다.</p>
     <form action="" method="post">
         {% csrf_token %}
-        <label><span>*</span>Username</label>
-        <input class="form-input" type="text" name="username" placeholder="Username" required="">                          
-        <div class="form-msg id-msg">* 아이디 관련 메시지 출력</div>
-        <label><span>*</span>Password</label>
-        <input class="form-input" type="password" name="password1" placeholder="Password" required="">                          
-        <div class="form-msg pwd-msg">* 패스워드 관련 메시지 출력</div>
-        <label><span>*</span>Check password</label>
-        <input class="form-input" type="password" name="password2" placeholder="Password" required="">                          
-        <div class="form-msg pwd-check-msg">* 패스워드 확인 관련 메시지 출력</div>
-        <label><span>*</span>Email</label>
-        <input class="form-input" type="email" name="email" placeholder="example@naver.com" required="">                          
-        <div class="form-msg email-msg">* 이메일 관련 메시지 출력</div>
+        
+        <label><span>*</span>사용자 이름</label>
+        <input class="form-input" type="text" name="username" placeholder="사용자 이름" required="">
+        <div class="form-msg id-msg">{{ form.username.errors|default:"" }}</div>
 
-        <input class="btn signup" type="submit" value="Sign up">
+        <label><span>*</span>비밀번호</label>
+        <input class="form-input" type="password" name="password1" placeholder="비밀번호" required="">
+        <div class="form-msg pwd-msg">{{ form.password1.errors|default:"" }}</div>
+
+        <label><span>*</span>비밀번호 확인</label>
+        <input class="form-input" type="password" name="password2" placeholder="비밀번호 확인" required="">
+        <div class="form-msg pwd-check-msg">{{ form.password2.errors|default:"" }}</div>
+
+        <label><span>*</span>이메일</label>
+        <input class="form-input" type="email" name="email" placeholder="example@naver.com" required="">
+        <div class="form-msg email-msg">{{ form.email.errors|default:"" }}</div>
+
+        <input class="btn signup" type="submit" value="가입하기">
     </form>
 </div>
 {% endblock content %}

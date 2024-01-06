@@ -18,6 +18,20 @@ TKL: Sign in
         <input class="form-input" type="text" name="username" id="username" placeholder="Username">
         <label for="password">Password</label>
         <input class="form-input" type="password" name="password" id="password" placeholder="Password">
+
+        {% if form.errors %}
+        
+            <div class="form-msg login-error-msg">
+                로그인에 실패했습니다. 아이디와 비밀번호를 확인하세요.
+            </div>
+
+            <script>
+                
+                alert("로그인에 실패했습니다. 아이디와 비밀번호를 확인하세요.");
+            </script>
+
+        {% endif %}
+
         <input class="btn signin" type="submit" value="Sign in">
     </form>
     <div class="login_more"><a href="#">아이디 찾기</a><span>|</span><a href="#">비밀번호 찾기</a><span>|</span><a href="{% url 'signup_consent' %}">회원가입</a></div>
