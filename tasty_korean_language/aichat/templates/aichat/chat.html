@@ -21,23 +21,32 @@ TKL: AI Chat
             {% else %}
                 <div class="user-chat">
                     {{ message }}
+                    <br>
+                    feedback : {{ message.feedback.feedback }}
+                    <br>
+                    accuracy : {{ message.feedback.accuracy }}
                 </div>
             {% endif %}
         {% endfor %}
-        <!-- <ul id="messages">
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        </ul> -->
     </div>
-    <form action="{% url 'aichat:send' id %}" method="post">
+    <form id="chat-form" action="{% url 'aichat:send' id %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <input id="text-input" type="text" name="message" placeholder="메시지를 입력하세요">
-        <input id="text-submit" type="submit" value="전송">
+        
+        <!-- 오디오 파일을 선택할 수 있는 파일 입력 상자 추가 -->
+        {% comment %} <input type="file" id="audio-input" accept="audio/*" name="audio_file" capture="microphone" style="display:none;"> {% endcomment %}
+        {% comment %} <input type="hidden" id="audio-input" accept="audio/*" name="audio_file"> {% endcomment %}
+
+
+        <!-- 녹음 시작, 중지 버튼 추가 -->
+        <br>
+        <button id="record" type="button"></button>
+
+        {% comment %} <input id="text-submit" type="submit" value="전송"> {% endcomment %}
     </form>
-    <button id="record"></button>
 </div>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src= "{% static 'js/voiceRecord.js' %}"></script>
+
 {% endblock content %}
