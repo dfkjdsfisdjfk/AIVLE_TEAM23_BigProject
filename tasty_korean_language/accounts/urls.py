@@ -18,10 +18,12 @@ urlpatterns = [
           name="password_change_done",
      ),
 
-    path('profile/', TemplateView.as_view(template_name='registration/profile.html'), name='profile'  ),
-
     path('cookie/<code>/', views.cookie_test),
     
     path('session/<int:code>', views.session_test),
+     
+#     path('mypage/', TemplateView.as_view(template_name='registration/mypage.html'), name='mypage'),
+
+    path('mypage/', views.mypage, name='mypage'),
 
 ]

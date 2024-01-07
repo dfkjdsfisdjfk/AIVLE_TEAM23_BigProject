@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %} chatlog 목록 {% endblock %}
+{% block content %}
+    {% for chat_log in chatlog_list %}
+        <h2>User: {{ chat_log.user }}</h2>
+        <p>Created at: {{ chat_log.created_at }}</p>
+        <ul>
+            {% for chat_message in chat_log.chatmessage_set.all %}
+                <li>Sender: {{ chat_message.sender }}</li>
+                <li>Message: {{ chat_message.message }}</li>
+                <li>Created at: {{ chat_message.created_at }}</li>
+            {% endfor %}
+            <ul>
+                <br>
+                <li>fwefwefwefwefFirst Message: {{ chat_log.first_message}}</li>
+                
+                <br>
+            </ul>
+        </ul>
+        
+        {% comment %} <a href="{% url 'aichat:user' book.id %}"> {{book.title}}</a><br> {% endcomment %}
+        {% comment %} <li>
+            User: {{ chatlog.user }}
+            <ul>
+                <li>First Message: {{ chatlog.first_message.message }}</li>
+            </ul>
+        </li> {% endcomment %}
+    {% endfor %}
+{% endblock %}

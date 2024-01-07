@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1> 내정보 </h1>
+    <ul>
+        <li> name : {{user}}</li>
+        <li> email : {{user.email}}</li>
+        <li>{{user.date_joined}}</li>
+    </ul>
+
+    <p>chatlog </p>
+    <p>gg{{ chatlogs }}</p>
+    {% comment %} chatlogs list 출력 {% endcomment %}
+    {% for chatlog in chatlogs %}
+        <li>
+            <p>chatlog </p>
+            <p>{{ chatlog.user }}</p>
+        </li>
+    {% endfor %}
+
+
+    {% comment %} {% for chatlog in chatlogs %}
+        <li>
+            <p>chatlog </p>
+            <p>{{ chatlog.user }}</p>
+        </li>
+    {% endfor %} {% endcomment %}
+    
+    {% comment %} <a href="{% url 'password_change' %}">[암호 변경하기]</a> {% endcomment %}
+
+{% endblock %}
