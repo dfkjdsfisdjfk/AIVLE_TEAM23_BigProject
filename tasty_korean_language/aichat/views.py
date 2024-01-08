@@ -17,6 +17,7 @@ from django.core.files.storage import default_storage
 
 
 #####################aichat#####################
+from google.cloud import translate_v2
 
 @login_required
 def index(request):
@@ -43,7 +44,13 @@ def send(request, id):
     correct_message = request.POST.get('message')
     sender = request.user.username
     chatlog = ChatLog.objects.get(id=id)
-    audio_file = request.FILES['audio_file']
+    
+    try:
+        audio_file = request.FILES['audio_file']
+    except MultiValueDictKeyError:
+        return JsonResponse({'error': 'audio_file key not found'}, status=400)
+    
+    #audio_file = request.FILES['audio_file']
     # audio_file = request.FILES.get('audio_file')
     # file_path = default_storage.save(sender+'/audio.mp3', audio_file)
     
@@ -105,7 +112,19 @@ def get_chat_gpt_response(message):
 def get_pronunciation_feedback(stt_message, correct_message):
     
     return 0.5, "good job"
+###############################################################################################
+def translate(request):
+    if request.method == 'POST' and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        message = request.POST.get('message')
+        target_language = 'ko'  # 대상 언어 설정
 
+        # 번역 수행
+        translation_client = translate_v2.Client.from_service_account_json("C:\\Users\\user\\Desktop\\chat.json")
+        translated_message = translation_client.translate(message, target_language=target_language)['translatedText']
+        
+        return JsonResponse({'translated_message': translated_message})
+    else:
+        return JsonResponse({'error': '잘못된 요청'}, status=400)
 
 
 #####################chatlog list#####################
@@ -160,3 +179,4 @@ class ChatLogListView(ListView):
     
     
 #     return response.results[0].alternatives[0].transcript
+        

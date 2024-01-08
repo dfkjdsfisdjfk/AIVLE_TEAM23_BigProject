@@ -29,31 +29,24 @@ TKL: AI Chat
             {% endif %}
         {% endfor %}
     </div>
-    {% comment %} <form method="post"> {% endcomment %}
     <form id="chat-form" action="{% url 'aichat:send' id %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <input id="text-input" type="text" name="message" placeholder="메시지를 입력하세요">
-        
-        <!-- 오디오 파일을 선택할 수 있는 파일 입력 상자 추가 -->
-        {% comment %} <input type="file" id="audio-input" accept="audio/*" name="audio_file" capture="microphone" style="display:none;"> {% endcomment %}
-        {% comment %} <input type="hidden" id="audio-input" accept="audio/*" name="audio_file"> {% endcomment %}
-
-
+        <div id="translated-result" style="margin-top: 10px;"></div>
+       
         <!-- 녹음 시작, 중지 버튼 추가 -->
         <br>
-        <button id="record" type="button"></button>
-        {% comment %} <input id="submit" type="submit" value="전송" style="display: none;"> {% endcomment %}
-        {% comment %} <input id="text-submit" type="submit" value="전송"> {% endcomment %}
+        <div id="record_section" style="display: none;">
+            <button id="record" type="button"></button>
+            <button id="reset_record" style="display: none;">Reset Recording</button>
+        </div>
+        <input id="submit" type="submit" value="전송" style="display: none;">
     </form>
-    {% comment %} <div id="record_section" style="display: none;">
-        <button id="record"></button>
-        <button id="reset_record" style="display: none;">Reset Recording</button>
-    </div> {% endcomment %}
 </div>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src= "{% static 'js/voiceRecord.js' %}"></script>
-{% comment %} <script>
+{% comment %} <script src= "{% static 'js/voiceRecord.js' %}"></script> {% endcomment %}
+<script>
     function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -129,11 +122,43 @@ TKL: AI Chat
                 alert('Error accessing the microphone:', err);
             })
 
+        ////////////////////////////////////////////////////////////
+        $('#text-input').on('input', function() {
+            var message = $(this).val();
+        
+            if (message.trim() !== '') {
+                var csrftoken = getCookie('csrftoken');
+                $.ajax({
+                    type: 'POST',
+                    url: "{% url 'aichat:translate' %}",
+                    data: {'message': message},
+                    headers: {"X-CSRFToken": csrftoken},
+                    dataType: 'json',
+                    success: function (data) {
+                        var translatedMessage = data.translated_message;
+                        if (translatedMessage) {
+                            $('#translated-result').text(translatedMessage);
+                        }
+                    },
+                    error: function (error) {
+                        console.error(error);
+                    }
+                });
+            } else {
+                    // 입력이 비어있는 경우 번역 결과 지우기
+                $('#translated-result').text('');
+            }
+        });
+
+ ////////////////////////////////////////////////////////////
+
             // 메시지와 녹음 내용 전송
             $('#submit').on('click', function(){
                 var form = new FormData();
-                form.append('audio', blob);
-                form.append('message', $('#text-input').val())
+                form.append('audio_file', blob)
+                form.append('message', $('#translated-result').text())
+
+
                 var csrftoken = getCookie('csrftoken');
                 $.ajax({
                     async: false,
@@ -173,5 +198,5 @@ TKL: AI Chat
             })
         }
     });
-</script> {% endcomment %}
+</script>
 {% endblock content %}

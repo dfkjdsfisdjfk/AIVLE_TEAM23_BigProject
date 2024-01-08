@@ -9,4 +9,5 @@ urlpatterns = [
     path('', views.index, name='chat'),
     path('<int:id>/', views.index2, name='chatlog'),
     path('send/<int:id>/', views.send, name='send'),
+    path('translate/', views.translate, name='translate'),
 ]
