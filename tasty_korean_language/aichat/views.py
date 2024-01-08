@@ -88,8 +88,7 @@ def run_stt(audio_file):
      
 def get_chat_gpt_response(message):
     
-    client = OpenAI(api_key=settings.SECRET_API_KEY)
-    client = OpenAI(api_key="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")
+    client = OpenAI(api_key=settings.CHATGPT_API_KEY)
 
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo",
