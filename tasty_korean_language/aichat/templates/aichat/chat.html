@@ -42,7 +42,7 @@ TKL: AI Chat
         <!-- 녹음 시작, 중지 버튼 추가 -->
         <br>
         <button id="record" type="button"></button>
-
+        {% comment %} <input id="submit" type="submit" value="전송" style="display: none;"> {% endcomment %}
         {% comment %} <input id="text-submit" type="submit" value="전송"> {% endcomment %}
     </form>
     {% comment %} <div id="record_section" style="display: none;">
@@ -51,8 +51,8 @@ TKL: AI Chat
     </div> {% endcomment %}
 </div>
 
-<script src= "{% static 'js/voiceRecord.js' %}"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src= "{% static 'js/voiceRecord.js' %}"></script>
 {% comment %} <script>
     function getCookie(name) {
         var cookieValue = null;
