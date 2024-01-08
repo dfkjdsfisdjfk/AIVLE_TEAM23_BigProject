@@ -15,6 +15,9 @@ from google.cloud import speech
 from django.conf import settings
 from django.core.files.storage import default_storage
 
+import random
+
+
 
 #####################aichat#####################
 from google.cloud import translate_v2
@@ -22,6 +25,10 @@ from google.cloud import translate_v2
 @login_required
 def index(request):
     chatlog = ChatLog.objects.create(user=request.user)
+    
+    
+    initial_gpt_message = get_chat_gpt_response("이야기!")  # 초기 메시지를 GPT에 전달
+    ChatMessage.objects.create(chatlog=chatlog, sender="system", message=initial_gpt_message)
     
     return redirect('aichat:chatlog', chatlog.id)
     # return render(request, 'aichat/chat.html', {'messages': '', 'id': chatlog.id})
@@ -98,7 +105,7 @@ def get_chat_gpt_response(message):
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "system", "content": "I am small talker."},
             {"role": "user", "content": message}
         ]
     )
