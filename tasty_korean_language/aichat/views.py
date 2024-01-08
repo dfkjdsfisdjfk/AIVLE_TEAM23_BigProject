@@ -23,8 +23,8 @@ from google.cloud import translate_v2
 def index(request):
     chatlog = ChatLog.objects.create(user=request.user)
     
-    # return redirect('aichat:chatlog', chatlog.id)
-    return render(request, 'aichat/chat.html', {'messages': '', 'id': chatlog.id})
+    return redirect('aichat:chatlog', chatlog.id)
+    # return render(request, 'aichat/chat.html', {'messages': '', 'id': chatlog.id})
 
 @login_required
 def index2(request, id):
@@ -50,9 +50,7 @@ def send(request, id):
     except MultiValueDictKeyError:
         return JsonResponse({'error': 'audio_file key not found'}, status=400)
     
-    #audio_file = request.FILES['audio_file']
-    # audio_file = request.FILES.get('audio_file')
-    # file_path = default_storage.save(sender+'/audio.mp3', audio_file)
+    file_path = default_storage.save(sender+'/audio.mp3', audio_file)
     
     print(id)
     print(request.user)
@@ -60,16 +58,16 @@ def send(request, id):
     print(request.FILES)
     print(correct_message)
     
-    stt_message = run_stt(audio_file)
-    ChatMessage.objects.create(chatlog=chatlog, sender=sender, message=stt_message)
+    stt_message = "test"
+    # stt_message = run_stt(audio_file)
+    userchatmessage = ChatMessage.objects.create(chatlog=chatlog, sender=sender, message=stt_message)
     
     accurcy, feedback = get_pronunciation_feedback(stt_message, correct_message)
-    Feedback.objects.create(chatmessage=ChatMessage.objects.last(), accuracy=accurcy, feedback=feedback, answer=correct_message)
+    Feedback.objects.create(chatmessage=userchatmessage, accuracy=accurcy, feedback=feedback, answer=correct_message)
     
     chat_gpt_response = get_chat_gpt_response(correct_message)
     ChatMessage.objects.create(chatlog=chatlog, sender="system", message=chat_gpt_response)
 
-    # return redirect('aichat:chatlog', chatlog.id)
     return redirect('aichat:chatlog', id)
     
 #####################함수#####################

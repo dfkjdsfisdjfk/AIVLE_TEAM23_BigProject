@@ -29,7 +29,7 @@ TKL: AI Chat
             {% endif %}
         {% endfor %}
     </div>
-    <form id="chat-form" action="{% url 'aichat:send' id %}" method="post" enctype="multipart/form-data">
+    <form id="chat-form" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <input id="text-input" type="text" name="message" placeholder="메시지를 입력하세요">
         <div id="translated-result" style="margin-top: 10px;"></div>
@@ -45,7 +45,6 @@ TKL: AI Chat
 </div>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
-{% comment %} <script src= "{% static 'js/voiceRecord.js' %}"></script> {% endcomment %}
 <script>
     function getCookie(name) {
         var cookieValue = null;
@@ -65,117 +64,107 @@ TKL: AI Chat
 
     $(document).ready(function(){
         let isRecording = false;
-    
+
         if (navigator.mediaDevices){
             let recordArray = []; // 녹음 데이터 저장 변수
-            var blob;
-    
+
             navigator.mediaDevices.getUserMedia({audio: true})
             .then((stream) => {
                 const mediaRecorder = new MediaRecorder(stream);
-    
+
                 // 녹음 버튼 클릭했을 때
                 $('#record').on('click', function(){
                     if (!isRecording){
                         mediaRecorder.start();
                         $(this).addClass('recording');
-                        isRecording = true;
                         $('#reset_record, #submit').hide();
                     }
                     else {
                         mediaRecorder.stop();
                         $(this).removeClass('recording');
-                        isRecording = false;
                         $('#reset_record, #submit').show();
                         $('#record').hide();
                     }
+                    isRecording = !isRecording;
                 });
-    
+                
                 mediaRecorder.onstop = (event) => {
                     // 녹음 데이터 audio 태그 추가
                     var $audio = $('<audio controls>');
                     $('#chat-box').append($('<article class="user-chat">').append($audio));
-    
-                    blob = new Blob(recordArray, {
-                        'type': 'audio/mp3 codecs=opus'
+
+                    const blob = new Blob(recordArray, {
+                        'type': 'audio/wav'
                     });
                     recordArray = [];
-    
+
                     const audioURL = URL.createObjectURL(blob);
                     $audio.attr('src', audioURL);
-    
-                    // 녹음 파일 저장
-                    // const a = document.createElement('a');
-                    // a.href = audioURL;
-                    // a.download = "record" + Date.now();
-                    // a.click();
+                    
+                    // 메시지와 녹음 내용 전송
+                    $('#submit').on('click', function(){
+                        const formData = new FormData();
+                        formData.append('message', $('#translated-result').text());
+                        formData.append('audio_file', blob);
+                        var csrftoken = getCookie('csrftoken');
+                        // 서버로 FormData 전송
+                        $.ajax({
+                            async: false,
+                            url: "{% url 'aichat:send' id %}", 
+                            type: 'POST',
+                            data: formData,
+                            headers: {"X-CSRFToken": csrftoken},
+                            processData: false,
+                            contentType: false,
+                            enctype: 'multipart/form-data',
+                            success: function(response) {
+                                // Handle success if needed
+                            },
+                            error: function(error) {
+                                // Handle error if needed
+                            }
+                        });
+                    })
                 };
-    
+
                 // 녹음 데이터 배열에 저장
                 mediaRecorder.ondataavailable = (event) => {
                     recordArray.push(event.data);
                 };
-    
+
             })
             .catch((err) => {
                 console.log(err);
                 alert('Error accessing the microphone:', err);
             })
 
-        ////////////////////////////////////////////////////////////
-        $('#text-input').on('input', function() {
-            var message = $(this).val();
-        
-            if (message.trim() !== '') {
-                var csrftoken = getCookie('csrftoken');
-                $.ajax({
-                    type: 'POST',
-                    url: "{% url 'aichat:translate' %}",
-                    data: {'message': message},
-                    headers: {"X-CSRFToken": csrftoken},
-                    dataType: 'json',
-                    success: function (data) {
-                        var translatedMessage = data.translated_message;
-                        if (translatedMessage) {
-                            $('#translated-result').text(translatedMessage);
+            // 원어 입력 한국어 텍스트 변환
+            $('#text-input').on('input', function() {
+                var message = $(this).val();
+            
+                if (message.trim() !== '') {
+                    var csrftoken = getCookie('csrftoken');
+                    $.ajax({
+                        type: 'POST',
+                        url: "{% url 'aichat:translate' %}",
+                        data: {'message': message},
+                        headers: {"X-CSRFToken": csrftoken},
+                        dataType: 'json',
+                        success: function (data) {
+                            var translatedMessage = data.translated_message;
+                            if (translatedMessage) {
+                                $('#translated-result').text(translatedMessage);
+                            }
+                        },
+                        error: function (error) {
+                            console.error(error);
                         }
-                    },
-                    error: function (error) {
-                        console.error(error);
-                    }
-                });
-            } else {
-                    // 입력이 비어있는 경우 번역 결과 지우기
-                $('#translated-result').text('');
-            }
-        });
-
- ////////////////////////////////////////////////////////////
-
-            // 메시지와 녹음 내용 전송
-            $('#submit').on('click', function(){
-                var form = new FormData();
-                form.append('audio_file', blob)
-                form.append('message', $('#translated-result').text())
-
-
-                var csrftoken = getCookie('csrftoken');
-                $.ajax({
-                    async: false,
-                    url: "{% url 'aichat:send' id %}",
-                    type: 'POST',
-                    headers: {"X-CSRFToken": csrftoken},
-                    data: form,
-                    processData: false,
-                    contentType: false,
-                    success: function (data) {
-                        console.log('success');
-                    },
-                    error: function (error) {
-                        console.error(error);
-                    }
-                });
-            })
+                    });
+                } else {
+                        // 입력이 비어있는 경우 번역 결과 지우기
+                    $('#translated-result').text('');
+                }
+            });
 
             // 메시지 입력 변경 시 녹음, 제출 버튼 처리
             $('#text-input').keyup(function() {
@@ -198,5 +187,6 @@ TKL: AI Chat
             })
         }
     });
+    
 </script>
 {% endblock content %}
