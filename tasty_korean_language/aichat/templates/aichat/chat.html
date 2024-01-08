@@ -29,6 +29,7 @@ TKL: AI Chat
             {% endif %}
         {% endfor %}
     </div>
+    {% comment %} <form method="post"> {% endcomment %}
     <form id="chat-form" action="{% url 'aichat:send' id %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <input id="text-input" type="text" name="message" placeholder="메시지를 입력하세요">
@@ -44,9 +45,148 @@ TKL: AI Chat
 
         {% comment %} <input id="text-submit" type="submit" value="전송"> {% endcomment %}
     </form>
+    <div id="record_section" style="display: none;">
+        <button id="record"></button>
+        <button id="reset_record" style="display: none;">Reset Recording</button>
+    </div>
 </div>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src= "{% static 'js/voiceRecord.js' %}"></script>
 
+{% endblock content %}
+    <form method="post">
+        {% csrf_token %}
+        <input id="text-input" type="text" name="message" placeholder="메시지를 입력하세요" required>
+        <input id="submit" type="submit" value="전송" style="display: none;">
+    </form>
+    <div id="record_section" style="display: none;">
+        <button id="record"></button>
+    <button id="reset_record" style="display: none;">Reset Recording</button>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script>
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    $(document).ready(function(){
+        let isRecording = false;
+    
+        if (navigator.mediaDevices){
+            let recordArray = []; // 녹음 데이터 저장 변수
+            var blob;
+    
+            navigator.mediaDevices.getUserMedia({audio: true})
+            .then((stream) => {
+                const mediaRecorder = new MediaRecorder(stream);
+    
+                // 녹음 버튼 클릭했을 때
+                $('#record').on('click', function(){
+                    if (!isRecording){
+                        mediaRecorder.start();
+                        $(this).addClass('recording');
+                        isRecording = true;
+                        $('#reset_record, #submit').hide();
+                    }
+                    else {
+                        mediaRecorder.stop();
+                        $(this).removeClass('recording');
+                        isRecording = false;
+                        $('#reset_record, #submit').show();
+                        $('#record').hide();
+                    }
+                });
+    
+                mediaRecorder.onstop = (event) => {
+                    // 녹음 데이터 audio 태그 추가
+                    var $audio = $('<audio controls>');
+                    $('#chat-box').append($('<article class="user-chat">').append($audio));
+    
+                    blob = new Blob(recordArray, {
+                        'type': 'audio/mp3 codecs=opus'
+                    });
+                    recordArray = [];
+    
+                    const audioURL = URL.createObjectURL(blob);
+                    $audio.attr('src', audioURL);
+    
+                    // 녹음 파일 저장
+                    // const a = document.createElement('a');
+                    // a.href = audioURL;
+                    // a.download = "record" + Date.now();
+                    // a.click();
+                };
+    
+                // 녹음 데이터 배열에 저장
+                mediaRecorder.ondataavailable = (event) => {
+                    recordArray.push(event.data);
+                };
+    
+            })
+            .catch((err) => {
+                console.log(err);
+                alert('Error accessing the microphone:', err);
+            })
+
+            // 메시지와 녹음 내용 전송
+            $('#submit').on('click', function(){
+                var form = new FormData();
+                form.append('audio', blob);
+                form.append('message', $('#text-input').val())
+                var csrftoken = getCookie('csrftoken');
+                $.ajax({
+                    async: false,
+                    url: "{% url 'aichat:send' id %}",
+                    type: 'POST',
+                    headers: {"X-CSRFToken": csrftoken},
+                    data: form,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        console.log('success');
+                    },
+                    error: function (error) {
+                        console.error(error);
+                    }
+                });
+            })
+
+            // 메시지 입력 변경 시 녹음, 제출 버튼 처리
+            $('#text-input').keyup(function() {
+                if ($('#text-input').val() != ''){
+                    $('#record_section').show();
+                    if ($('#reset_record').is(':visible')){
+                        $('#submit').show();
+                    }
+                }
+                else {
+                    $('#record_section, #submit').hide();
+                }
+            })
+
+            // 재녹음 기능
+            $('#reset_record').click(function(){
+                $('#chat-box > article').last().remove();
+                $('#reset_record, #submit').hide();
+                $('#record').show();
+            })
+        }
+    });
+</script>
+<!-- <script src= "{% static 'js/voiceRecord.js' %}"></script> -->
 {% endblock content %}
