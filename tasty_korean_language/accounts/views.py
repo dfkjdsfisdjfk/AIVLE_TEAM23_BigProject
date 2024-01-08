@@ -72,14 +72,3 @@ def session_test(request, code):
         print('session 데이터 삭제')
         session.pop('prod')
     return response    
-
-# mypage
-def mypage(request):
-    chatlogs = ChatLog.objects.all()
-    return render(request, 'registration/mypage.html', {'chatlogs': chatlogs})
-
-
-# def chatlog_list(request):
-#     chatlogs = ChatLog.objects.all()
-#     return render(request, 'chatlog_list.html', {'chatlogs': chatlogs})
-

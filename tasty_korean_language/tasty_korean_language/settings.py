@@ -42,7 +42,36 @@ INSTALLED_APPS = [
     "accounts",
     "community",
     "aichat",
+    
+    # site 설정도!
+    'django.contrib.sites',
+
+    # 설치한 라이브러리
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # 'allauth.account.models.EmailAddress',
+    'allauth.socialaccount.providers.google',
 ]
+
+# 사이트는 1개만 사용할 것이라고 명시
+SITE_ID = 1
+
+REST_USE_JWT = True
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+SOCIALACCOUNT_LOGIN_ON_GET=True
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -52,6 +81,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'allauth.account.middleware.AccountMiddleware',
     "accounts.middleware.BlockedMiddleware",
 ]
 
@@ -92,6 +122,13 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'kt-aivle-584f12b40238.json'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
 
 # DATABASES = {
 #     "default": {
@@ -170,3 +207,19 @@ LOGOUT_REDIRECT_URL = None
 LOGIN_URL = '/accounts/login/'
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend', # 이 코드 추가!
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend', # 이 코드 추가!
+
+    # 'allauth'와 상관없이 Django admin에서 사용자 이름으로 로그인해야 함
+    #'django.contrib.auth.backends.ModelBackend',
+
+    # 'allauth' 이메일 로그인과 같은 특정 인증 방법
+    # 'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+LOGIN_REDIRECT_URL = '/'

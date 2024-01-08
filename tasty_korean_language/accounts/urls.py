@@ -1,7 +1,9 @@
-from django.urls import path
+from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from . import views
 from django.views.generic import TemplateView
+from django.contrib import admin
+
 
 urlpatterns = [     
      path('login/', auth_views.LoginView.as_view(), name='login'),
