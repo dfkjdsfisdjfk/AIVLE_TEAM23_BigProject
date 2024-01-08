@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -51,6 +52,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "accounts.middleware.BlockedMiddleware",
 ]
 
 ROOT_URLCONF = "tasty_korean_language.urls"
@@ -74,6 +76,20 @@ TEMPLATES = [
 WSGI_APPLICATION = "tasty_korean_language.wsgi.application"
 
 
+################################################################
+
+#secret key 값 가져오기
+
+with open("secrets.json", "r") as f:
+  secrets = json.load(f)
+
+CHATGPT_API_KEY = secrets["CHATGPT_API_KEY"]
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'kt-aivle-584f12b40238.json'
+
+################################################################
+
+
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -91,7 +107,7 @@ DATABASES = {
         'PORT': '3306',
         'NAME': 'TKL',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': secrets["DB_PASSWORD"],
     }
 }
 
@@ -147,7 +163,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = 'accounts.User'
 
-LOGIN_REDIRECT_URL = '/accounts/profile/'
+LOGIN_REDIRECT_URL = '/'
 
 LOGOUT_REDIRECT_URL = None 
 

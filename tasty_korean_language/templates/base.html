@@ -57,6 +57,9 @@
                                 <a class="nav-link" href="{% url 'login' %}">로그인</a>
                             </li>
                         {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'mypage' %}">마이페이지</a>
+                            </li>
                             <li class="nav-item logout">
                                 <form method="post" action="{% url 'logout' %}?next={{request.path}}">
                                     {% csrf_token %}

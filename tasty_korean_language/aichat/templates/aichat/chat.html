@@ -21,23 +21,39 @@ TKL: AI Chat
             {% else %}
                 <div class="user-chat">
                     {{ message }}
+                    <br>
+                    feedback : {{ message.feedback.feedback }}
+                    <br>
+                    accuracy : {{ message.feedback.accuracy }}
                 </div>
             {% endif %}
         {% endfor %}
     </div>
-    <form method="post">
+    {% comment %} <form method="post"> {% endcomment %}
+    <form id="chat-form" action="{% url 'aichat:send' id %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <input id="text-input" type="text" name="message" placeholder="메시지를 입력하세요" required>
-        <input id="submit" type="submit" value="전송" style="display: none;">
+        <input id="text-input" type="text" name="message" placeholder="메시지를 입력하세요">
+        
+        <!-- 오디오 파일을 선택할 수 있는 파일 입력 상자 추가 -->
+        {% comment %} <input type="file" id="audio-input" accept="audio/*" name="audio_file" capture="microphone" style="display:none;"> {% endcomment %}
+        {% comment %} <input type="hidden" id="audio-input" accept="audio/*" name="audio_file"> {% endcomment %}
+
+
+        <!-- 녹음 시작, 중지 버튼 추가 -->
+        <br>
+        <button id="record" type="button"></button>
+        {% comment %} <input id="submit" type="submit" value="전송" style="display: none;"> {% endcomment %}
+        {% comment %} <input id="text-submit" type="submit" value="전송"> {% endcomment %}
     </form>
-    <div id="record_section" style="display: none;">
+    {% comment %} <div id="record_section" style="display: none;">
         <button id="record"></button>
-    <button id="reset_record" style="display: none;">Reset Recording</button>
-    </div>
+        <button id="reset_record" style="display: none;">Reset Recording</button>
+    </div> {% endcomment %}
 </div>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script>
+<script src= "{% static 'js/voiceRecord.js' %}"></script>
+{% comment %} <script>
     function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -157,6 +173,5 @@ TKL: AI Chat
             })
         }
     });
-</script>
-<!-- <script src= "{% static 'js/voiceRecord.js' %}"></script> -->
+</script> {% endcomment %}
 {% endblock content %}
