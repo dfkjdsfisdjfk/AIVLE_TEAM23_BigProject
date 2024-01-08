@@ -45,29 +45,15 @@ TKL: AI Chat
 
         {% comment %} <input id="text-submit" type="submit" value="전송"> {% endcomment %}
     </form>
-    <div id="record_section" style="display: none;">
+    {% comment %} <div id="record_section" style="display: none;">
         <button id="record"></button>
         <button id="reset_record" style="display: none;">Reset Recording</button>
-    </div>
+    </div> {% endcomment %}
 </div>
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src= "{% static 'js/voiceRecord.js' %}"></script>
-
-{% endblock content %}
-    <form method="post">
-        {% csrf_token %}
-        <input id="text-input" type="text" name="message" placeholder="메시지를 입력하세요" required>
-        <input id="submit" type="submit" value="전송" style="display: none;">
-    </form>
-    <div id="record_section" style="display: none;">
-        <button id="record"></button>
-    <button id="reset_record" style="display: none;">Reset Recording</button>
-    </div>
-</div>
-
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script>
+{% comment %} <script>
     function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -187,6 +173,5 @@ TKL: AI Chat
             })
         }
     });
-</script>
-<!-- <script src= "{% static 'js/voiceRecord.js' %}"></script> -->
+</script> {% endcomment %}
 {% endblock content %}
