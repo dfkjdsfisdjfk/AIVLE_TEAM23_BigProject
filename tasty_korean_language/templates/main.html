@@ -1,22 +1,23 @@
+main
+
 {% extends "base.html" %}
 {% load static %}
-
-{% block title %}
-Tasty Korean Language
-{% endblock title %}
-
+{% block title %}Tasty Korean Language{% endblock title %}
 {% block content %}
-    <div>
-        <h1>Tasty Korean Language</h1>
-        <div>
-            <p>서비스 설명</p>
+<main>
+    <div class="content-area">
+        <div class="service-description">
+            <body style="background-image: url('{% static 'img/test4.png' %}');">
+            <h1 class="banner_taital">Tasty Korean Language </h1>
+            <h2>  한국어를 쉽고 재미있게 배우는 첫걸음
+                환영합니다! </h2>
+            <p>'Tasty Korean Language'는 외국인을 위한 혁신적인 한국어 학습 플랫폼입니다.</p>  
+            </body>  
         </div>
+        <div class="ai-practice">
+            <button>AI 회화 연습하기</button>
+        </div>
+        
     </div>
-    <div>
-        <p>AI 회화 학습하기</p>
-        <hr>
-        <p>AI 채팅 학습하기 기능 설명 영역</p>
-        <a href="#">AI 회화 학습하기</a>
-    </div>
-
+</main>
 {% endblock content %}

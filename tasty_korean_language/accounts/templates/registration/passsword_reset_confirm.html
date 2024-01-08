@@ -2,6 +2,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<body style="background-image: url('{% static 'img/test4.png' %}');">
 <h2> 새 비밀번호 입력 </h2>
 <form action="" method="post">
     {% csrf_token %}

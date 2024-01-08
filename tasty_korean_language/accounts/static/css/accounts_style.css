@@ -2,13 +2,25 @@
 
 /* 로그인 & 회원가입 */
 
+
+body {
+  color: #666666;
+  font-size: 14px;
+  font-family: Raleway;
+  line-height: 1.80857;
+  font-weight: normal;
+  overflow-x: hidden;
+}
+
 .wrapper {
   width: 430px;
   height: 550px;
   border: 2px solid rgba(0, 0, 0, 0.2);
   box-shadow: 2px 2px 3px 0px lightgray;
   margin: 50px auto;
+  box-shadow: white;
 }
+
 
 .wrapper form > label {
   display: block;
