@@ -16,7 +16,7 @@ class User(AbstractUser):
         ("ja", "Japanese"),
     )
     
-    language = models.CharField(choices=LANGUAGE_CHOICES, max_length=2, null=True, blank=True)
+    language = models.CharField(choices=LANGUAGE_CHOICES, max_length=2, default="en")
 
 
 # class Profile(models.Model):
