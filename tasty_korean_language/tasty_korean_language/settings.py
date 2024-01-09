@@ -47,11 +47,11 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     # 설치한 라이브러리
-    'rest_framework',
-    'rest_framework.authtoken',
-    'rest_framework_simplejwt',
-    'dj_rest_auth',
-    'dj_rest_auth.registration',
+    # 'rest_framework',
+    # 'rest_framework.authtoken',
+    # 'rest_framework_simplejwt',
+    # 'dj_rest_auth',
+    # 'dj_rest_auth.registration',
 
     'allauth',
     'allauth.account',
@@ -114,7 +114,7 @@ with open("secrets.json", "r") as f:
   secrets = json.load(f)
 
 CHATGPT_API_KEY = secrets["CHATGPT_API_KEY"]
-ETRI_API_KEY = secrets["CHATGPT_API_KEY"]
+ETRI_API_KEY = secrets["ETRI_API_KEY"]
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'kt-aivle-584f12b40238.json'
 
@@ -123,13 +123,6 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'kt-aivle-584f12b40238.json'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
 
 # DATABASES = {
 #     "default": {
