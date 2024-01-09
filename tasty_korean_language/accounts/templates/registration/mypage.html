@@ -1,31 +1,97 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+mypage
+{% endblock title %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'css/mypage_style.css' %}">
+{% endblock extrahead %}
 
 {% block content %}
-    <h1> 내정보 </h1>
-    <ul>
-        <li> name : {{user}}</li>
-        <li> email : {{user.email}}</li>
-        <li>{{user.date_joined}}</li>
-    </ul>
 
-    <p>chatlog </p>
-    <p>gg{{ chatlogs }}</p>
-    {% comment %} chatlogs list 출력 {% endcomment %}
-    {% for chatlog in chatlogs %}
-        <li>
-            <p>chatlog </p>
-            <p>{{ chatlog.user }}</p>
-        </li>
-    {% endfor %}
+<div class="main">
+    <h2>계정 정보</h2>
+    <div class="card">
+        <div class="card-body">
+            <i class="fa fa-pen fa-xs edit"></i>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Name</td>
+                        <td>:</td>
+                        <td>{{user}}</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>:</td>
+                        <td>{{user.email}}</td>
+                    </tr>
+                    <tr>
+                        <td>Data_joined</td>
+                        <td>:</td>
+                        <td>{{user.date_joined}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
+    <h2>대화 내역</h2>
+    <div class="card">
+        <div class="card-body">
+            <i class="fa fa-pen fa-xs edit"></i>
+            <div class="conversation-list">
+                <!-- Add the following div for the scrollable list -->
+                <div class="scrollable-list">
+                    <!-- Your conversation list content goes here -->
+                    {% for chatlog in chatlog_list %}
+                        <div class="conversation-item">
+                            <a href="{% url 'aichat:chatlog' chatlog.id %}">
+                            <h3>{{ chatlog.user }}</h3>
 
-    {% comment %} {% for chatlog in chatlogs %}
-        <li>
-            <p>chatlog </p>
-            <p>{{ chatlog.user }}</p>
-        </li>
-    {% endfor %} {% endcomment %}
+                            <p>{{ chatlog.created_at }}</p>
+                            </a>
+                            <!-- Add other conversation details as needed -->
+                        </div>
+                        <div class="conversation-separator">
+                            <hr>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
     
-    {% comment %} <a href="{% url 'password_change' %}">[암호 변경하기]</a> {% endcomment %}
+    <h2>회원 탈퇴</h2>
+    <div class="card">
+        <div class="card-body">
+            <i class="fa fa-pen fa-xs edit"></i>
+            {% comment %} <form action="{% url 'accounts:delete' %}" method="POST">
+                {% csrf_token %}
+                <input type="submit" value="회원 탈퇴">
+            </form> {% endcomment %}
+            <div class="sidenav-url">
+                {% comment %} <div class="url">
+                    <a href="#profile" class="active">Profile</a>
+                    <hr align="center">
+                </div> {% endcomment %}
+                <div class="url">
+                    <a href="#settings">회원탈퇴</a>
+                    {% comment %} <hr align="center"> {% endcomment %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End -->
+{% endblock content %}
 
-{% endblock %}
+
+
+
+
+
+

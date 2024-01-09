@@ -24,8 +24,8 @@ urlpatterns = [
     
     path('session/<int:code>', views.session_test),
      
-    path('mypage/', TemplateView.as_view(template_name='registration/mypage.html'), name='mypage'),
+#     path('mypage/', TemplateView.as_view(template_name='registration/mypage.html'), name='mypage'),
 
-#     path('mypage/', views.mypage, name='mypage'),
+    path('mypage/', views.mypage, name='mypage'),
 
 ]

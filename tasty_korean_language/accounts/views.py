@@ -6,7 +6,8 @@ from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
 from django.contrib import messages
 
-from aichat.models import ChatLog, ChatMessage
+# from aichat.models import ChatLog, ChatMessage
+from aichat.models import *
 
 
 def signupConsent(request):
@@ -72,3 +73,10 @@ def session_test(request, code):
         print('session 데이터 삭제')
         session.pop('prod')
     return response    
+
+
+###################### mypage ######################
+def mypage(request):
+    chatlog_list = ChatLog.objects.all()
+    return render(request, 'registration/mypage.html', {'chatlog_list':chatlog_list})
+
