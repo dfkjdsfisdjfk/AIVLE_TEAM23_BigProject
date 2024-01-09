@@ -114,6 +114,7 @@ with open("secrets.json", "r") as f:
   secrets = json.load(f)
 
 CHATGPT_API_KEY = secrets["CHATGPT_API_KEY"]
+ETRI_API_KEY = secrets["CHATGPT_API_KEY"]
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'kt-aivle-584f12b40238.json'
 

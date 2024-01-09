@@ -4,9 +4,20 @@ $(document).ready(function(){
     if (navigator.mediaDevices){
         let recordArray = []; // 녹음 데이터 저장 변수
 
+        // const audioConstraints = {
+        //     audio: {
+        //         sampleRate: 16000, // Set the sample rate to 16kHz
+        //     },
+        // };
+
         navigator.mediaDevices.getUserMedia({audio: true})
+        // navigator.mediaDevices.getUserMedia(audioConstraints)
         .then((stream) => {
             const mediaRecorder = new MediaRecorder(stream);
+            // const mediaRecorder = new MediaRecorder(stream, {
+            //     audioBitsPerSecond : 16000,
+            //     sampleRate: 16000,
+            // });
 
             // 녹음 버튼 클릭했을 때
             $('#record').on('click', function(){
@@ -24,6 +35,8 @@ $(document).ready(function(){
             mediaRecorder.onstop = (event) => {
                 const blob = new Blob(recordArray, {
                     type: 'audio/mp3'
+                    // type: 'audio/wav'
+                    // type: 'audio/mpeg'
                 });
                 recordArray = [];
 
@@ -31,12 +44,14 @@ $(document).ready(function(){
                 // const formData = new FormData();
                 // formData.append('csrfmiddlewaretoken', $('[name=csrfmiddlewaretoken]').val());
                 formData.append('audio_file', blob, 'recorded_audio.mp3');
+                // formData.append('audio_file', blob, 'recorded_audio.wav');
                 // formData.append('message', $('#text-input').val());
 
                 // 서버로 FormData 전송
                 $.ajax({
                     url: $('#chat-form').attr('action'),
                     // action: $('#chat-form').attr('action'),
+                    async: false,
                     type: 'POST',
                     data: formData,
                     processData: false,

@@ -13,10 +13,27 @@ from django.conf import settings
 from google.cloud import speech
 
 from django.conf import settings
-from django.core.files.storage import default_storage
+from django.core.files.storage import FileSystemStorage, default_storage, Storage
+
+
+import urllib3
+import json
+import base64
+import librosa
+import numpy as np
 
 import random
 
+
+
+import urllib3
+import json
+import base64
+# import librosa
+import numpy as np
+
+
+from pydub import AudioSegment
 
 
 #####################aichat#####################
@@ -44,20 +61,20 @@ def index2(request, id):
     
     return render(request, 'aichat/chat.html', {'messages': messages_with_feedback, 'id': id})
 
-
 @login_required
 def send(request, id):
     
+    # correct_message = request.POST.get('message')
     correct_message = request.POST.get('message')
     sender = request.user.username
     chatlog = ChatLog.objects.get(id=id)
     
-    try:
-        audio_file = request.FILES['audio_file']
-    except MultiValueDictKeyError:
-        return JsonResponse({'error': 'audio_file key not found'}, status=400)
-    
-    file_path = default_storage.save(sender+'/audio.mp3', audio_file)
+    # try:
+    #     audio_file = request.FILES['audio_file']
+    # except MultiValueDictKeyError:
+    #     return JsonResponse({'error': 'audio_file key not found'}, status=400)
+    audio_file = request.FILES['audio_file']
+    # audio_file = request.FILES.get('audio_file')
     
     print(id)
     print(request.user)
@@ -65,12 +82,18 @@ def send(request, id):
     print(request.FILES)
     print(correct_message)
     
-    stt_message = "test"
-    # stt_message = run_stt(audio_file)
-    userchatmessage = ChatMessage.objects.create(chatlog=chatlog, sender=sender, message=stt_message)
+    stt_message = run_stt(audio_file)
+    ChatMessage.objects.create(chatlog=chatlog, sender=sender, message=stt_message)
+    # userchatmessage = ChatMessage.objects.create(chatlog=chatlog, sender=sender, message=stt_message)
     
-    accurcy, feedback = get_pronunciation_feedback(stt_message, correct_message)
-    Feedback.objects.create(chatmessage=userchatmessage, accuracy=accurcy, feedback=feedback, answer=correct_message)
+    last_chatmessage_id = ChatMessage.objects.last().id
+    # default_storage.save(sender+'/' + str(last_chatmessage_id) + '.mp3', audio_file)
+    default_storage.save(sender+'/' + str(last_chatmessage_id) + '.webm', audio_file)
+    # file_path = default_storage.save(sender+'/' + ' ' + '.mp3', audio_file)
+    
+    accurcy, feedback = get_pronunciation_feedback(correct_message, audio_file, sender,last_chatmessage_id)
+
+    Feedback.objects.create(chatmessage=ChatMessage.objects.last(), accuracy=accurcy, feedback=feedback, answer=correct_message)
     
     chat_gpt_response = get_chat_gpt_response(correct_message)
     ChatMessage.objects.create(chatlog=chatlog, sender="system", message=chat_gpt_response)
@@ -114,9 +137,79 @@ def get_chat_gpt_response(message):
     
     return response
 
-def get_pronunciation_feedback(stt_message, correct_message):
+
+# def get_pronunciation_feedback(origin_text:str,audio):
+def get_pronunciation_feedback(origin_text,audio,sender,last_chatmessage_id):
+    key = settings.ETRI_API_KEY
+    # openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/Pronunciation" # 영어
+    openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/PronunciationKor" # 한국어
+
+    accessKey = key
     
+    audioFilePath = "C:\\bigProject\\AIVLE_TEAM23\\tasty_korean_language\\media\\" + sender + "\\" + str(last_chatmessage_id) + ".webm"
+    
+    saveFilePath = "C:\\bigProject\\AIVLE_TEAM23\\tasty_korean_language\\aichat\\static\\media\\" + sender + "\\" + str(last_chatmessage_id) + ".wav"
+
+    # audioFilePath = audio # audio로 바꾸면 될 듯 한데 체크해야함
+    languageCode = "korean"
+    script = origin_text
+    # audio_data = audio.read()
+    
+    # with open(audioFilePath, 'rb') as file:
+    #     file = file.read()
+    print(audioFilePath)
+    webm = AudioSegment.from_file(audioFilePath, format="webm")
+    print("webm중간")
+    webm.export(saveFilePath, format="wav")
+    print("webm끝")
+    # r, _ = librosa.load(saveFilePath, sr=16000)
+    pcm = (librosa.load(saveFilePath, sr=16000)[0] * 32767).astype(np.int16)
+    audioContents = base64.b64encode(pcm).decode('utf8')
+    
+    # pcm = (librosa.load(audioFilePath, sr=16000)[0] * 32767).astype(np.int16)
+    # pcm = np.frombuffer(file, dtype=np.int16)
+    # pcm = np.frombuffer(audio_data, dtype=np.int16)
+    # file = audio.read()
+    # file = np.frombuffer(audio.read(),dtype=np.int16)
+    
+    # file = open(audioFilePath, "rb")
+    # file = open(audio, "rb")
+    # audioContents = base64.b64encode(pcm).decode("utf8")
+    
+    # audioContents = base64.b64encode(audio.read()).decode("utf8")
+
+    requestJson = {   
+        "argument": {
+            "language_code": languageCode,
+            "script": script,
+            "audio": audioContents
+        }
+    }
+
+    http = urllib3.PoolManager()
+    print("http시작")
+    response = http.request(
+        "POST",
+        openApiURL,
+        headers={"Content-Type": "application/json; charset=UTF-8","Authorization": accessKey},
+        body=json.dumps(requestJson)
+    )
+    print("http끝")
+
+    # print("[responseCode] " + str(response.status)) # 응답 코드 필요하다면 사용
+    # print("[responBody]")
+    # print(str(response.data,"utf-8"))
+    
+    # result = json.loads(response.data)['return_object']['score']
+    
+    # print(result)
+    print(response.data)
+    print(json.loads(response.data)['return_object']['recognized'])
+        
+    # return result
     return 0.5, "good job"
+
+
 ###############################################################################################
 def translate(request):
     if request.method == 'POST' and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
@@ -130,7 +223,6 @@ def translate(request):
         return JsonResponse({'translated_message': translated_message})
     else:
         return JsonResponse({'error': '잘못된 요청'}, status=400)
-
 
 #####################chatlog list#####################
 
