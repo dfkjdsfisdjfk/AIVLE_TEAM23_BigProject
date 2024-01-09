@@ -70,7 +70,11 @@ TKL: AI Chat
 
             navigator.mediaDevices.getUserMedia({audio: true})
             .then((stream) => {
-                const mediaRecorder = new MediaRecorder(stream);
+                //const mediaRecorder = new MediaRecorder(stream);
+                const mediaRecorder = new MediaRecorder(stream, {
+                    audioBitsPerSecond : 16000,
+                    sampleRate: 16000,
+                });
 
                 // 녹음 버튼 클릭했을 때
                 $('#record').on('click', function(){
@@ -94,7 +98,8 @@ TKL: AI Chat
                     $('#chat-box').append($('<article class="user-chat">').append($audio));
 
                     const blob = new Blob(recordArray, {
-                        'type': 'audio/wav'
+                        //'type': 'audio/wav'
+                        'type': 'audio/webm'
                     });
                     recordArray = [];
 
