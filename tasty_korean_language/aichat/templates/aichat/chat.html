@@ -155,6 +155,9 @@ TKL: AI Chat
                     
                     // 메시지와 녹음 내용 전송
                     $('#submit').on('click', function(){
+                        // 전송 중 버튼 중복 처리 방지
+                        $('#submit').css('pointer-events','none');
+
                         const formData = new FormData();
                         formData.append('message', $('#translated-result').text());
                         formData.append('audio_file', blob);
