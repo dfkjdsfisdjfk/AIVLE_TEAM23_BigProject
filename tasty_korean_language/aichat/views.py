@@ -23,6 +23,7 @@ import librosa
 import numpy as np
 
 import random
+import json
 
 
 
@@ -242,11 +243,16 @@ class ChatLogListView(ListView):
 
 
 
+# Lanugae 설정 Update
+def update_language(request):
+    if request.method == 'PATCH':
+        data = json.loads(request.body)
+        language = data.get('language')
+        request.user.language = language
+        request.user.save()
+        return JsonResponse({'message': 'Language updated successfully!'})
 
-
-
-
-
+    return JsonResponse({'error': 'Invalid request method.'}, status=400)
 
 
 

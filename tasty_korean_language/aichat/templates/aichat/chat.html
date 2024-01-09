@@ -11,11 +11,22 @@ TKL: AI Chat
 
 {% block content %}
 <div class="wrapper">
+    <form id="language-form" method="post">
+        {% csrf_token %}
+        <label for="language-select">Select Language:</label>
+        <select id="language-select" name="language">
+            {% for language_code, language_name in user.LANGUAGE_CHOICES %}
+                <option value={{ language_code }} {% if language_code == user.language %}selected{% endif %}>{{ language_name }}</option>
+            {% endfor %}
+        </select>
+        <button type="button" onclick="updateLanguage()">Save</button>
+    </form>
+    
     <div class="new-chat-container"><a id="new-chat" href="{% url 'aichat:chat' %}">New Chat</a></div>
     <div id="chat-box">
         {% for message in messages %}
             {% if message.sender == "system" %}
-                <div class="gpt-chat">
+                <div class="gpt-chat" onclick="speak(this)">
                     {{ message }}
                 </div>
             {% else %}
@@ -46,6 +57,13 @@ TKL: AI Chat
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
+    // 시스템 채팅 메시지 TTS
+    function speak(element) {
+        const synth = window.speechSynthesis;
+        const utterance = new SpeechSynthesisUtterance($(element).text());
+        synth.speak(utterance);
+    }
+
     function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -61,6 +79,31 @@ TKL: AI Chat
         }
         return cookieValue;
     }
+
+    function updateLanguage() {
+        var language = $('#language-select').val();
+        var csrftoken = getCookie('csrftoken');
+
+        fetch("{% url 'aichat:update_language' %}", {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify({ language: language }),
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Language updated successfully');
+            } else {
+                throw new Error('Failed to update language');
+            }
+        })
+        .catch(error => {
+            alert(error.message);
+        });
+    }
+
 
     $(document).ready(function(){
         let isRecording = false;

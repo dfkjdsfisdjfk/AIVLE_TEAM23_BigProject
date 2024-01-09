@@ -10,4 +10,5 @@ urlpatterns = [
     path('<int:id>/', views.index2, name='chatlog'),
     path('send/<int:id>/', views.send, name='send'),
     path('translate/', views.translate, name='translate'),
+    path('update_language/', views.update_language, name='update_language'),
 ]

@@ -7,12 +7,15 @@ from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-LANGUAGE_CHOICES = (
-   ("en", "English"),
-   ("ko", "Korean"),
-)
 
 class User(AbstractUser):
+    LANGUAGE_CHOICES = (
+        ("en", "English"),
+        ("ko", "Korean"),
+        ("cn", "Chinese"),
+        ("ja", "Japanese"),
+    )
+    
     language = models.CharField(choices=LANGUAGE_CHOICES, max_length=2, null=True, blank=True)
 
 
