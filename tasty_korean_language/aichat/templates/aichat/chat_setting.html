@@ -23,7 +23,16 @@ TKL: AI Chat
     </form>
 
     <div>
-        <a href="{% url 'aichat:chat' %}">Start</a>
+        <a href="{% url 'aichat:chat' %}">Start New Chat</a>
+    </div>
+
+    <div class="container">
+        <h3>Chat Log List</h3>
+        <ul class="list-group">
+            {% for chatlog in chatloglist %}
+                <li class="list-group-item"><a href="{% url 'aichat:chatlog' chatlog.id %}">{{ chatlog.created_at }}</a></li>
+            {% endfor %}
+        </ul>
     </div>
 </div>
 

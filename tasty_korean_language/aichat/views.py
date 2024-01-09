@@ -58,7 +58,9 @@ def update_language(request):
 
 @login_required
 def chatsetting(request):
-    return render(request, 'aichat/chat_setting.html')
+    chatloglist = ChatLog.objects.filter(user=request.user)
+    
+    return render(request, 'aichat/chat_setting.html', {'chatloglist': chatloglist})
 
 
 @login_required
