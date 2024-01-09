@@ -12,3 +12,6 @@ kt-aivle-584f12b40238.json
 #모든 migrations 폴더
 **/migrations/**
 0001_initial.py
+*.mp3
+*.wav
+*.webm

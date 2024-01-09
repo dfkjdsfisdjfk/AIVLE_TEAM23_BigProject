@@ -108,7 +108,7 @@ WSGI_APPLICATION = "tasty_korean_language.wsgi.application"
 
 ################################################################
 
-#secret key 값 가져오기
+# secret key 값 가져오기
 
 with open("secrets.json", "r") as f:
   secrets = json.load(f)

@@ -41,6 +41,7 @@ import os
 
 #####################aichat#####################
 from google.cloud import translate_v2
+from .STT import etri_eval, compare, hug_stt_acc, etri_stt
 
 @login_required
 def index(request):
@@ -90,8 +91,8 @@ def send(request, id):
     # userchatmessage = ChatMessage.objects.create(chatlog=chatlog, sender=sender, message=stt_message)
     
     last_chatmessage_id = ChatMessage.objects.last().id
-    # default_storage.save(sender+'/' + str(last_chatmessage_id) + '.mp3', audio_file)
     default_storage.save(sender+'/' + str(last_chatmessage_id) + '.webm', audio_file)
+    # default_storage.save( 'record_file/ + 'f'{sender}_' + str(last_chatmessage_id) + '.webm', audio_file)
     # file_path = default_storage.save(sender+'/' + ' ' + '.mp3', audio_file)
     
     accurcy, feedback = get_pronunciation_feedback(correct_message, audio_file, sender,last_chatmessage_id)
@@ -143,14 +144,8 @@ def get_chat_gpt_response(message):
 
 # def get_pronunciation_feedback(origin_text:str,audio):
 def get_pronunciation_feedback(origin_text,audio,sender,last_chatmessage_id):
+    # etri 키 불러오기
     key = settings.ETRI_API_KEY
-    # openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/Pronunciation" # 영어
-    openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/PronunciationKor" # 한국어
-
-    accessKey = key
-    languageCode = "korean"
-    script = origin_text
-    
     audioFilePath = ".\\media\\" + sender + "\\" + str(last_chatmessage_id) + ".webm"
     
     # make dir
@@ -159,60 +154,26 @@ def get_pronunciation_feedback(origin_text,audio,sender,last_chatmessage_id):
         os.mkdir(current_path + "\\media\\" + sender + "_transformed")
     
     saveFilePath = ".\\media\\" + sender + "_transformed" + "\\" + str(last_chatmessage_id) + ".wav"
-    
-    # audio_data = audio.read()
-    # with open(audioFilePath, 'rb') as file:
-    #     file = file.read()
+
     
     webm = AudioSegment.from_file(audioFilePath, format="webm")
-    print("webm중간")
+    print(2)
     webm.export(saveFilePath, format="wav")
-    print("webm끝")
-    # r, _ = librosa.load(saveFilePath, sr=16000)
-    pcm = (librosa.load(saveFilePath, sr=16000)[0] * 32767).astype(np.int16)
-    audioContents = base64.b64encode(pcm).decode('utf8')
     
-    # pcm = (librosa.load(audioFilePath, sr=16000)[0] * 32767).astype(np.int16)
-    # pcm = np.frombuffer(file, dtype=np.int16)
-    # pcm = np.frombuffer(audio_data, dtype=np.int16)
-    # file = audio.read()
-    # file = np.frombuffer(audio.read(),dtype=np.int16)
+    # 평가 모듈을 사용하여 평가
+    STT_result, hug_acc = hug_stt_acc(origin_text, saveFilePath)
+    stt_etri = etri_stt(saveFilePath,key)
+    etri_score = etri_eval(origin_text,saveFilePath,key)
+    compare_lt = compare(origin_text, STT_result)
     
-    # file = open(audioFilePath, "rb")
-    # file = open(audio, "rb")
-    # audioContents = base64.b64encode(pcm).decode("utf8")
     
-    # audioContents = base64.b64encode(audio.read()).decode("utf8")
-
-    requestJson = {   
-        "argument": {
-            "language_code": languageCode,
-            "script": script,
-            "audio": audioContents
-        }
-    }
-
-    http = urllib3.PoolManager()
-    print("http시작")
-    response = http.request(
-        "POST",
-        openApiURL,
-        headers={"Content-Type": "application/json; charset=UTF-8","Authorization": accessKey},
-        body=json.dumps(requestJson)
-    )
-    print("http끝")
-
-    # print("[responseCode] " + str(response.status)) # 응답 코드 필요하다면 사용
-    # print("[responBody]")
-    # print(str(response.data,"utf-8"))
+    print(STT_result)
+    print(stt_etri)
+    print(hug_acc)
+    print(etri_score)
+    print(compare_lt)
     
-    # result = json.loads(response.data)['return_object']['score']
-    
-    print(response.data)
-    print(json.loads(response.data)['return_object']['recognized'])
-        
-    # return result
-    return 0.5, "good job"
+    return hug_acc, "good job"
 
 
 ###############################################################################################
@@ -257,7 +218,6 @@ def update_language(request):
         return JsonResponse({'message': 'Language updated successfully!'})
 
     return JsonResponse({'error': 'Invalid request method.'}, status=400)
-
 
 
 # def run_stt_by_gcs():
