@@ -21,7 +21,7 @@
 	<!-- Responsive-->
 	<link rel="stylesheet" href="{% static 'css/responsive.css' %}">
 	<!-- fevicon -->
-	<link rel="icon" href="{% static 'img/fevicon.png' %}" type="image/gif" />
+	{% comment %} <link rel="icon" href="{% static 'img/fevicon.png' %}" type="image/gif" /> {% endcomment %}
 	<!-- Scrollbar Custom CSS -->
 	<link rel="stylesheet" href="{% static 'css/jquery.mCustomScrollbar.min.css' %}">
 	<!-- Tweaks for older IEs-->
@@ -44,7 +44,7 @@
                             <a class="nav-link" aria-current="page" href="{% url 'home' %}">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'aichat:chat' %}">AI 회화</a>
+                            <a class="nav-link" href="{% url 'aichat:chatsetting' %}">AI 회화</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'community:index' %}">커뮤니티</a>

@@ -43,6 +43,24 @@ import os
 from google.cloud import translate_v2
 from .STT import etri_eval, compare, hug_stt_acc, etri_stt
 
+
+# Lanugae 설정 Update
+def update_language(request):
+    if request.method == 'PATCH':
+        data = json.loads(request.body)
+        language = data.get('language')
+        request.user.language = language
+        request.user.save()
+        return JsonResponse({'message': 'Language updated successfully!'})
+
+    return JsonResponse({'error': 'Invalid request method.'}, status=400)
+
+
+@login_required
+def chatsetting(request):
+    return render(request, 'aichat/chat_setting.html')
+
+
 @login_required
 def index(request):
     chatlog = ChatLog.objects.create(user=request.user)
@@ -206,18 +224,6 @@ class ChatLogListView(ListView):
         # Add any additional context data if needed
         return context
 
-
-
-# Lanugae 설정 Update
-def update_language(request):
-    if request.method == 'PATCH':
-        data = json.loads(request.body)
-        language = data.get('language')
-        request.user.language = language
-        request.user.save()
-        return JsonResponse({'message': 'Language updated successfully!'})
-
-    return JsonResponse({'error': 'Invalid request method.'}, status=400)
 
 
 # def run_stt_by_gcs():
