@@ -5,6 +5,8 @@ from .forms import SignupForm
 from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.contrib.auth import get_user_model
+from django.http import JsonResponse
 
 # from aichat.models import ChatLog, ChatMessage
 from aichat.models import *
@@ -23,6 +25,19 @@ def signup(request):
         form = SignupForm()
 
     return render(request, 'registration/signup.html',{'form':form})
+
+
+def findID(request):
+    if request.method == 'POST':
+        User = get_user_model()
+        email = request.POST.get('email', None)
+        if email:
+            try:
+                user = User.objects.get(email=email)
+                return JsonResponse({'result': user.username})
+            except User.DoesNotExist:
+                return JsonResponse({'result': 'User not found'})
+    return JsonResponse({}, status=400)
 
 
 class MyPasswordChangeView(PasswordChangeView) :

@@ -10,7 +10,8 @@ urlpatterns = [
      path('logout/', auth_views.LogoutView.as_view(), name='logout'),
      path('signup_consent/', views.signupConsent, name='signup_consent'),
      path('signup/', views.signup, name='signup'),
-     
+     path("id_find/", TemplateView.as_view(template_name='registration/id_find.html'), name="id_find"),
+     path("id_find/find/", views.findID, name="find_id_by_email"),
      path(
           "password_change/", views.MyPasswordChangeView.as_view(), name="password_change"
      ),

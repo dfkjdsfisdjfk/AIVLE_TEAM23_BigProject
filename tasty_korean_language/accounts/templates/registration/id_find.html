@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+{% load socialaccount %}
+
+{% block title %}
+TKL: Sign in
+{% endblock title %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'css/accounts_style.css' %}">
+{% endblock extrahead %}
+
+{% block content %}
+<div class="wrapper login-wrapper">
+    <h2>아이디 찾기</h2>
+    <form>
+        {% csrf_token %}
+        <label for="email">Email</label>
+        <input id="email" class="form-input" type="email" name="email" placeholder="example@naver.com" required>
+
+        <button id="find_id" class="btn find_id" type="button">Find ID</button>
+    </form>
+    <br>
+    <div id="find-id-result"></div>
+</div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#find_id').click(function () {
+            $('#find-id-result').text('');
+
+            var email = $("#email").val();
+            if (email == ""){
+                alert('Please enter your email.');
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'find_id_by_email' %}",
+                    dataType: "json",
+                    data: {
+                        'email': email,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    },
+                    success: function (response) {
+                        if (response.result == "User not found"){
+                            $('#find-id-result').text(response.result);
+                        }
+                        else {
+                            $('#find-id-result').text("ID: " + response.result);
+                        }
+                    },
+                    error: function (error) {
+                        alert('Error:' + error);
+                    },
+                });
+            }
+        })
+    });
+</script>
+{% endblock content %}
