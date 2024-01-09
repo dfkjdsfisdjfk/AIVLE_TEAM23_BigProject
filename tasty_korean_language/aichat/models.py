@@ -10,6 +10,7 @@ class ChatMessage(models.Model):
     chatlog = models.ForeignKey(ChatLog, on_delete=models.CASCADE)
     sender = models.CharField(max_length=100)
     message = models.TextField()
+    translated = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
