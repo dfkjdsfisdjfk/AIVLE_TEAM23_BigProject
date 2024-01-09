@@ -36,6 +36,8 @@ import numpy as np
 
 from pydub import AudioSegment
 
+import os
+
 
 #####################aichat#####################
 from google.cloud import translate_v2
@@ -146,19 +148,22 @@ def get_pronunciation_feedback(origin_text,audio,sender,last_chatmessage_id):
     openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/PronunciationKor" # 한국어
 
     accessKey = key
-    
-    audioFilePath = "C:\\bigProject\\AIVLE_TEAM23\\tasty_korean_language\\media\\" + sender + "\\" + str(last_chatmessage_id) + ".webm"
-    
-    saveFilePath = "C:\\bigProject\\AIVLE_TEAM23\\tasty_korean_language\\aichat\\static\\media\\" + sender + "\\" + str(last_chatmessage_id) + ".wav"
-
-    # audioFilePath = audio # audio로 바꾸면 될 듯 한데 체크해야함
     languageCode = "korean"
     script = origin_text
-    # audio_data = audio.read()
     
+    audioFilePath = ".\\media\\" + sender + "\\" + str(last_chatmessage_id) + ".webm"
+    
+    # make dir
+    current_path = os.getcwd()
+    if not os.path.exists(current_path + "\\media\\" + sender + "_transformed"):
+        os.mkdir(current_path + "\\media\\" + sender + "_transformed")
+    
+    saveFilePath = ".\\media\\" + sender + "_transformed" + "\\" + str(last_chatmessage_id) + ".wav"
+    
+    # audio_data = audio.read()
     # with open(audioFilePath, 'rb') as file:
     #     file = file.read()
-    print(audioFilePath)
+    
     webm = AudioSegment.from_file(audioFilePath, format="webm")
     print("webm중간")
     webm.export(saveFilePath, format="wav")
@@ -203,7 +208,6 @@ def get_pronunciation_feedback(origin_text,audio,sender,last_chatmessage_id):
     
     # result = json.loads(response.data)['return_object']['score']
     
-    # print(result)
     print(response.data)
     print(json.loads(response.data)['return_object']['recognized'])
         
