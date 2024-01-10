@@ -226,9 +226,9 @@ button {
     float: left;
 }
 
-#navbarNav {
+/* #navbarNav {
      padding-right: 30px;
-}
+} */
 
 .navbar-light .navbar-nav .nav-link {
     color: #282828;
@@ -255,7 +255,7 @@ button {
      text-align: start;
  }
 
-.banner_section{
+/* .banner_section{
      width: 100%;
      float: left;
      background-image: url('/static/img/banner-bg.png');
@@ -271,7 +271,7 @@ button {
      text-align: center;
      padding-bottom: 40px;
      font-family: Baloo Chettan;
-}
+} */
 
 
 .free_text {
@@ -310,13 +310,13 @@ button {
     background-color: #d102ff;
 }
 
-.bg_main {
+/* .bg_main {
     width: 100%;
     float: left;
     text-align: center;
     position: relative;
     top: -35px;
-}
+} */
 
 .service_section.layout_padding.margin_0 {
     margin: 0px;
@@ -350,12 +350,12 @@ button {
      margin-left: 0px;
 }
 
-.about_bg{
+/* .about_bg{
      width: 100%;
      float: left;
      text-align: center;
      padding-top: 50px;
-}
+} */
 
 .read_bt_main{
      width: 15%;
@@ -838,4 +838,20 @@ body {
     --breakpoint-xl: 1200px;
     --font-family-sans-serif: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
     --font-family-monospace: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+}
+
+.main_section {
+    /* background-image: url('/static/img/main-background.png'); */
+    /* background-image: url('/static/img/bg6.jpg'); */
+    background-image: url('/static/img/bg7.png');
+    
+    /* 사진 좌우로 사이즈 변경 */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    /* height: 100vh;
+    width: 100%;
+    position: relative;
+    overflow: hidden; */
 }
