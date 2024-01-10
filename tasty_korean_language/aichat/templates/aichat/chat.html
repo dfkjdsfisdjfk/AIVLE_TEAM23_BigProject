@@ -17,7 +17,8 @@ TKL: AI Chat
     <div id="chat-box">
         {% for message in messages %}
             {% if message.sender == "system" %}
-                <div class="gpt-chat" onclick="speak(this)" >
+                <div class="gpt-chat">
+                    <i class="fa fa-play-circle" style="font-size:24px;" onclick="speak(this)"></i>
                     {{ message }}<br>
                     {{ message.translated }}
                 </div>
