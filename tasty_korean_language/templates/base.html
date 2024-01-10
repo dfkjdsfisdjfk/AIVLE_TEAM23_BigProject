@@ -109,8 +109,8 @@
         if (url == "{% url 'signup' %}"){
             $('.nav-item a[href="{% url 'signup_consent' %}"]').addClass('active');
         }
-        else if (url.indexOf("{% url 'aichat:chat' %}") !== -1){
-            $('.nav-item a[href="{% url 'aichat:chat' %}"]').addClass('active');
+        else if (url.indexOf("aichat") !== -1){
+            $('.nav-item a[href="{% url 'aichat:chatsetting' %}"]').addClass('active');
         }
         else {
             $('.nav-item').find('a').each(function() {
