@@ -144,7 +144,8 @@ def send(request, id):
     Feedback.objects.create(chatmessage=ChatMessage.objects.last(), accuracy_detail = hug_acc, accuracy=etri_score, feedback=to_compare_lt_str, answer=correct_message)      # detail_acc, accurcy, feedback = get_pronunciation_feedback(correct_message, audio_file, sender,last_chatmessage_id)
     
     #GPT 답변 생성
-    chat_gpt_response = get_chat_gpt_response(correct_message)
+    # chat_gpt_response = get_chat_gpt_response(correct_message, request.user.language)
+    chat_gpt_response = get_chat_gpt_response(correct_message, 'ko')
     
     #ChatMessage objects 생성
     
