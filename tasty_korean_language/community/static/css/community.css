@@ -1,3 +1,35 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+.content {
+    /* background-color: antiquewhite; */
+    /* background 투명도 20 */
+    /* background: rgba(236, 227, 227, 0.95); */
+    background: rgba(255, 255, 255, 0.92);
+
+
+    font-family: Arial;
+    overflow: hidden;
+    /* 가장자리 */
+    /* border-radius: 25px; */
+    border-radius: 10px;
+
+    /* 그림자 */
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
+
+
+    margin-top: 3%;
+    margin-left: 0%;
+    /* font-size: 28px; */
+    /* padding: 10px 20px; */
+    padding: 10px 20px;
+    /* padding: 5% 10%; */
+    width: 100%;
+    min-height: 500px;
+}
 
 h1 { 
     font-weight: border;
