@@ -64,8 +64,9 @@ def chatsetting(request):
 
 
 @login_required
-def index(request):
-    chatlog = ChatLog.objects.create(user=request.user)
+def index(request, title):
+    print(title)
+    chatlog = ChatLog.objects.create(user=request.user, title=title)
     
     
     initial_gpt_message = get_chat_gpt_response("이야기!")  # 초기 메시지를 GPT에 전달
