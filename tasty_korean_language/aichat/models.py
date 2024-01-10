@@ -13,6 +13,7 @@ class ChatMessage(models.Model):
     message = models.TextField()
     translated = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    audio_path = models.FilePathField(path='/media/', recursive=True, null=True)
     
     def __str__(self):
         return self.message

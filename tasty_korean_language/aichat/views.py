@@ -80,7 +80,7 @@ def index(request):
         translation_client = translate_v2.Client.from_service_account_json("C:\\Users\\user\\Desktop\\chat.json")
         trans_initial_gpt_message = translation_client.translate(initial_gpt_message, target_language='ko')['translatedText']
         # 초기 메시지를 GPT에 전달
-        ChatMessage.objects.create(chatlog=chatlog, sender="system", message=initial_gpt_message, translated=trans_initial_gpt_message)
+        ChatMessage.objects.create(chatlog=chatlog, sender="system", message=trans_initial_gpt_message, translated=initial_gpt_message)
         
         return redirect('aichat:chatlog', chatlog.id)
     
@@ -124,13 +124,15 @@ def send(request, id):
     saveFilePath = ".\\media\\" + sender + "_transformed" + "\\" + str(last_chatmessage_id) + ".wav"
     webm = AudioSegment.from_file(audioFilePath, format="webm")
     webm.export(saveFilePath, format="wav")
+    # DB에 추가될 오디오 파일 경로
+    audio_path = "/media/" + sender + "_transformed" + "/" + str(last_chatmessage_id) + ".wav"
     
     #STT 적용
     STT_result, hug_acc = hug_stt_acc(correct_message, saveFilePath)    
     # stt_message = run_stt(audio_file)
     
     #ChatMessage objects 생성
-    ChatMessage.objects.create(chatlog=chatlog, sender=sender, message=correct_message) # ChatMessage.objects.create(chatlog=chatlog, sender=sender, message=STT_result)    # userchatmessage = ChatMessage.objects.create(chatlog=chatlog, sender=sender, message=stt_message)
+    ChatMessage.objects.create(chatlog=chatlog, sender=sender, message=STT_result, audio_path=audio_path) # ChatMessage.objects.create(chatlog=chatlog, sender=sender, message=STT_result)    # userchatmessage = ChatMessage.objects.create(chatlog=chatlog, sender=sender, message=stt_message)
     
     #발음평가 모델 적용
     key = settings.ETRI_API_KEY

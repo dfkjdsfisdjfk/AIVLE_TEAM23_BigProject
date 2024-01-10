@@ -6,8 +6,7 @@ TKL: AI Chat
 {% endblock title %}
 
 {% block extrahead %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,600,1,200" />
 <link rel="stylesheet" href="{% static 'css/chat_style.css' %}">
 {% endblock extrahead %}
 
@@ -18,21 +17,26 @@ TKL: AI Chat
         {% for message in messages %}
             {% if message.sender == "system" %}
                 <div class="gpt-chat">
-                    <i class="fa fa-play-circle" style="font-size:24px;" onclick="speak(this)"></i>
-                    {{ message }}<br>
-                    {{ message.translated }}
+                    <i class="material-symbols-outlined" onclick="speak(this)">play_circle</i>
+                    <span class="tts-text">{{ message }}</span>
+                    <hr>
+                    <span>{{ message.translated }}</span>
                 </div>
             {% else %}
                 <div class="user-chat">
-                    {{ message }}
+                    <i class="material-symbols-outlined" onclick="play_audio(this)">play_circle</i>
+                    <audio src="{{ message.audio_path }}"></audio>
+                    <span>{{ message.feedback.answer }}<span>
                     <hr>
-                    <span class="material-symbols-outlined" onclick="show_feedback(this)">expand_more</span>
+                    <i id="feedback-btn" class="material-symbols-outlined" onclick="show_feedback(this)">expand_more</i>
                     <div class="feedback" style="display:none;">
                         accuracy : {{ message.feedback.accuracy }}
                         <br>
                         accuracy_detail : {{ message.feedback.accuracy_detail }}
                         <br>
-                        feedback : {{ message.feedback.feedback }}
+                        [feedback] <br>
+                        You: {{ message }} <br>
+                        {{ message.feedback.feedback }}
                     </div>
                     <br>
                 </div>
@@ -43,8 +47,8 @@ TKL: AI Chat
         {% csrf_token %}
         <input id="text-input" type="text" name="message" placeholder="메시지를 입력하세요">
         <div style="margin-top: 10px;">
-            <i class="fa fa-play-circle" style="font-size:24px; display:none;" onclick="speak(this)"></i>
-            <span id="translated-result"></span>
+            <i class="material-symbols-outlined" style="display:none;" onclick="speak(this)">play_circle</i>
+            <span id="translated-result" class="tts-text"></span>
         </div>
     
         <!-- 녹음 시작, 중지 버튼 추가 -->
@@ -67,21 +71,35 @@ TKL: AI Chat
         if (currentUtterance && synth.speaking) {
             synth.cancel(); // 음성 출력 중지
             currentUtterance = null;
-            $(element).removeClass('fa-stop-circle');
-            $(element).addClass('fa-play-circle');
+            $(element).text("play_circle");
         }
         else {
-            const text = $(element).parent().text();
+            const text = $(element).siblings('.tts-text').text();
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.onend = function(event) {
                 currentUtterance = null;
-                $(element).removeClass('fa-stop-circle');
-                $(element).addClass('fa-play-circle');
+                $(element).text("play_circle");
             };
             synth.speak(utterance);
             currentUtterance = utterance;
-            $(element).removeClass('fa-play-circle');
-            $(element).addClass('fa-stop-circle');
+            $(element).text("stop_circle");
+        }
+    }
+
+    // 사용자 채팅 음성 파일 재생 컨트롤
+    function play_audio(element){
+        var audio = $(element).siblings('audio')[0];
+        if (audio.paused) {
+            audio.play();
+            $(element).text("stop_circle");
+            audio.onended = function(event) {
+                $(element).text("play_circle");
+            };
+        }
+        else {
+            audio.pause();
+            audio.currentTime = 0;
+            $(element).text("play_circle");
         }
     }
 
@@ -125,7 +143,7 @@ TKL: AI Chat
         $('#chat-box').scrollTop($('#chat-box')[0].scrollHeight);
 
         // 마지막 피드백 열기
-        show_feedback($('.user-chat:last span'))
+        show_feedback($('.user-chat:last #feedback-btn'));
 
         let isRecording = false;
 
