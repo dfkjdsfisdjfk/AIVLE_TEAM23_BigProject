@@ -68,7 +68,7 @@ def index(request):
     chatlog = ChatLog.objects.create(user=request.user)
     
     
-    initial_gpt_message = get_chat_gpt_response("이야기!")  # 초기 메시지를 GPT에 전달
+    initial_gpt_message = get_chat_gpt_response("이야기!", request.user.language)  # 초기 메시지를 GPT에 전달
     ChatMessage.objects.create(chatlog=chatlog, sender="system", message=initial_gpt_message)
     
     return redirect('aichat:chatlog', chatlog.id)
@@ -106,7 +106,7 @@ def send(request, id):
     print(request.FILES)
     print(correct_message)
     
-    stt_message = run_stt(audio_file)
+    stt_message = "test"#run_stt(audio_file)
     ChatMessage.objects.create(chatlog=chatlog, sender=sender, message=stt_message)
     # userchatmessage = ChatMessage.objects.create(chatlog=chatlog, sender=sender, message=stt_message)
     
@@ -115,13 +115,21 @@ def send(request, id):
     # default_storage.save( 'record_file/ + 'f'{sender}_' + str(last_chatmessage_id) + '.webm', audio_file)
     # file_path = default_storage.save(sender+'/' + ' ' + '.mp3', audio_file)
     
-    accurcy, feedback = get_pronunciation_feedback(correct_message, audio_file, sender,last_chatmessage_id)
+    accurcy, feedback = 0.5 , 'test'
+    # get_pronunciation_feedback(correct_message, audio_file, sender,last_chatmessage_id)
 
     Feedback.objects.create(chatmessage=ChatMessage.objects.last(), accuracy=accurcy, feedback=feedback, answer=correct_message)
     
     chat_gpt_response = get_chat_gpt_response(correct_message)
+    
+    ###################################################################################################################
+    user_language = request.user.language if request.user.language else 'en'
+    translation_client = translate_v2.Client.from_service_account_json("C:\\Users\\user\\Desktop\\chat.json")
+    translated_message = translation_client.translate(chat_gpt_response, target_language=user_language)['translatedText']
     ChatMessage.objects.create(chatlog=chatlog, sender="system", message=chat_gpt_response)
-
+    ChatMessage.objects.create(chatlog=chatlog, sender="system", message=translated_message)
+    ###################################################################################################################
+    
     return redirect('aichat:chatlog', id)
     
 #####################함수#####################
@@ -145,9 +153,11 @@ def run_stt(audio_file):
     return response.results[0].alternatives[0].transcript
      
      
-def get_chat_gpt_response(message):
+def get_chat_gpt_response(message, lang):
     
     client = OpenAI(api_key=settings.CHATGPT_API_KEY)
+    
+    message = f"{message} (Language: {lang})"
 
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo",
@@ -176,9 +186,9 @@ def get_pronunciation_feedback(origin_text,audio,sender,last_chatmessage_id):
     saveFilePath = ".\\media\\" + sender + "_transformed" + "\\" + str(last_chatmessage_id) + ".wav"
 
     
-    webm = AudioSegment.from_file(audioFilePath, format="webm")
+    # webm = AudioSegment.from_file(audioFilePath, format="webm")
     print(2)
-    webm.export(saveFilePath, format="wav")
+    # webm.export(saveFilePath, format="wav")
     
     # 평가 모듈을 사용하여 평가
     STT_result, hug_acc = hug_stt_acc(origin_text, saveFilePath)

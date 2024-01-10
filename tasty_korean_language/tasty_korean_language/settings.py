@@ -105,7 +105,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "tasty_korean_language.wsgi.application"
 
-
+import json
 ################################################################
 
 # secret key 값 가져오기

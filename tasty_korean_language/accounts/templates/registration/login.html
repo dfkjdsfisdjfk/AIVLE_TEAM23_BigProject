@@ -33,15 +33,15 @@ TKL: Sign in
             </script>
 
         {% endif %}
-
+        
         <input class="btn signin" type="submit" value="Sign in">
     </form>
     <div class="login_more"><a href="{% url 'id_find' %}">아이디 찾기</a><span>|</span><a href="#">비밀번호 찾기</a><span>|</span><a href="{% url 'signup_consent' %}">회원가입</a></div>
     <hr>
-    <div class="login_google">
+    {% comment %} <div class="login_google">
         <a role="button" class="btn btn-outline-dark btn-block btn-sm" href="{% provider_login_url 'google' %}">
             <i class="fa-brands fa-google"></i> Log in with Google
         </a>
-    </div>
+    </div> {% endcomment %}
 </div>
 {% endblock content %}
