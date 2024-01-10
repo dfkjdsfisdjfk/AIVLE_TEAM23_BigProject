@@ -12,7 +12,7 @@ class User(AbstractUser):
     LANGUAGE_CHOICES = (
         ("en", "English"),
         ("ko", "Korean"),
-        ("cn", "Chinese"),
+        ("zh", "Chinese"),
         ("ja", "Japanese"),
     )
     
