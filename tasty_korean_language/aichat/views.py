@@ -58,7 +58,7 @@ def update_language(request):
 
 @login_required
 def chatsetting(request):
-    chatloglist = ChatLog.objects.filter(user=request.user)
+    chatloglist = ChatLog.objects.filter(user=request.user).order_by("-created_at")
     
     return render(request, 'aichat/chat_setting.html', {'chatloglist': chatloglist})
 
