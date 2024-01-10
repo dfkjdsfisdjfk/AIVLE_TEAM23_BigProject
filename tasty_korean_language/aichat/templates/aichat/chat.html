@@ -7,6 +7,7 @@ TKL: AI Chat
 
 {% block extrahead %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <link rel="stylesheet" href="{% static 'css/chat_style.css' %}">
 {% endblock extrahead %}
 
@@ -23,10 +24,16 @@ TKL: AI Chat
             {% else %}
                 <div class="user-chat">
                     {{ message }}
+                    <hr>
+                    <span class="material-symbols-outlined" onclick="show_feedback(this)">expand_more</span>
+                    <div class="feedback" style="display:none;">
+                        accuracy : {{ message.feedback.accuracy }}
+                        <br>
+                        accuracy_detail : {{ message.feedback.accuracy_detail }}
+                        <br>
+                        feedback : {{ message.feedback.feedback }}
+                    </div>
                     <br>
-                    feedback : {{ message.feedback.feedback }}
-                    <br>
-                    accuracy : {{ message.feedback.accuracy }}
                 </div>
             {% endif %}
         {% endfor %}
@@ -77,6 +84,19 @@ TKL: AI Chat
         }
     }
 
+    // 피드백 영역 여닫기
+    function show_feedback(element){
+        var feedback = $(element).next();
+        if (feedback.is(':hidden')){
+            $(element).text("expand_less");
+            feedback.show();
+        }
+        else {
+            $(element).text("expand_more");
+            feedback.hide();
+        }
+    }
+
     function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -101,6 +121,9 @@ TKL: AI Chat
 
         // 채팅 스크롤 끝으로 내리기
         $('#chat-box').scrollTop($('#chat-box')[0].scrollHeight);
+
+        // 마지막 피드백 열기
+        show_feedback($('.user-chat:last span'))
 
         let isRecording = false;
 
