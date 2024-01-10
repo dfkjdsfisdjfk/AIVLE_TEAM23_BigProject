@@ -46,7 +46,7 @@ mypage
                 <!-- Add the following div for the scrollable list -->
                 <div class="scrollable-list">
                     <!-- Your conversation list content goes here -->
-                    {% for chatlog in chatlog_list|slice:"::-1" %}
+                    {% for chatlog in chatlog_list|dictsortreversed:"created_at" %}
                         <div class="conversation-item">
                             <a href="{% url 'aichat:chatlog' chatlog.id %}">
                             <h3>{{ chatlog.title }}</h3>
