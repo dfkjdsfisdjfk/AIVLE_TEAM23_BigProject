@@ -115,9 +115,9 @@ def send(request, id):
     # default_storage.save( 'record_file/ + 'f'{sender}_' + str(last_chatmessage_id) + '.webm', audio_file)
     # file_path = default_storage.save(sender+'/' + ' ' + '.mp3', audio_file)
     
-    accurcy, feedback = get_pronunciation_feedback(correct_message, audio_file, sender,last_chatmessage_id)
+    detail_acc, accurcy, feedback = get_pronunciation_feedback(correct_message, audio_file, sender,last_chatmessage_id)
 
-    Feedback.objects.create(chatmessage=ChatMessage.objects.last(), accuracy=accurcy, feedback=feedback, answer=correct_message)
+    Feedback.objects.create(chatmessage=ChatMessage.objects.last(), accuracy_detail = detail_acc, accuracy=accurcy, feedback=feedback, answer=correct_message)
     
     chat_gpt_response = get_chat_gpt_response(correct_message)
     ChatMessage.objects.create(chatlog=chatlog, sender="system", message=chat_gpt_response)
@@ -185,7 +185,7 @@ def get_pronunciation_feedback(origin_text,audio,sender,last_chatmessage_id):
     stt_etri = etri_stt(saveFilePath,key)
     etri_score = etri_eval(origin_text,saveFilePath,key)
     compare_lt = compare(origin_text, STT_result)
-    
+    to_compare_lt_str = ", ".join(sum(compare_lt, []))
     
     print(STT_result)
     print(stt_etri)
@@ -193,7 +193,8 @@ def get_pronunciation_feedback(origin_text,audio,sender,last_chatmessage_id):
     print(etri_score)
     print(compare_lt)
     
-    return hug_acc, "good job"
+    
+    return hug_acc, etri_score, to_compare_lt_str
 
 
 ###############################################################################################
