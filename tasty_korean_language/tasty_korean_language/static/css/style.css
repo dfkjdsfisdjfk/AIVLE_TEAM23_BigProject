@@ -558,18 +558,21 @@ button {
 }
 
 .footer_section{
-     width: 100%;
-     float: left;
-     background-image: url('/static/img/footer-bg.png');
-     height: auto;
-     padding-bottom: 30px;
-     margin-top: 50px;
+    width: 100%;
+    float: left;
+    height: auto;
+    padding-bottom: 10px;
+    margin-top: 50px;
+    background-color: rgba(232, 232, 238, 0.8);
+    backdrop-filter: blur(5px); 
 }
 
 .footer_main{
-     width: 70%;
-     margin: 0 auto;
-     text-align: center;
+    width: 70%;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
 }
 
 .input-group {
@@ -689,8 +692,8 @@ body {
     color: white;
     display: flex;
     justify-content: space-between;
-    padding: 15px 30px;
-    width: 90%; 
+    padding: 15px 0;
+    width: 100%; 
     margin: 0 auto; /* 중앙 정렬 */
     max-width: 1200px; /* 최대 너비 설정 */
     position: fixed;
@@ -757,10 +760,12 @@ body {
     color: white;
     text-align: center;
     padding: 20px 0;
-    position: absolute;
     bottom: 0;
     width: 100%;
+    position: absolute;
+    z-index: 1000;
 }
+
 
 #page-footer .container {
     box-shadow: none; /* 그림자 효과 추가 */
