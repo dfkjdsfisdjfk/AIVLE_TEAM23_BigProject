@@ -226,9 +226,9 @@ button {
     float: left;
 }
 
-#navbarNav {
+/* #navbarNav {
      padding-right: 30px;
-}
+} */
 
 .navbar-light .navbar-nav .nav-link {
     color: #282828;
@@ -255,7 +255,7 @@ button {
      text-align: start;
  }
 
-.banner_section{
+/* .banner_section{
      width: 100%;
      float: left;
      background-image: url('/static/img/banner-bg.png');
@@ -271,7 +271,7 @@ button {
      text-align: center;
      padding-bottom: 40px;
      font-family: Baloo Chettan;
-}
+} */
 
 
 .free_text {
@@ -310,13 +310,13 @@ button {
     background-color: #d102ff;
 }
 
-.bg_main {
+/* .bg_main {
     width: 100%;
     float: left;
     text-align: center;
     position: relative;
     top: -35px;
-}
+} */
 
 .service_section.layout_padding.margin_0 {
     margin: 0px;
@@ -350,12 +350,12 @@ button {
      margin-left: 0px;
 }
 
-.about_bg{
+/* .about_bg{
      width: 100%;
      float: left;
      text-align: center;
      padding-top: 50px;
-}
+} */
 
 .read_bt_main{
      width: 15%;
@@ -558,18 +558,21 @@ button {
 }
 
 .footer_section{
-     width: 100%;
-     float: left;
-     background-image: url('/static/img/footer-bg.png');
-     height: auto;
-     padding-bottom: 30px;
-     margin-top: 50px;
+    width: 100%;
+    float: left;
+    height: auto;
+    padding-bottom: 10px;
+    margin-top: 50px;
+    background-color: rgba(232, 232, 238, 0.8);
+    backdrop-filter: blur(5px); 
 }
 
 .footer_main{
-     width: 70%;
-     margin: 0 auto;
-     text-align: center;
+    width: 70%;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
 }
 
 .input-group {
@@ -689,8 +692,8 @@ body {
     color: white;
     display: flex;
     justify-content: space-between;
-    padding: 15px 30px;
-    width: 90%; 
+    padding: 15px 0;
+    width: 100%; 
     margin: 0 auto; /* 중앙 정렬 */
     max-width: 1200px; /* 최대 너비 설정 */
     position: fixed;
@@ -757,10 +760,12 @@ body {
     color: white;
     text-align: center;
     padding: 20px 0;
-    position: absolute;
     bottom: 0;
     width: 100%;
+    position: absolute;
+    z-index: 1000;
 }
+
 
 #page-footer .container {
     box-shadow: none; /* 그림자 효과 추가 */
@@ -833,4 +838,20 @@ body {
     --breakpoint-xl: 1200px;
     --font-family-sans-serif: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
     --font-family-monospace: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+}
+
+.main_section {
+    /* background-image: url('/static/img/main-background.png'); */
+    /* background-image: url('/static/img/bg6.jpg'); */
+    background-image: url('/static/img/bg7.png');
+    
+    /* 사진 좌우로 사이즈 변경 */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    /* height: 100vh;
+    width: 100%;
+    position: relative;
+    overflow: hidden; */
 }

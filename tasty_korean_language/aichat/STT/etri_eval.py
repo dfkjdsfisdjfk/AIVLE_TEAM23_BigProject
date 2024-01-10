@@ -37,7 +37,7 @@ def etri_eval(origin_text:str,audio,key:str):
     # print("[responBody]")
     # print(str(response.data,"utf-8"))
     
-    # result = json.loads(response.data)['return_object']['score']
-    print(json.loads(response.data))
+    result = json.loads(response.data)['return_object']['score']
+    # print(json.loads(response.data))
     
-    return 'a'
+    return result

@@ -3,6 +3,7 @@ from django.conf import settings
 
 class ChatLog(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    title = models.TextField(default = '제목없음', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     
     

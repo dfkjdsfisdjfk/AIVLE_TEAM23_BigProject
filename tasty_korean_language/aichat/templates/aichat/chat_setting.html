@@ -22,15 +22,22 @@ TKL: AI Chat
         <button type="button" onclick="updateLanguage()">Save</button>
     </form>
 
-    <div>
-        <a href="{% url 'aichat:chat' %}">Start New Chat</a>
-    </div>
+    <form action="{% url 'aichat:chat' %}" method="POST">
+        {% csrf_token %}
+        <label for="titleInput">채팅 제목: </label>
+        <input type="text" id="titleInput" name="title" placeholder="제목 입력">
+
+        <button type="submit">Start New Chat</button>
+    </form>
 
     <div class="container">
         <h3>Chat Log List</h3>
-        <ul class="list-group">
+        <ul class="list-group" style="max-height:300px; overflow-y:scroll;">
             {% for chatlog in chatloglist %}
-                <li class="list-group-item"><a href="{% url 'aichat:chatlog' chatlog.id %}">{{ chatlog.created_at }}</a></li>
+                <li class="list-group-item">
+                    <a href="{% url 'aichat:chatlog' chatlog.id %}">{{ chatlog.title }}</a>
+                    <p>{{ chatlog.created_at }}</p>
+                </li>
             {% endfor %}
         </ul>
     </div>

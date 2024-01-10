@@ -7,6 +7,7 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 
 # from aichat.models import ChatLog, ChatMessage
 from aichat.models import *
@@ -38,6 +39,29 @@ def findID(request):
             except User.DoesNotExist:
                 return JsonResponse({'result': 'User not found'})
     return JsonResponse({}, status=400)
+
+def custom_password_reset(request):
+    return PasswordResetView.as_view(
+        template_name='passsword_reset_form.html',  # 여러분의 템플릿 경로를 제공하세요
+        success_url=reverse_lazy('password_reset_done'),
+        email_template_name='your_email_template.html',  # 선택적으로 사용자 정의 이메일 템플릿을 만들 수 있습니다.
+    )(request)
+
+def custom_password_reset_done(request):
+    return PasswordResetDoneView.as_view(
+        template_name='your_password_reset_done_template.html',  # 여러분의 템플릿 경로를 제공하세요
+    )(request)
+
+def custom_password_reset_confirm(request, uidb64, token):
+    return PasswordResetConfirmView.as_view(
+        template_name='passsword_reset_confirm.html',  # 여러분의 템플릿 경로를 제공하세요
+        success_url=reverse_lazy('password_reset_complete'),
+    )(request, uidb64=uidb64, token=token)
+
+def custom_password_reset_complete(request):
+    return PasswordResetCompleteView.as_view(
+        template_name='your_password_reset_complete_template.html',  # 여러분의 템플릿 경로를 제공하세요
+    )(request)
 
 
 class MyPasswordChangeView(PasswordChangeView) :
