@@ -133,8 +133,7 @@ def send(request, id):
     user_language = request.user.language if request.user.language else 'en'
     translation_client = translate_v2.Client.from_service_account_json("C:\\Users\\user\\Desktop\\chat.json")
     translated_message = translation_client.translate(chat_gpt_response, target_language=user_language)['translatedText']
-    ChatMessage.objects.create(chatlog=chatlog, sender="system", message=chat_gpt_response)
-    ChatMessage.objects.create(chatlog=chatlog, sender="system", message=translated_message)
+    ChatMessage.objects.create(chatlog=chatlog, sender="system", message=chat_gpt_response, translated=translated_message)
     ###################################################################################################################
     
     return redirect('aichat:chatlog', id)
