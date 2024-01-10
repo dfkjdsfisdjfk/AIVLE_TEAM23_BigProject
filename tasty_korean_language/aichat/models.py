@@ -20,6 +20,7 @@ class ChatMessage(models.Model):
 class Feedback(models.Model):
     chatmessage = models.OneToOneField(ChatMessage, on_delete=models.CASCADE)
     accuracy = models.FloatField()
+    accuracy_detail = models.FloatField()
     feedback = models.TextField()
     answer = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
