@@ -6,27 +6,18 @@ TKL: AI Chat
 {% endblock title %}
 
 {% block extrahead %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="{% static 'css/chat_style.css' %}">
 {% endblock extrahead %}
 
 {% block content %}
 <div class="wrapper">
-    <!-- <form id="language-form" method="post">
-        {% csrf_token %}
-        <label for="language-select">Select Language:</label>
-        <select id="language-select" name="language">
-            {% for language_code, language_name in user.LANGUAGE_CHOICES %}
-                <option value={{ language_code }} {% if language_code == user.language %}selected{% endif %}>{{ language_name }}</option>
-            {% endfor %}
-        </select>
-        <button type="button" onclick="updateLanguage()">Save</button>
-    </form> -->
-    
     <div class="new-chat-container"><a id="new-chat" href="{% url 'aichat:chat' %}">New Chat</a></div>
     <div id="chat-box">
         {% for message in messages %}
             {% if message.sender == "system" %}
-                <div class="gpt-chat" onclick="speak(this)">
+                <div class="gpt-chat">
+                    <i class="fa fa-play-circle" style="font-size:24px;" onclick="speak(this)"></i>
                     {{ message }}
                 </div>
             {% else %}
@@ -43,7 +34,10 @@ TKL: AI Chat
     <form id="chat-form" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <input id="text-input" type="text" name="message" placeholder="메시지를 입력하세요">
-        <div id="translated-result" style="margin-top: 10px;" onclick="speak(this)"></div>
+        <div style="margin-top: 10px;">
+            <i class="fa fa-play-circle" style="font-size:24px; display:none;" onclick="speak(this)"></i>
+            <span id="translated-result"></span>
+        </div>
     
         <!-- 녹음 시작, 중지 버튼 추가 -->
         <br>
@@ -58,10 +52,29 @@ TKL: AI Chat
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
     // 시스템 채팅 메시지 TTS
+    let currentUtterance = null;
     function speak(element) {
         const synth = window.speechSynthesis;
-        const utterance = new SpeechSynthesisUtterance($(element).text());
-        synth.speak(utterance);
+        
+        if (currentUtterance && synth.speaking) {
+            synth.cancel(); // 음성 출력 중지
+            currentUtterance = null;
+            $(element).removeClass('fa-stop-circle');
+            $(element).addClass('fa-play-circle');
+        }
+        else {
+            const text = $(element).parent().text();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.onend = function(event) {
+                currentUtterance = null;
+                $(element).removeClass('fa-stop-circle');
+                $(element).addClass('fa-play-circle');
+            };
+            synth.speak(utterance);
+            currentUtterance = utterance;
+            $(element).removeClass('fa-play-circle');
+            $(element).addClass('fa-stop-circle');
+        }
     }
 
     function getCookie(name) {
@@ -80,36 +93,15 @@ TKL: AI Chat
         return cookieValue;
     }
 
-    /* function updateLanguage() {
-        if ($('#chat-section').is(':hidden')){
-            $('#chat-section').show();
-        }
-
-        var language = $('#language-select').val();
-        var csrftoken = getCookie('csrftoken');
-
-        fetch("{% url 'aichat:update_language' %}", {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrftoken,
-            },
-            body: JSON.stringify({ language: language }),
-        })
-        .then(response => {
-            if (response.ok) {
-                alert('Language updated successfully');
-            } else {
-                throw new Error('Failed to update language');
-            }
-        })
-        .catch(error => {
-            alert(error.message);
-        });
-    } */
-
-
     $(document).ready(function(){
+        // 채팅 시작 시 마지막 gpt 대화 메시지 읽어주기
+        setTimeout(() => {
+            speak($('.gpt-chat:last i'));
+          }, 2000)
+
+        // 채팅 스크롤 끝으로 내리기
+        $('#chat-box').scrollTop($('#chat-box')[0].scrollHeight);
+
         let isRecording = false;
 
         if (navigator.mediaDevices){
@@ -152,6 +144,8 @@ TKL: AI Chat
 
                     const audioURL = URL.createObjectURL(blob);
                     $audio.attr('src', audioURL);
+
+                    $('#chat-box').scrollTop($('#chat-box')[0].scrollHeight);
                     
                     // 메시지와 녹음 내용 전송
                     $('#submit').on('click', function(){
@@ -209,6 +203,7 @@ TKL: AI Chat
                             var translatedMessage = data.translated_message;
                             if (translatedMessage) {
                                 $('#translated-result').text(translatedMessage);
+                                $('#chat-form i').show();
                             }
                         },
                         error: function (error) {
@@ -218,6 +213,7 @@ TKL: AI Chat
                 } else {
                         // 입력이 비어있는 경우 번역 결과 지우기
                     $('#translated-result').text('');
+                    $('#chat-form i').hide();
                 }
             });
 
