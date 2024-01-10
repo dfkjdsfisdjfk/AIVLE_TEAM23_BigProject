@@ -92,9 +92,21 @@ def index2(request, id):
     # messages = ChatMessage.objects.filter(chatlog=userchatlog)
     messages_with_feedback = ChatMessage.objects.filter(chatlog=userchatlog).select_related('feedback').all()
     
-    print("index2 성공")
-    
-    return render(request, 'aichat/chat.html', {'messages': messages_with_feedback, 'id': id})
+    # Feedback 단어쌍 처리
+    feedback_list = []
+    for message in messages_with_feedback:
+        if hasattr(message, 'feedback'):
+            feedback_message = message.feedback.feedback
+            if feedback_message:
+                feedback = feedback_message.split(', ')
+                feedback = list(zip(feedback[::2], feedback[1::2]))
+            else:
+                feedback = []
+            feedback_list.append(feedback)
+        else:
+            feedback_list.append([])
+        
+    return render(request, 'aichat/chat.html', {'messages': zip(messages_with_feedback, feedback_list), 'id': id})
 
 @login_required
 def send(request, id):
