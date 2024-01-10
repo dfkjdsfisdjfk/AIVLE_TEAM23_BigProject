@@ -22,23 +22,13 @@ TKL: AI Chat
         <button type="button" onclick="updateLanguage()">Save</button>
     </form>
 
-    <div>
-        <label for="roomInput">채팅 제목: </label>
-        <input type="text" id="titleInput" placeholder="제목 입력">
+    <form action="{% url 'aichat:chat' %}" method="POST">
+        {% csrf_token %}
+        <label for="titleInput">채팅 제목: </label>
+        <input type="text" id="titleInput" name="title" placeholder="제목 입력">
 
-        <a href="#" id="startChatLink">Start New Chat</a>
-
-        {% comment %} <a href="{% url 'aichat:chat' %}">Start New Chat</a> {% endcomment %}
-
-        <script>
-            // JavaScript to dynamically update the link
-            document.getElementById('startChatLink').addEventListener('click', function() {
-                var roomInputValue = document.getElementById('titleInput').value || '제목 없음';
-                var link = "{% url 'aichat:chat' title=0 %}".replace('0', roomInputValue);
-                window.location.href = link;
-            });
-        </script>
-    </div>
+        <button type="submit">Start New Chat</button>
+    </form>
 
     <div class="container">
         <h3>Chat Log List</h3>

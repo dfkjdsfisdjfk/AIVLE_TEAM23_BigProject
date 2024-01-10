@@ -64,15 +64,18 @@ def chatsetting(request):
 
 
 @login_required
-def index(request, title):
-    print(title)
-    chatlog = ChatLog.objects.create(user=request.user, title=title)
-    
-    
-    initial_gpt_message = get_chat_gpt_response("이야기!")  # 초기 메시지를 GPT에 전달
-    ChatMessage.objects.create(chatlog=chatlog, sender="system", message=initial_gpt_message)
-    
-    return redirect('aichat:chatlog', chatlog.id)
+def index(request):
+    if request.method == 'POST':
+        title = request.POST['title']
+        if (title != ''):
+            chatlog = ChatLog.objects.create(user=request.user, title=title)
+        else:
+            chatlog = ChatLog.objects.create(user=request.user)
+        
+        initial_gpt_message = get_chat_gpt_response("이야기!")  # 초기 메시지를 GPT에 전달
+        ChatMessage.objects.create(chatlog=chatlog, sender="system", message=initial_gpt_message)
+        
+        return redirect('aichat:chatlog', chatlog.id)
     # return render(request, 'aichat/chat.html', {'messages': '', 'id': chatlog.id})
 
 @login_required

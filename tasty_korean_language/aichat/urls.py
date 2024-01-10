@@ -6,7 +6,7 @@ app_name = 'aichat'
 
 urlpatterns = [   
     # path('chat/', TemplateView.as_view(template_name='aichat/chat.html'), name='chat'),  
-    path('<str:title>/', views.index, name='chat'),
+    path('', views.index, name='chat'),
     path('setting/', views.chatsetting, name='chatsetting'),
     path('<int:id>/', views.index2, name='chatlog'),
     path('send/<int:id>/', views.send, name='send'),
