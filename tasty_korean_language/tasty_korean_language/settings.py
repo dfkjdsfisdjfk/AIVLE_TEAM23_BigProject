@@ -118,6 +118,15 @@ ETRI_API_KEY = secrets["ETRI_API_KEY"]
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'kt-aivle-584f12b40238.json'
 
+
+# Email 전송
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = secrets["HOST_EMAIL"]
+EMAIL_HOST_PASSWORD = secrets["EMAIL_PASSWORD"]
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 ################################################################
 
 
@@ -200,7 +209,7 @@ LOGOUT_REDIRECT_URL = None
 
 LOGIN_URL = '/accounts/login/'
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
