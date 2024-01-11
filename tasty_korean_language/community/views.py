@@ -5,7 +5,7 @@ from .models import Post
 from .forms import PostForm
 
 
-def test1(request):
+def show_list(request):
     # tmp_list = [{'name':[1], 'content':[1]},{'name':[2], 'content':[2]},{'name':[3], 'content':[3]}] * 3
     tmp_list = Post.objects.all()
     page = request.GET.get('page',1)
@@ -28,9 +28,9 @@ def test1(request):
     # print(Post.objects.all()[0])
 
     
-    return render(request, 'community/community.html', contents)
+    return render(request, 'community/community_list.html', contents)
 
-def posting(request, pk):
+def detail(request, pk):
     
     post = Post.objects.get(pk=pk)
     print(request.user)

@@ -1,11 +1,19 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}Tasty Korean Language{% endblock title %}
+
+{% block extrahead %}
+<style>
+    .main_section {
+        background-image: url('/static/img/bg29.jpg');
+    }
+</style>
+{% endblock extrahead %}
+
 {% block content %}
 <main>
     <div class="content-area">
         <div class="service-description">
-            {% comment %} <body style="background-image: url('{% static 'img/test4.png' %}');"> {% endcomment %}            
             <body>
                 <h1 class="banner_taital">Tasty Korean Language </h1>
                 <h2>  한국어를 쉽고 재미있게 배우는 첫걸음
