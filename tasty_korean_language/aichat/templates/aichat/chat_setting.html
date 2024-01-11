@@ -13,13 +13,13 @@ TKL: AI Chat
 <div class="wrapper" style="min-height: 500px;">
     <form id="language-form" method="post">
         {% csrf_token %}
-        <label for="language-select">Select Language:</label>
+        <label for="language-select">언어 설정:</label>
         <select id="language-select" name="language">
             {% for language_code, language_name in user.LANGUAGE_CHOICES %}
                 <option value={{ language_code }} {% if language_code == user.language %}selected{% endif %}>{{ language_name }}</option>
             {% endfor %}
         </select>
-        <button type="button" onclick="updateLanguage()">Save</button>
+        <button type="button" onclick="updateLanguage()">저장</button>
     </form>
 
     <form action="{% url 'aichat:chat' %}" method="POST">
@@ -27,11 +27,11 @@ TKL: AI Chat
         <label for="titleInput">채팅 제목: </label>
         <input type="text" id="titleInput" name="title" placeholder="제목 입력">
 
-        <button type="submit">Start New Chat</button>
+        <button type="submit">새로운 채팅</button>
     </form>
 
-    <div class="container">
-        <h3>Chat Log List</h3>
+    <div class="container_chat">
+        <h3>채팅 기록</h3>
         <ul class="list-group" style="max-height:300px; overflow-y:scroll;">
             {% for chatlog in chatloglist %}
                 <li class="list-group-item">

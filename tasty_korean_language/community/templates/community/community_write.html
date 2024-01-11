@@ -11,12 +11,23 @@
 
 {% block content %}
     <div class="content">
-        <body style="background-image: url('{% static 'img/test4.png' %}');">
         <form action="" method="post">
-
             {% csrf_token %}
             <table>
-                {{form.as_table}}
+                <tbody>
+                    <tr>
+                        <td class="td_title" style="text-align:center; width:20%;">제목</td>
+                        <td style="padding:10px;">
+                            <span>{{ form.title }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td_title" style="text-align:center; width:20%;">내용</td>
+                        <td style="padding:10px;">
+                            <span>{{ form.contents }}</span>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
 
             <input type="submit" value="등록">
