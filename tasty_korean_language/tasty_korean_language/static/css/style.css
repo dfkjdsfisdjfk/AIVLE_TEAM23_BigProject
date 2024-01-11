@@ -208,10 +208,10 @@ button {
      width: 100%;
 }
 
-.layout_padding {
+/* .layout_padding {
      padding-top: 30px;
      padding-bottom: 0px;
-}
+} */
 
 .padding_0{
      padding: 0px;
@@ -561,8 +561,8 @@ button {
     width: 100%;
     float: left;
     height: auto;
-    padding-bottom: 10px;
-    margin-top: 50px;
+    /* padding-bottom: 10px; */
+    /* margin-top: 50px; */
     background-color: rgba(232, 232, 238, 0.8);
     backdrop-filter: blur(5px); 
 }
@@ -688,19 +688,26 @@ body {
 }
 
 .navbar {
-    background-color: #333366; /* 진한 색상 유지 */
+    /* background-color: #3b5998; 진한 색상 유지 */
+    
+    /* 그라데이션 */
+    /* background-color: #820cdb; */
+    
+    /* background-image: linear-gradient(90deg, #83B7C4, #343e40);  */
+    background-image: linear-gradient(to right, #90C0CA, #72ABB6);
     color: white;
     display: flex;
     justify-content: space-between;
-    padding: 15px 0;
+    padding: 15px 100px;
     width: 100%; 
     margin: 0 auto; /* 중앙 정렬 */
-    max-width: 1200px; /* 최대 너비 설정 */
+    /* max-width: 1200px; 최대 너비 설정 */
     position: fixed;
     top: 0;
     left: 50%;
     transform: translateX(-50%); /* 중앙에 위치하도록 조정 */
     z-index: 1000;
+    height: 70px;
 }
 
 .navbar .logo {
@@ -843,12 +850,40 @@ body {
 .main_section {
     /* background-image: url('/static/img/main-background.png'); */
     /* background-image: url('/static/img/bg6.jpg'); */
-    background-image: url('/static/img/bg7.png');
+    background-image: url('/static/img/bg29.jpg');
     
-    /* 사진 좌우로 사이즈 변경 */
-    background-size: cover;
+    /* navbar와 footer 사이의 빈 공간 */
+    /* height: 100vh; */
+    margin-top: 70px;
+    min-height: 100vh;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+
+
+    /* 이미지 아래로 고정 */
+    background-attachment: fixed;
     background-position: center;
-    background-repeat: no-repeat;
+    /* background-repeat: no-repeat; */
+    background-size: cover;
+
+    /* background-position: center; */
+    /* background-repeat:initial; */
+    
+    /* 대칭으로 반복 */
+    background-repeat: repeat;
+
+
+
+    /* background-size: cover; */
+
+
+
+    /* 사진 좌우로 사이즈 변경 */
+    /* background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; */
 
     /* height: 100vh;
     width: 100%;
