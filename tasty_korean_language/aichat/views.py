@@ -75,7 +75,7 @@ def index(request):
         else:
             chatlog = ChatLog.objects.create(user=request.user)
         
-        initial_gpt_message = get_chat_gpt_response("여행에 대해 얘기하자", 'ko')
+        initial_gpt_message = get_chat_gpt_response("말하기 쉬운 주제로 얘기하자", 'ko')
     
         translation_client = translate_v2.Client.from_service_account_json("C:\\Users\\user\\Desktop\\chat.json")
         trans_initial_gpt_message = translation_client.translate(initial_gpt_message, target_language=request.user.language)['translatedText']
@@ -203,7 +203,14 @@ def get_chat_gpt_response(message, lang):
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "I am small talker."},
+            {"role": "system", "content": """당신은 다정하고 친절하며 조용한 사람입니다.
+                                             먼저, 구체적인 주제를 선정하여 이야기를 나누어 보세요.
+                                             상대방이 어떤 주제에 관해 이야기하든 친절하게 대답해야 합니다.
+                                             가능하다면 이어지는 주제에 대해 계속 이야기를 나누되, 상대방의 대답으로 대화가 이어지지 않는다면 먼저 새로운 주제를 제안해보세요.
+                                             무조건 2문장 안으로 말하고 간결하게 20단어 이내로 말하세요.
+                                             짧고 간결하게 작성하세요.
+                                             무조건 질문 하나만 하세요.
+                                             항상 한국어로 대답하세요."""},
             {"role": "user", "content": message}
         ]
     )
