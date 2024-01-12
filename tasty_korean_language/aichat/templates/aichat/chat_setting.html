@@ -25,7 +25,7 @@ TKL: AI Chat
         <button class="btn btn-primary btn-lg bt1" type="button" onclick="updateLanguage()">저장</button>
     </form>
 
-    <br><hr>
+    <br><hr class="hr1">
     
     <form id="theme-form" action="{% url 'aichat:chat' %}" method="POST">
         <h3>채팅 제목</h3>
@@ -37,7 +37,7 @@ TKL: AI Chat
 
     {% comment %} <button class="btn btn-primary btn-lg chat-setting-btn" type="button" onclick="submitForms()">새 채팅 시작</button> {% endcomment %}
 
-    <hr>
+    <hr class="hr2">
     
     <div class="container chat_log_list">
         <h3>채팅 기록</h3>

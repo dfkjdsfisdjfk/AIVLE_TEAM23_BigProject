@@ -929,3 +929,9 @@ body {
     padding-top: 8px;
 
 }
+
+
+.navbar-expand-lg {
+    margin: 0 auto;
+    padding: 0 100px;
+}
