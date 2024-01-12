@@ -1,21 +1,30 @@
+/*----------- import Fonts -------------*/
+@import url('https://fonts.googleapis.com/css2?family=Orbit&display=swap');
+
+/*======================================*/
+
 .wrapper {
-    width: 90%;
-    margin: 30px auto;
+    width: calc(100% - 100px);
+    margin: 0 auto;
+    padding: 30px 50px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
     text-align: center;
+    color: #333;
+    font-family: 'Orbit', sans-serif;
 }
 
 .new-chat-container {
     width: 100%;
     margin: 10px auto;
-    text-align: end;
+    text-align: left;
 }
 
 #new-chat {
     width: fit-content;
     padding: 5px 10px;
     margin: 0 0 0 auto;
-    background-color: #48485C;
-    border: 1px solid #48485C;
+    background-color: #89cdd6;
     border-radius: 5px;
     text-decoration: none;
     color: white;
@@ -23,9 +32,8 @@
 }
 
 #new-chat:hover {
-    opacity: 0.8;
+    background-color: #79bdc6;
 }
-
 #chat-box {
     height: 500px;
     margin: 0 auto;
@@ -36,39 +44,53 @@
 }
 
 audio::-webkit-media-controls-panel {
-    background-color: #86F774;
+    background-color: #aae7dd;
   }
 
-#chat-box > .gpt-chat {
+.gpt-chat, .user-chat {
     width: fit-content;
     max-width: 60%;
-    margin: 10px auto 0px 7px;
-    padding: 3px 10px;
-    border: 1px solid #cccccc;
+    padding: 5px 10px;
     border-radius: 12px;
-    background-color: #cccccc;
     font-size: 14px;
     text-align: start;
 }
 
-#chat-box > .user-chat {
-    width: fit-content;
-    max-width: 60%;
-    margin: 10px 7px 0px auto;
-    padding: 3px 10px;
-    border: 1px solid #86F774;
-    border-radius: 12px;
-    background-color: #86F774;
-    font-size: 14px;
-    text-align: start;
+.gpt-chat {
+    margin: 10px auto 10px 10px;
+    border: 1px solid #dddddd;
+    background-color: #dddddd;
+}
+
+.user-chat {
+    margin: 10px 10px 10px auto;
+    border: 1px solid #aae7dd;
+    background-color: #aae7dd;
+}
+
+.chat-msg i, .chat-msg span {
+    vertical-align: middle;
+}
+
+#chat-box i, #chat-form i {
+    color: #48485C;
+}
+
+#chat-box i:hover, #chat-form i:hover {
+    color: #2e2e36;
+}
+
+#chat-box hr {
+    margin: 5px;
 }
 
 #text-input {
-    width: calc(100% - 100px);
+    width: 100%;
+    margin-top: 10px;
     padding: 5px 10px;
     border-radius: 10px;
     border-color: #cccccc;
-    background-color: #fafafa;
+    background-color: #ffffff;
     font-size: 14px;
 }
 
@@ -81,7 +103,7 @@ audio::-webkit-media-controls-panel {
     height: 70px;
     margin: 15px auto;
     border: none;
-    background-color: white;
+    background-color: transparent;
     background-image: url('/static/img/icon_record_start.svg');
     transition: all ease-out 0.2s 0s;
 }
@@ -94,46 +116,50 @@ audio::-webkit-media-controls-panel {
     background-image: url('/static/img/icon_record_stop.svg');
 }
 
-.container_chat {
-    /* background-color: antiquewhite; */
-    /* background 투명도 20 */
-    /* background: rgba(236, 227, 227, 0.95); */
-    background: rgba(255, 255, 255, 0.92);
+#reset_record {
+    min-width: 110px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+}
+
+#reset_record:hover {
+    background-color: #ddd;
+}
+
+#submit {
+    min-width: 110px;
+    padding: 5px 10px;
+    margin-top: 10px;
+    border-radius: 0;
+    box-shadow: none;
+}
 
 
-    font-family: Arial;
-    overflow: hidden;
-    /* 가장자리 */
-    /* border-radius: 25px; */
-    border-radius: 10px;
-
-    /* 그림자 */
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
-
-
-    margin-top: 3%;
-    margin-left: 0%;
-    /* font-size: 28px; */
-    /* padding: 10px 20px; */
-    padding: 10px 20px;
-    /* padding: 5% 10%; */
+#feedback-btn{
     width: 100%;
-    min-height: 500px;
+    text-align: center;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
-.list-group {
-    background-color: #fff;
-    border-radius: 18px;
-    box-shadow: 1px 1px 8px 0 grey;
-    height: auto;
-    margin-bottom: 20px;
-    padding: 20px 0 20px 50px;
+.feedback {
+    padding: 10px 12px;
+    font-size: 13px;
+    border-radius: 0px 0px 4px 4px;
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
-.list-group table {
-    border: none;
-    font-size: 16px;
-    /* height: 270px; */
-    height: 180px;
-    width: 80%;
+.feedback div {
+    width: fit-content;
+    margin: 0 auto;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+#feedback-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+#feedback-btn i, #feedback-btn span {
+    vertical-align: middle;
 }

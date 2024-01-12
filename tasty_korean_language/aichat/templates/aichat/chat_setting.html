@@ -22,30 +22,36 @@ TKL: AI Chat
                 <option value={{ language_code }} {% if language_code == user.language %}selected{% endif %}>{{ language_name }}</option>
             {% endfor %}
         </select>
-        {% comment %} <button class="btn btn-primary btn-lg bt1" type="button" onclick="updateLanguage()">저장</button> {% endcomment %}
+        <button class="btn btn-primary btn-lg bt1" type="button" onclick="updateLanguage()">저장</button>
     </form>
 
+    <br><hr>
     
     <form id="theme-form" action="{% url 'aichat:chat' %}" method="POST">
         <h3>채팅 제목</h3>
         {% csrf_token %}
         {% comment %} <label for="titleInput">채팅 제목</label> {% endcomment %}
-        <input type="text" id="titleInput" name="title" placeholder="  제목 입력">
-        {% comment %} <button class="btn btn-primary btn-lg bt2" type="submit" >채팅 시작</button> {% endcomment %}
+        <input type="text" id="titleInput" name="title" placeholder="제목 입력">
+        <button class="btn btn-primary btn-lg bt2 chat-setting-btn" type="submit" >채팅 시작</button>
     </form>
 
-    <button class="btn btn-primary btn-lg chat-setting-btn" type="button" onclick="submitForms()">채팅 시작</button>
+    {% comment %} <button class="btn btn-primary btn-lg chat-setting-btn" type="button" onclick="submitForms()">새 채팅 시작</button> {% endcomment %}
 
+    <hr>
     
     <div class="container chat_log_list">
         <h3>채팅 기록</h3>
-        <ul class="list-group" style="max-height:300px; overflow-y:scroll;">
-            {% for chatlog in chatloglist %}
-                <li class="list-group-item">
-                    <a href="{% url 'aichat:chatlog' chatlog.id %}">{{ chatlog.title }}</a>
-                    <p>{{ chatlog.created_at }}</p>
-                </li>
-            {% endfor %}
+        <ul class="list-group">
+            {% if chatloglist %}
+                {% for chatlog in chatloglist %}
+                    <li class="list-group-item">
+                        <a href="{% url 'aichat:chatlog' chatlog.id %}">{{ chatlog.title }}</a>
+                        <div>{{ chatlog.created_at }}<div>
+                    </li>
+                {% endfor %}
+            {% else %}
+                대화한 내역이 없습니다.
+            {% endif %}
         </ul>
     </div>
 </div>
@@ -95,7 +101,7 @@ TKL: AI Chat
 </script>
 
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+{% comment %} <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     function submitForms() {
         // Assuming you have added IDs to your forms: language-form and theme-form
@@ -106,5 +112,5 @@ TKL: AI Chat
         updateLanguage();
         themeForm.submit();
     }
-</script>
+</script> {% endcomment %}
 {% endblock content %}
