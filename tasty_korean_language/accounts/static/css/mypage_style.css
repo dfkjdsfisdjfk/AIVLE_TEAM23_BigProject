@@ -11,26 +11,6 @@
     font-family: 'Noto Sans KR', sans-serif;
 }
 
-
-/* .title {
-    font-family: 'Dancing Script', cursive;
-    padding-top: 15px;
-    position: absolute;
-    left: 45%;
-}
-
-.icon-count {
-    background-color: #ff0000;
-    color: #fff;
-    float: right;
-    font-size: 11px;
-    left: -25px;
-    padding: 2px;
-    position: relative;
-} */
-
-/* End */
-
 /* Sidenav */
 .sidenav {
     background-color: #fff;
@@ -96,8 +76,7 @@
 
 /* End */
 .scrollable-list {
-    max-height: 300px; /* Adjust the height as needed */
-    /* 스크롤 안보이게 */
+    max-height: 300px;
     overflow-y: auto;
 
 }
@@ -114,23 +93,14 @@
 
 /* Main */
 .main {
-    /* background-color: antiquewhite; */
-    /* background: rgba(236, 227, 227, 0.95); */
     background: rgba(255, 255, 255, 0.92);
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
-
     overflow: hidden;
-    /* 가장자리 */
     border-radius: 10px;
-
     margin: 30px auto 0 auto;
     padding: 30px 50px;
-
     margin-top: 3%;
     margin-left: 0%;
-    /* font-size: 28px; */
-    /* padding: 10px 20px; */
-    /* padding: 5% 10%; */
     width: 100%;
 }
 
@@ -144,7 +114,6 @@
 }
 
 .main .card {
-    /* background: rgba(242, 241, 241, 0.92); */
     background: rgba(242, 241, 241);
     border-radius: 18px;
     height: auto;
@@ -157,7 +126,6 @@
 .main .card table {
     border: none;
     font-size: 16px;
-    /* height: 270px; */
     height: 180px;
     width: 80%;
 }

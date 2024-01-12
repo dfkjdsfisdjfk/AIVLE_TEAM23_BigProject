@@ -20,8 +20,6 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 	<!-- Responsive-->
 	<link rel="stylesheet" href="{% static 'css/responsive.css' %}">
-	<!-- fevicon -->
-	{% comment %} <link rel="icon" href="{% static 'img/fevicon.png' %}" type="image/gif" /> {% endcomment %}
 	<!-- Scrollbar Custom CSS -->
 	<link rel="stylesheet" href="{% static 'css/jquery.mCustomScrollbar.min.css' %}">
 	<!-- Tweaks for older IEs-->
@@ -33,9 +31,7 @@
 	<!--header section start -->
 	<div class="header_section">
 		<div class="container-fluid">
-			{% comment %} <nav class="navbar navbar-expand-lg navbar-light bg-light"> {% endcomment %}
             <nav class="navbar navbar-expand-lg navbar-light">
-                {% comment %} <div class="logo"><a href="{% url 'home' %}"><img src="{% static 'img/test10.png' %}"></a></div> {% endcomment %}
                 <div class="logo"><a href="{% url 'home' %}"><img src="{% static 'img/logo03.png' %}"></a></div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -66,7 +62,6 @@
                                 <form method="post" action="{% url 'logout' %}?next={{request.path}}">
                                     {% csrf_token %}
                                     <input class="nav-link" type="submit" value="로그아웃">
-                                    {% comment %} <input type="submit" value="로그아웃"> {% endcomment %}
                                 </form>
                             </li>
                         {% endif %}

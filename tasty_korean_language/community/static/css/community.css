@@ -10,28 +10,14 @@
 
 
 .content {
-    /* background-color: antiquewhite; */
-    /* background 투명도 20 */
-    /* background: rgba(236, 227, 227, 0.95); */
     background: rgba(255, 255, 255, 0.92);
-
-
     font-family: Arial;
     overflow: hidden;
-    /* 가장자리 */
-    /* border-radius: 25px; */
     border-radius: 10px;
-
-    /* 그림자 */
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
-
     padding: 30px 50px;
-
     margin-top: 3%;
     margin-left: 0%;
-    /* font-size: 28px; */
-    /* padding: 10px 20px; */
-    /* padding: 5% 10%; */
     width: 100%;
     min-height: 500px;
 }
@@ -58,10 +44,6 @@ h1 {
 .write_btn:hover {
     color: #fff;
 }
-
-    /* .grey { 
-     color: #727272;}
-     #strong { font-weight: 900;} */
 
 table {
     width: 100%;
@@ -134,33 +116,3 @@ td input, td textarea {
     padding:20px 30px; 
     text-align: center;
 }
-
-
-/* .greylist {
-width: 50px;
-height: 30px;
-font-weight: 900;
-color: white;
-text-align: center;
-background: grey;
-border: solid 2px white;
-border-radius: 5px;
-}
-
-.gradient {
-width: 80px;
-height: 30px;
-font-weight: 900;
-color: white;
-text-align: center;
-background: linear-gradient( to bottom, grey, black );
-border: solid 2px white;
-border-radius: 5px;
-}
-
-.left {text-align: left;}
-.right {  float: right;}
-.center { text-align: center;}
-
-a {color:black;
-text-decoration-line : none;} */

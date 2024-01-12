@@ -23,9 +23,6 @@ class SignupForm(UserCreationForm):
                 'invalid': ('유효한 이메일 주소를 입력하세요.'),
             }
         )
-        
-        # phone_number = forms.CharField()
-        # address = forms.CharField()
 
         class Meta(UserCreationForm.Meta):
             model = get_user_model()

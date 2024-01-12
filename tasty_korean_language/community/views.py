@@ -6,7 +6,6 @@ from .forms import PostForm
 
 
 def show_list(request):
-    # tmp_list = [{'name':[1], 'content':[1]},{'name':[2], 'content':[2]},{'name':[3], 'content':[3]}] * 3
     tmp_list = Post.objects.all().order_by('-create_date')
     page = request.GET.get('page',1)
     paginator = Paginator(tmp_list, 10)
@@ -24,9 +23,6 @@ def show_list(request):
         'page_paginator' : paginator,
         'pages' : pages,
     }
-    
-    # print(Post.objects.all()[0])
-
     
     return render(request, 'community/community_list.html', contents)
 

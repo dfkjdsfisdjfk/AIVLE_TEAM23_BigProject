@@ -13,7 +13,6 @@
 
 <div class = "content">
     <div class = "header">
-        {% comment %} <body style="background-image: url('{% static 'img/test4.png' %}');"> {% endcomment %}
         <h1>게시판</h1>
         <hr class ="hr1" noshade>
     </div>
@@ -26,7 +25,6 @@
             <tr>
                 <td class="td_title" style="text-align:center; width:20%;">제목</td>
                 <td style="padding:10px;">
-                    {% comment %} <input type="text" name="title" id="title" value="{{ post.title }}" readonly/> {% endcomment %}
                     <span>{{ post.title }}</span>
                 </td>
             </tr>
@@ -45,7 +43,6 @@
             <tr>
                 <td class="td_title" style="text-align:center;">내용</td>
                 <td style="padding:10px; height:300px;">
-                    {% comment %} <textarea name="detail" id="detail" rows="10" readonly>{{ post.contents }}</textarea> {% endcomment %}
                     <span>{{ post.contents }}</span>
                 </td>
             </tr>

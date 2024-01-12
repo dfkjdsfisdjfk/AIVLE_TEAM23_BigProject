@@ -12,7 +12,6 @@ TKL: AI Chat
 
 {% block content %}
 <div class="wrapper" style="min-height: 500px;">
-    {% comment %} <label for="language-select">언어설정</label> {% endcomment %}
     
     <form id="language-form" method="post">
         <h3>언어 설정</h3>
@@ -30,12 +29,9 @@ TKL: AI Chat
     <form id="theme-form" action="{% url 'aichat:chat' %}" method="POST">
         <h3>채팅 제목</h3>
         {% csrf_token %}
-        {% comment %} <label for="titleInput">채팅 제목</label> {% endcomment %}
         <input type="text" id="titleInput" name="title" placeholder="제목 입력">
         <button class="btn btn-primary btn-lg bt2 chat-setting-btn" type="submit" >채팅 시작</button>
     </form>
-
-    {% comment %} <button class="btn btn-primary btn-lg chat-setting-btn" type="button" onclick="submitForms()">새 채팅 시작</button> {% endcomment %}
 
     <hr class="hr2">
     
@@ -100,17 +96,4 @@ TKL: AI Chat
     }
 </script>
 
-
-{% comment %} <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
-    function submitForms() {
-        // Assuming you have added IDs to your forms: language-form and theme-form
-        var languageForm = $('#language-form');
-        var themeForm = $('#theme-form');
-
-        // Submit both forms
-        updateLanguage();
-        themeForm.submit();
-    }
-</script> {% endcomment %}
 {% endblock content %}

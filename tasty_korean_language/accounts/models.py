@@ -19,20 +19,6 @@ class User(AbstractUser):
     language = models.CharField(choices=LANGUAGE_CHOICES, max_length=2, default="en")
 
 
-# class Profile(models.Model):
-#     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-#     phone_number = models.CharField(max_length=20)
-#     address = models.CharField(max_length=50)
-
-
-# def on_send_mail(sender, **kwargs):
-#     if kwargs['created'] :
-#         user = kwargs['instance']
-#         send_mail('가입인사','가입을 환영합니다.', 'admin@sky.com', [user.email], fail_silently=False)
-        
-
-# post_save.connect(on_send_mail, sender=settings.AUTH_USER_MODEL)
-
 from django.contrib.sessions.backends.db import SessionStore
 from django.contrib.auth.signals import user_logged_in
 

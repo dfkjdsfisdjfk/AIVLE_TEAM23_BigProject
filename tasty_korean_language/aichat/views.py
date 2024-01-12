@@ -13,7 +13,7 @@ from django.conf import settings
 from google.cloud import speech
 
 from django.conf import settings
-from django.core.files.storage import FileSystemStorage, default_storage, Storage
+from django.core.files.storage import default_storage
 
 import urllib3
 import json
@@ -21,7 +21,6 @@ import base64
 import librosa
 import numpy as np
 
-import random
 
 from pydub import AudioSegment
 
@@ -89,7 +88,6 @@ def index(request):
 def index2(request, id):
     userchatlog = ChatLog.objects.get(id=id)
     
-    # messages = ChatMessage.objects.filter(chatlog=userchatlog)
     messages_with_feedback = ChatMessage.objects.filter(chatlog=userchatlog).select_related('feedback').all()
     
     
@@ -220,49 +218,6 @@ def get_chat_gpt_response(message, lang):
     return response
 
 
-# # def get_pronunciation_feedback(origin_text:str,audio):
-# def get_pronunciation_feedback(origin_text,audio,sender,last_chatmessage_id):
-#     # etri 키 불러오기
-#     key = settings.ETRI_API_KEY
-#     audioFilePath = ".\\media\\" + sender + "\\" + str(last_chatmessage_id) + ".webm"
-    
-#     # make dir
-#     current_path = os.getcwd()
-#     if not os.path.exists(current_path + "\\media\\" + sender + "_transformed"):
-#         os.mkdir(current_path + "\\media\\" + sender + "_transformed")
-    
-#     saveFilePath = ".\\media\\" + sender + "_transformed" + "\\" + str(last_chatmessage_id) + ".wav"
-
-    
-#     webm = AudioSegment.from_file(audioFilePath, format="webm")
-#     print(2)
-#     webm.export(saveFilePath, format="wav")
-    
-#     # 평가 모듈을 사용하여 평가
-#     STT_result, hug_acc = hug_stt_acc(origin_text, saveFilePath)
-#     stt_etri = etri_stt(saveFilePath,key)
-#     etri_score = etri_eval(origin_text,saveFilePath,key)
-#     compare_lt = compare(origin_text, STT_result)
-#     to_compare_lt_str = ", ".join(sum(compare_lt, []))
-    
-#     print(STT_result)
-#     print(stt_etri)
-#     print(hug_acc)
-#     print(etri_score)
-#     print(compare_lt)
-    
-    
-#     return hug_acc, etri_score, to_compare_lt_str
-
-
-###############################################################################################
-
-
-
-
-
-
-
 
 
 #####################chatlog list#####################
@@ -281,135 +236,3 @@ class ChatLogListView(ListView):
         # Add any additional context data if needed
         return context
 
-
-
-
-# def get_pronunciation_feedback(origin_text,audio,sender,last_chatmessage_id):   # def get_pronunciation_feedback(origin_text:str,audio):
-#     # etri 키 불러오기
-#     key = settings.ETRI_API_KEY
-#     ## openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/Pronunciation" # 영어
-#     # openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/PronunciationKor" # 한국어
-
-#     # accessKey = key
-#     # languageCode = "korean"
-#     # script = origin_text
-
-#     audioFilePath = ".\\media\\" + sender + "\\" + str(last_chatmessage_id) + ".webm"
-    
-#     # make dir
-#     current_path = os.getcwd()
-#     if not os.path.exists(current_path + "\\media\\" + sender + "_transformed"):
-#         os.mkdir(current_path + "\\media\\" + sender + "_transformed")
-    
-#     config = speech.RecognitionConfig(
-#         encoding=speech.RecognitionConfig.AudioEncoding.MP3,
-#         sample_rate_hertz=36000,
-#         language_code="ko-KR",
-#     )
-    
-#     operation = client.long_running_recognize(config=config, audio=audio)
-    
-#     print("Waiting for operation to complete...")
-#     response = operation.result(timeout=90)
-    
-#     print(response)
-    
-#     # for result in response.results:
-#     #     print("Transcript: {}".format(result.alternatives[0].transcript))
-    
-    
-#     return response.results[0].alternatives[0].transcript
-        
-
-
-
-
-# def get_pronunciation_feedback(origin_text,audio,sender,last_chatmessage_id):   # def get_pronunciation_feedback(origin_text:str,audio):
-#     # etri 키 불러오기
-#     key = settings.ETRI_API_KEY
-#     ## openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/Pronunciation" # 영어
-#     # openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/PronunciationKor" # 한국어
-
-#     # accessKey = key
-#     # languageCode = "korean"
-#     # script = origin_text
-
-#     audioFilePath = ".\\media\\" + sender + "\\" + str(last_chatmessage_id) + ".webm"
-    
-#     # make dir
-#     current_path = os.getcwd()
-#     if not os.path.exists(current_path + "\\media\\" + sender + "_transformed"):
-#         os.mkdir(current_path + "\\media\\" + sender + "_transformed")
-    
-#     saveFilePath = ".\\media\\" + sender + "_transformed" + "\\" + str(last_chatmessage_id) + ".wav"
-
-#     # audio_data = audio.read()
-#     # with open(audioFilePath, 'rb') as file:
-#     #     file = file.read()
-    
-#     webm = AudioSegment.from_file(audioFilePath, format="webm")
-#     print(2)
-#     webm.export(saveFilePath, format="wav")
-    
-    
-#     #     # r, _ = librosa.load(saveFilePath, sr=16000)
-#     # pcm = (librosa.load(saveFilePath, sr=16000)[0] * 32767).astype(np.int16)
-#     # audioContents = base64.b64encode(pcm).decode('utf8')
-
-#     # # pcm = (librosa.load(audioFilePath, sr=16000)[0] * 32767).astype(np.int16)
-#     # # pcm = np.frombuffer(file, dtype=np.int16)
-#     # # pcm = np.frombuffer(audio_data, dtype=np.int16)
-#     # # file = audio.read()
-#     # # file = np.frombuffer(audio.read(),dtype=np.int16)
-
-#     # # file = open(audioFilePath, "rb")
-#     # # file = open(audio, "rb")
-#     # # audioContents = base64.b64encode(pcm).decode("utf8")
-
-#     # # audioContents = base64.b64encode(audio.read()).decode("utf8")
-
-#     # requestJson = {   
-#     #     "argument": {
-#     #         "language_code": languageCode,
-#     #         "script": script,
-#     #         "audio": audioContents
-#     #     }
-#     # }
-
-#     # http = urllib3.PoolManager()
-#     # print("http시작")
-#     # response = http.request(
-#     #     "POST",
-#     #     openApiURL,
-#     #     headers={"Content-Type": "application/json; charset=UTF-8","Authorization": accessKey},
-#     #     body=json.dumps(requestJson)
-#     # )
-#     # print("http끝")
-
-#     # # print("[responseCode] " + str(response.status)) # 응답 코드 필요하다면 사용
-#     # # print("[responBody]")
-#     # # print(str(response.data,"utf-8"))
-
-#     # # result = json.loads(response.data)['return_object']['score']
-    
-#     #     print(response.data)
-#     # print(json.loads(response.data)['return_object']['recognized'])
-
-#     # # return result
-#     # return 0.5, "good job"
-    
-    
-#     # 평가 모듈을 사용하여 평가
-#     STT_result, hug_acc = hug_stt_acc(origin_text, saveFilePath)
-#     stt_etri = etri_stt(saveFilePath,key)
-#     etri_score = etri_eval(origin_text,saveFilePath,key)
-#     compare_lt = compare(origin_text, STT_result)
-    
-    
-#     print(STT_result)
-#     print(stt_etri)
-#     print(hug_acc)
-#     print(etri_score)
-#     print(compare_lt)
-    
-#     return hug_acc, "good job"
