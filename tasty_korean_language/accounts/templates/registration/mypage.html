@@ -46,24 +46,47 @@ mypage
                 <!-- Add the following div for the scrollable list -->
                 <div class="scrollable-list">
                     <!-- Your conversation list content goes here -->
-                    {% for chatlog in chatlog_list|dictsortreversed:"created_at" %}
-                        <div class="conversation-item">
-                            <a href="{% url 'aichat:chatlog' chatlog.id %}">
-                            <h3>{{ chatlog.title }}</h3>
-
-                            <p>{{ chatlog.created_at }}</p>
-                            </a>
-                            <!-- Add other conversation details as needed -->
-                        </div>
-                        <div class="conversation-separator">
-                            <hr>
-                        </div>
-                    {% endfor %}
+                    {% if chatlog_list %}
+                        <ul class="list-group">
+                            {% for chatlog in chatlog_list|dictsortreversed:"created_at" %}
+                                <li class="list-group-item">
+                                    <a href="{% url 'aichat:chatlog' chatlog.id %}">{{ chatlog.title }}</a>
+                                    <div>{{ chatlog.created_at }}<div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        대화한 내역이 없습니다.
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
 
+    <h2>게시글 내역</h2>
+    <div class="card">
+        <div class="card-body">
+            <i class="fa fa-pen fa-xs edit"></i>
+            <div class="conversation-list">
+                <!-- Add the following div for the scrollable list -->
+                <div class="scrollable-list">
+                    <!-- Your conversation list content goes here -->
+                    {% if post_list %}
+                        <ul class="list-group">
+                            {% for post in post_list %}
+                                <li class="list-group-item">
+                                    <a href="{% url 'community:detail' post.id %}">{{ post.title }}</a>
+                                    <div>{{ post.create_date }}<div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        작성한 게시글이 없습니다.
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
     
     <h2>회원 탈퇴</h2>
     <div class="card">

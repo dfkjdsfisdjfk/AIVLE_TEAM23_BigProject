@@ -11,6 +11,7 @@ from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, 
 
 # from aichat.models import ChatLog, ChatMessage
 from aichat.models import *
+from community.models import Post
 
 
 def signupConsent(request):
@@ -116,6 +117,7 @@ def session_test(request, code):
 
 ###################### mypage ######################
 def mypage(request):
-    chatlog_list = ChatLog.objects.all()
-    return render(request, 'registration/mypage.html', {'chatlog_list':chatlog_list})
+    chatlog_list = ChatLog.objects.filter(user=request.user)
+    post_list = Post.objects.filter(writer=request.user).order_by("-create_date")
+    return render(request, 'registration/mypage.html', {'chatlog_list':chatlog_list, 'post_list':post_list})
 
