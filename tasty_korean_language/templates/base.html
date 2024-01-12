@@ -106,7 +106,8 @@
     <script src="{% static 'js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
     <script src="{% static 'js/custom.js' %}"></script>
     
-    {% comment %} <script>
+    <script>
+        // 현재 페이지 네비게이션 바 메뉴 표시
         var url = window.location.pathname;
         if (url == "{% url 'signup' %}"){
             $('.nav-item a[href="{% url 'signup_consent' %}"]').addClass('active');
@@ -114,19 +115,23 @@
         else if (url.indexOf("aichat") !== -1){
             $('.nav-item a[href="{% url 'aichat:chatsetting' %}"]').addClass('active');
         }
+        else if (url.indexOf("community") !== -1){
+            $('.nav-item a[href="{% url 'community:index' %}"]').addClass('active');
+        }
         else {
             $('.nav-item').find('a').each(function() {
                 $(this).toggleClass('active', $(this).attr('href')==url);
             });
         }
 
+        // 개인정보 처리방침 팝업
         function openPrivacyPopup(){
             window.open("{% url 'privacy' %}", "new", "toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=700, height=700, left=0, top=0");
         }
-
+        // 이용약관 팝업
         function openServicePopup(){
             window.open("{% url 'service' %}", "new", "toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=700, height=700, left=0, top=0");
         }
-    </script> {% endcomment %}
+    </script>
 </body>
 </html>
