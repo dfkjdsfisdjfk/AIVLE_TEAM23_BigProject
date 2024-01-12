@@ -7,7 +7,7 @@ from .forms import PostForm
 
 def show_list(request):
     # tmp_list = [{'name':[1], 'content':[1]},{'name':[2], 'content':[2]},{'name':[3], 'content':[3]}] * 3
-    tmp_list = Post.objects.all()
+    tmp_list = Post.objects.all().order_by('-create_date')
     page = request.GET.get('page',1)
     paginator = Paginator(tmp_list, 10)
     page = paginator.get_page(int(page))
@@ -58,9 +58,8 @@ def update(request, id):
     if request.method == 'POST':
         form = PostForm(request.POST, instance=post)
         if form.is_valid():
-            form_dic = form.cleaned_data
-            form_dic['writer'] = request.user
-            post = Post.objects.create(**form.cleaned_data)
+            form.save()
+            redirect('community:detail', pk=id)
         return redirect(post)
     else:
         form = PostForm(instance=post)
