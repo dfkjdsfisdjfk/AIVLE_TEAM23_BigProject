@@ -12,6 +12,14 @@
 {% block content %}
 
 <div class = "content">
+    <div class = "header">
+        {% comment %} <body style="background-image: url('{% static 'img/test4.png' %}');"> {% endcomment %}
+        <h1>게시판</h1>
+        <hr class ="hr1" noshade>
+    </div>
+    <div class="path-section">
+        <a href="{% url 'community:index' %}">> Home</a>
+    </div>
     <table class="board_for_read">
         <body style="background-image: url('{% static 'img/test4.png' %}');">
         <tbody>
@@ -44,10 +52,9 @@
         </tbody>
     </table>
     <div style="text-align:left;">
-        <a href="{% url 'community:index' %}">> Home</a>
         {% if post.writer == user %}
-            <a href = "{% url 'community:update' post.id %}">> 글 수정</a>
-            <a href= "{% url 'community:delete' post.id %}">> 글 삭제</a>
+            <a class="btn btn_right" href = "{% url 'community:update' post.id %}">글 수정</a>
+            <a class="btn btn_right" href= "{% url 'community:delete' post.id %}">글 삭제</a>
         {% endif %}
     </div>
 </div>

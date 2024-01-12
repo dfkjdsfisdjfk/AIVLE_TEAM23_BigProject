@@ -18,27 +18,27 @@
         </div>
         {% if user.is_authenticated %}
             <div style="text-align:right">
-                <a href = "{% url 'community:write' %}">글쓰기</a>
+                <a class="write_btn btn" href = "{% url 'community:write' %}">글쓰기</a>
             </div>
         {% endif %}
         <div class = 'container-com'>
             <table class = 'community-table'>
                 <thead class = 'community-table-thead'>
                     <tr>
-                        <th>번호</th>
-                        <th>제목</th>
-                        <th>글쓴이</th>
-                        <th>등록일</th>
+                        <th class="col1">번호</th>
+                        <th class="col2">제목</th>
+                        <th class="col3">글쓴이</th>
+                        <th class="col4">등록일</th>
                     </tr>
                 </thead>
                 
                 <tbody class = 'community-table-tbody'>
                     {% for obj in page_obj %}
                         <tr>
-                            <td>{{obj.pk}}</td>
-                            <td><a href="{% url 'community:detail' obj.pk %}">{{obj.title}}</a></td>
-                            <td>{{obj.writer}}</td>
-                            <td>{{obj.create_date}}</td>
+                            <td class="col1">{{obj.pk}}</td>
+                            <td class="col2"><a href="{% url 'community:detail' obj.pk %}">{{obj.title}}</a></td>
+                            <td class="col3">{{obj.writer}}</td>
+                            <td class="col4">{{obj.create_date}}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

@@ -10,13 +10,17 @@
 {% endblock extrahead %}
 
 {% block content %}
-<body style="background-image: url('{% static 'img/test4.png' %}');">
-    <h1> POST 삭제</h1>
-    {{post}} 글을 정말로 삭제하시겠습니까?
+<div class="delete_container">
+    <div class = "header">
+        <h1> POST 삭제</h1>
+        <hr class ="hr1" noshade>
+    </div>
+    
+    <p>{{post.title}} 글을 정말로 삭제하시겠습니까?</p>
     <form action="" method="POST">
         {% csrf_token %}
-        <input type="submit" value="네, 삭제합니다">
+        <input class="btn" type="submit" value="네, 삭제합니다">
     </form>
-    <a href="{% url 'community:index' %}">아니오, 취소합니다</a>
-
+    <a class="btn" style="margin-top:8px;" href="{% url 'community:index' %}">아니오, 취소합니다</a>
+</div>
 {% endblock content %}

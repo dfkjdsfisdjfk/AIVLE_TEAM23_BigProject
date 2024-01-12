@@ -1,6 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbit&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Noto+Sans+KR:wght@200;300;400;500;700&display=swap');
+
+
 * {
     margin: 0;
     padding: 0;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
 
@@ -20,25 +25,39 @@
     /* 그림자 */
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
 
+    padding: 30px 50px;
 
     margin-top: 3%;
     margin-left: 0%;
     /* font-size: 28px; */
     /* padding: 10px 20px; */
-    padding: 10px 20px;
     /* padding: 5% 10%; */
     width: 100%;
     min-height: 500px;
 }
 
 h1 { 
+    text-align: center;
     font-weight: border;
-    font-size : 65; }
+    font-size : 65;
+    margin-bottom: 0;
+    padding-bottom: 0;
+ }
 
 .hr1 { 
     border: 0;
-    height: 2px;
-    background:  #d3d3d3;}
+    height: 1px;
+    background:  #d3d3d3;
+}
+
+.write_btn {
+    margin: 10px 0;
+    box-shadow: none;
+    font-size: 15px;
+}
+.write_btn:hover {
+    color: #fff;
+}
 
     /* .grey { 
      color: #727272;}
@@ -53,13 +72,19 @@ table {
 th { 
     background-color: #d3d3d3 ; 
     border-top: 3px solid #727272;
+    font-weight: bold;
 }
 
 th, td {
     border-bottom: 1px solid #d3d3d3;
     padding: 10px;
+    text-align: center;
 }
 
+.col1 { width: 7%; }
+.col2 { width: 45%; }
+.col3 { width: 20%; }
+.col4 { width: 28%; }
 
 a {
     color:black;
@@ -75,6 +100,42 @@ li {
     display: inline; /* or display: inline-block; */
     margin-right: 10px; /* Optional: Add some spacing between list items */
     }
+
+.com-number {
+    margin-top: 15px;
+}
+
+/* 글쓰기 */
+td input, td textarea {
+    width: 100%;
+    border: 1px solid #d3d3d3;
+    padding: 1px 5px;
+}
+
+.btn_right {
+    margin-left: 8px;
+    margin-top: 10px;
+    float: right;
+}
+
+.btn:hover {
+    color: #fff;
+}
+
+.path-section {
+    text-align:left;
+    font-size:12px;
+    margin-bottom:10px;
+}
+
+.delete_container {
+    background-color:#fff; 
+    border-radius:10px; 
+    padding:20px 30px; 
+    text-align: center;
+}
+
+
 /* .greylist {
 width: 50px;
 height: 30px;

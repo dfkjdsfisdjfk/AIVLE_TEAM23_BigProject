@@ -11,6 +11,14 @@
 
 {% block content %}
     <div class="content">
+        <div class = "header">
+            {% comment %} <body style="background-image: url('{% static 'img/test4.png' %}');"> {% endcomment %}
+            <h1>게시판</h1>
+            <hr class ="hr1" noshade>
+        </div>
+        <div class="path-section">
+            <a href="{% url 'community:index' %}">> Home</a>
+        </div>
         <form action="" method="post">
             {% csrf_token %}
             <table>
@@ -30,12 +38,8 @@
                 </tbody>
             </table>
 
-            <input type="submit" value="등록">
+            <input class="btn btn_right" type="submit" value="등록">
         </form>
-
-        <div style="text-align:left;">
-            <a href="{% url 'community:index' %}">> Home</a>
-        </div>
 
     </div>
 {% endblock content %}
