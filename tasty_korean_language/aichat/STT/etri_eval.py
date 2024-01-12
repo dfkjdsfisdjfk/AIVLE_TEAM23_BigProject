@@ -40,4 +40,4 @@ def etri_eval(origin_text:str,audio,key:str):
     result = json.loads(response.data)['return_object']['score']
     # print(json.loads(response.data))
     
-    return result
+    return np.round(float(result),1)

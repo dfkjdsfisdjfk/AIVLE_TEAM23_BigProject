@@ -75,12 +75,12 @@ def index(request):
         else:
             chatlog = ChatLog.objects.create(user=request.user)
         
-        initial_gpt_message = get_chat_gpt_response("이야기!", request.user.language)
+        initial_gpt_message = get_chat_gpt_response("여행에 대해 얘기하자", 'ko')
     
         translation_client = translate_v2.Client.from_service_account_json("C:\\Users\\user\\Desktop\\chat.json")
-        trans_initial_gpt_message = translation_client.translate(initial_gpt_message, target_language='ko')['translatedText']
+        trans_initial_gpt_message = translation_client.translate(initial_gpt_message, target_language=request.user.language)['translatedText']
         # 초기 메시지를 GPT에 전달
-        ChatMessage.objects.create(chatlog=chatlog, sender="system", message=trans_initial_gpt_message, translated=initial_gpt_message)
+        ChatMessage.objects.create(chatlog=chatlog, sender="system", message=initial_gpt_message, translated=trans_initial_gpt_message)
         
         return redirect('aichat:chatlog', chatlog.id)
     
@@ -91,6 +91,7 @@ def index2(request, id):
     
     # messages = ChatMessage.objects.filter(chatlog=userchatlog)
     messages_with_feedback = ChatMessage.objects.filter(chatlog=userchatlog).select_related('feedback').all()
+    
     
     # Feedback 단어쌍 처리
     feedback_list = []
