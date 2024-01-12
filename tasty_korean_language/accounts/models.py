@@ -12,8 +12,8 @@ class User(AbstractUser):
     LANGUAGE_CHOICES = (
         ("en", "English"),
         ("ko", "Korean"),
-        ("zh", "Chinese"),
         ("ja", "Japanese"),
+        ("zh", "Chinese"),
     )
     
     language = models.CharField(choices=LANGUAGE_CHOICES, max_length=2, default="en")
