@@ -36,6 +36,6 @@ def hug_stt_acc(orgin_text:str,audio_file_path):
     result = result.replace("</s>",'')
     result = result.replace("<pad>",'')
     result = result.replace("<unk>",'')
-    acc_hug = np.round(metrics.get_cer(orgin_text, result)['cer'], 1)
+    acc_hug = np.round(metrics.get_cer(orgin_text, result)['cer'], 1) * 100
     
     return result, acc_hug

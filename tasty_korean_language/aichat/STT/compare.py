@@ -10,8 +10,11 @@ def compare(origin,transcription):
 
     diff = []
     for i in range(0,len(nSen1)):
-        if nSen1[i]!=nSen2[i]:
-            diff.append([nSen2[i],nSen1[i]])
+        try:
+            if nSen1[i]!=nSen2[i]:
+                diff.append([nSen2[i],nSen1[i]])
+        except:
+            pass
 
     # #틀린 부분 출력
     # print(diff)
