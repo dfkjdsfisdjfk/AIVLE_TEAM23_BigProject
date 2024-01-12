@@ -1,34 +1,41 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Orbit&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;300;400;500;700&display=swap');
 
 /* 로그인 & 회원가입 */
 
 
 body {
-  color: #666666;
+  color: #222;
   font-size: 14px;
   font-family: Raleway;
   line-height: 1.80857;
   font-weight: normal;
   overflow-x: hidden;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 .wrapper {
   width: 430px;
   height: 550px;
   background-color: white;
-  border: 2px solid rgba(0, 0, 0, 0.2);
-  box-shadow: 2px 2px 3px 0px lightgray;
-  margin: 50px auto;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.4);
+  margin: 30px auto;
   box-shadow: white;
 }
 
+.wrapper h2 {
+  font-family: 'Orbit', sans-serif;
+  font-size: 25px;
+}
 
 .wrapper form > label {
   display: block;
   width: 70%;
-  font-size: 17px;
+  font-size: 14px;
   color: #323232;
-  margin: 10px auto 3px auto;
+  margin: 7px auto 3px auto;
+  font-weight: 500;
 }
 
 .wrapper form > label:first-child {
@@ -51,19 +58,17 @@ body {
   display: block;
   width: 70%;
   height: 40px;
-  background-color: #48485C;
-  color: white;
   border-radius: 8px;
   text-align: center;
   margin: 20px auto 10px auto;
   font-size: 17px;
-}
-
-.btn.signin:hover, .btn.signup:hover {
-  background-color: #48485C;
-  opacity: 0.8;
   color: white;
 }
+
+.btn {
+  font-weight: 500;
+}
+
 
 /* 로그인 */
 
@@ -129,6 +134,7 @@ body {
 .signup-wrapper h2 {
   text-align: center;
   margin: 30px 0px;
+  padding: 0;
   color: black;
 }
 
@@ -139,9 +145,11 @@ body {
 }
 
 .form-wrapper p {
-  font-size: 15px;
+  font-weight: normal;
+  font-size: 14px;
   text-align: center;
   margin: 7px auto;
+  color: #222;
 }
 
 .scroll-box {
@@ -153,6 +161,7 @@ body {
 }
 
 .scroll-box p {
+  font-weight: normal;
   font-size: 12px;
   margin: 0px;
 }
@@ -169,6 +178,7 @@ body {
 
 .anim label {
   font-size: 13px;
+  margin: 0;
   vertical-align: middle;
 }
 
@@ -191,7 +201,6 @@ body {
 .signup-check span {
   vertical-align: middle;
   margin-left: 5px;
-  font-weight: bold;
   color: black;
 }
 
@@ -204,18 +213,11 @@ body {
 .btn.next {
   width: calc(100% - 60px);
   height: 40px;
-  background-color: #48485C;
-  color: white;
   border-radius: 8px;
   text-align: center;
   font-size: 17px;
   margin: 0 auto;
-}
-
-.btn.next:hover {
-  background-color: #48485C;
-  opacity: 0.8;
-  color: white;
+  color: #fff;
 }
 
 .btn.next.disable {
@@ -228,7 +230,7 @@ body {
   width: 70%;
   margin: 0 auto;
   text-align: end;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .signup-wrapper > p > span, .signup-wrapper form > label > span {
@@ -242,4 +244,20 @@ body {
   font-size: 11px;
   margin: 2px auto;
   padding-left: 5px;
+}
+
+.form-msg .errorlist li, .form-msg.login-error-msg {
+  color: red;
+}
+
+
+.btn.find_id {
+  display: block;
+  width: 70%;
+  margin: 15px auto;
+}
+
+#find-id-result {
+  text-align: center;
+  font-size: 20px;
 }

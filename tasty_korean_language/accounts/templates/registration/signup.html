@@ -23,7 +23,8 @@ TKL: Sign up
 
         <label><span>*</span>비밀번호</label>
         <input class="form-input" type="password" name="password1" placeholder="비밀번호" required="">
-        <div class="form-msg pwd-msg">{{ form.password1.errors|default:"" }}</div>
+        <div class="form-msg pwd-msg err">{{ form.password1.errors|default:"" }}</div>
+        <div class="form-msg pwd-msg">* 비밀번호는 연속되지 않은 숫자와 문자를 포함하여 최소 8자 이상으로 입력하십시오.</div>
 
         <label><span>*</span>비밀번호 확인</label>
         <input class="form-input" type="password" name="password2" placeholder="비밀번호 확인" required="">
