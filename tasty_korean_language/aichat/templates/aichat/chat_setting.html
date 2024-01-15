@@ -21,7 +21,7 @@ TKL: AI Chat
                 <option value={{ language_code }} {% if language_code == user.language %}selected{% endif %}>{{ language_name }}</option>
             {% endfor %}
         </select>
-        <button class="btn btn-primary btn-lg bt1" type="button" onclick="updateLanguage()">저장</button>
+        {% comment %} <button class="btn btn-primary btn-lg bt1" type="button" onclick="updateLanguage()">저장</button> {% endcomment %}
     </form>
 
     <br><hr class="hr1">
@@ -30,8 +30,12 @@ TKL: AI Chat
         <h3>채팅 제목</h3>
         {% csrf_token %}
         <input type="text" id="titleInput" name="title" placeholder="제목 입력">
-        <button class="btn btn-primary btn-lg bt2 chat-setting-btn" type="submit" >채팅 시작</button>
+        {% comment %} <button class="btn btn-primary btn-lg bt2 chat-setting-btn" type="submit" >채팅 시작</button> {% endcomment %}
     </form>
+    
+    {% comment %} <br><hr class="hr1"> {% endcomment %}
+
+    <button class="btn btn-primary btn-lg chat-setting-btn" type="button" onclick="submitForms()">새 채팅 시작</button>
 
     <hr class="hr2">
     
@@ -85,7 +89,7 @@ TKL: AI Chat
         })
         .then(response => {
             if (response.ok) {
-                alert('Language updated successfully');
+                alert('Language updated successfully, language=' + language);
             } else {
                 throw new Error('Failed to update language');
             }
@@ -96,4 +100,21 @@ TKL: AI Chat
     }
 </script>
 
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    function submitForms() {
+        // Assuming you have added IDs to your forms: language-form and theme-form
+        var languageForm = $('#language-form');
+        var themeForm = $('#theme-form');
+
+        // Submit both forms
+        updateLanguage();
+        //0.5초 후에 실행
+        setTimeout(function() {
+            themeForm.submit();
+        }, 500);
+        themeForm.submit();
+    }
+</script>
 {% endblock content %}
